@@ -10,8 +10,13 @@
 
 
     <style name="AppTheme.OmiseGOButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:background">@drawable/ripple</item>
+        <item name="android:background">@drawable/ripple_round_shape</item>
         <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="AppTheme.OmiseGOOutlineButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/ripple_round_outline_shape</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>

@@ -22,8 +22,8 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".ProductListActivity"></activity>
     </application>
 
 </manifest>

@@ -8,7 +8,6 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -22,8 +21,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initInstance() {
         btnLogin.setOnClickListener {
-            // TODO : add validation, handle error, navigate to ProductList page
-            Toast.makeText(this@LoginActivity, "Login", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this@LoginActivity, ProductListActivity::class.java))
+            finish()
         }
         val clickSpan = object : ClickableSpan() {
             override fun onClick(v: View) {

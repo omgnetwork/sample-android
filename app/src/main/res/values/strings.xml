@@ -10,4 +10,7 @@
     <string name="activity_register_password">Password</string>
     <string name="activity_register_register">Register</string>
     <string name="activity_register_toolbar_title">Register</string>
+    <string name="activity_product_list_toolbar_title">Products</string>
+    <string name="menu_profile">Profile</string>
+    <string name="viewholder_product_content_description_tshirt">T-shirt</string>
 </resources>
