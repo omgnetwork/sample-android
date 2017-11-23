@@ -4,4 +4,10 @@
     <string name="activity_login_button_login">Log in</string>
     <string name="activity_login_hint_password">Password</string>
     <string name="activity_login_hint_email">Email</string>
+    <string name="activity_register_last_name">Last name</string>
+    <string name="activity_register_first_name">First name</string>
+    <string name="activity_register_email">Email</string>
+    <string name="activity_register_password">Password</string>
+    <string name="activity_register_register">Register</string>
+    <string name="activity_register_toolbar_title">Register</string>
 </resources>
