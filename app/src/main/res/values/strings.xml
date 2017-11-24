@@ -11,6 +11,21 @@
     <string name="activity_register_register">Register</string>
     <string name="activity_register_toolbar_title">Register</string>
     <string name="activity_product_list_toolbar_title">Products</string>
+    <string name="activity_checkout_toolbar_title">Products</string>
+    <string name="activity_checkout_section_1_header">Your Product</string>
+    <string name="activity_checkout_section_2_header">Summary</string>
+    <string name="activity_checkout_sub_total">Sub total</string>
+    <string name="activity_checkout_discount">Discount</string>
+    <string name="activity_checkout_total">Total</string>
+    <string name="activity_checkout_button_redeem">Redeem OMG</string>
+    <string name="activity_checkout_button_pay">Pay</string>
+    <string name="dialog_redeem_title">Redeem OMG coins</string>
+    <string name="dialog_redeem_description">You have #amount to redeem</string>
+    <string name="dialog_redeem_redeem_amount">Redeem #amount</string>
+    <string name="dialog_redeem_total_discount">Get discount #amount</string>
+    <string name="dialog_redeem_button_cancel">Cancel</string>
+    <string name="dialog_redeem_button_redeem">Redeem</string>
+
     <string name="menu_profile">Profile</string>
     <string name="viewholder_product_content_description_tshirt">T-shirt</string>
 </resources>

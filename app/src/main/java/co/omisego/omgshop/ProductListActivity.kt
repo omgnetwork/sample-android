@@ -1,5 +1,6 @@
 package co.omisego.omgshop
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -67,6 +68,7 @@ class ProductListActivity : AppCompatActivity() {
                     tvDescription.text = description
                     ivLogo.setImageDrawable(getDrawable(image))
                     btnPrice.text = price
+                    btnPrice.setOnClickListener { startActivity(Intent(this@ProductListActivity, CheckoutActivity::class.java)) }
                 }
             }
         }
