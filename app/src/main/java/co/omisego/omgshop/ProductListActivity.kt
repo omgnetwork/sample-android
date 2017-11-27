@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.Toast
 import co.omisego.omgshop.models.Product
 import kotlinx.android.synthetic.main.activity_product_list.*
 import kotlinx.android.synthetic.main.viewholder_product.view.*
@@ -41,7 +40,7 @@ class ProductListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.profile -> {
-                Toast.makeText(this@ProductListActivity, "My Profile", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, MyProfileActivity::class.java))
                 return true
             }
         }

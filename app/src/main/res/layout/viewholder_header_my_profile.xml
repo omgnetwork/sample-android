@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp">
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Widget.PopupMenu.Header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="start"
+        android:text="@string/activity_my_profile_token"
+        android:textColor="@color/colorWhite" />
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Widget.PopupMenu.Header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/activity_my_profile_amount"
+        android:textColor="@color/colorWhite" />
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Widget.PopupMenu.Header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:text="@string/activity_my_profile_selected"
+        android:textColor="@color/colorWhite" />
+
+</LinearLayout>

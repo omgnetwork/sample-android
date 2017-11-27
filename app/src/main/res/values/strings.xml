@@ -19,6 +19,10 @@
     <string name="activity_checkout_total">Total</string>
     <string name="activity_checkout_button_redeem">Redeem OMG</string>
     <string name="activity_checkout_button_pay">Pay</string>
+    <string name="activity_my_profile_token">Token</string>
+    <string name="activity_my_profile_amount">Amount</string>
+    <string name="activity_my_profile_selected">Selected</string>
+    <string name="activity_my_profile_toolbar">My profile</string>
     <string name="dialog_redeem_title">Redeem OMG coins</string>
     <string name="dialog_redeem_description">You have #amount to redeem</string>
     <string name="dialog_redeem_redeem_amount">Redeem #amount</string>

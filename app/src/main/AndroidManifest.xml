@@ -24,7 +24,8 @@
             android:name=".RegisterActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ProductListActivity" />
-        <activity android:name=".CheckoutActivity"></activity>
+        <activity android:name=".CheckoutActivity" />
+        <activity android:name=".MyProfileActivity"></activity>
     </application>
 
 </manifest>
