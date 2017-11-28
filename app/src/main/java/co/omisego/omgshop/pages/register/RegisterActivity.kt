@@ -1,25 +1,23 @@
-package co.omisego.omgshop
+package co.omisego.omgshop.pages.register
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_checkout.*
+import co.omisego.omgshop.R
+import kotlinx.android.synthetic.main.activity_register.*
 
-class CheckoutActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_checkout)
+        setContentView(R.layout.activity_register)
+
         initInstance()
     }
 
     private fun initInstance() {
         setSupportActionBar(toolbar)
-        supportActionBar?.title = getString(R.string.activity_product_list_toolbar_title)
+        supportActionBar?.title = getString(R.string.activity_register_toolbar_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        btnRedeem.setOnClickListener {
-            RedeemDialogFragment.newInstance().show(supportFragmentManager, "")
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="co.omisego.omgshop.RegisterActivity">
+    tools:context="co.omisego.omgshop.pages.register.RegisterActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

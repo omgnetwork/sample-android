@@ -1,4 +1,4 @@
-package co.omisego.omgshop
+package co.omisego.omgshop.pages.profile
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import co.omisego.omgshop.R
 import co.omisego.omgshop.models.Token
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.viewholder_content_my_profile.view.*

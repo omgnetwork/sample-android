@@ -1,4 +1,4 @@
-package co.omisego.omgshop
+package co.omisego.omgshop.pages.products
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,15 +6,18 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import co.omisego.omgshop.models.Product
+import co.omisego.omgshop.R
+import co.omisego.omgshop.models.MockProduct
+import co.omisego.omgshop.pages.checkout.CheckoutActivity
+import co.omisego.omgshop.pages.profile.MyProfileActivity
 import kotlinx.android.synthetic.main.activity_product_list.*
 import kotlinx.android.synthetic.main.viewholder_product.view.*
 
 class ProductListActivity : AppCompatActivity() {
     private val productList = listOf(
-            Product(R.drawable.ic_photo_24dp, "OmiseGO T-Shirt", "An amazing t-shirt!", "฿985.00"),
-            Product(R.drawable.ic_photo_24dp, "OmiseGO Hoodie", "An amazing hoodie!", "฿480.00"),
-            Product(R.drawable.ic_photo_24dp, "OmiseGO Hat", "An amazing hat!", "฿100.00")
+            MockProduct(R.drawable.ic_photo_24dp, "OmiseGO T-Shirt", "An amazing t-shirt!", "฿985.00"),
+            MockProduct(R.drawable.ic_photo_24dp, "OmiseGO Hoodie", "An amazing hoodie!", "฿480.00"),
+            MockProduct(R.drawable.ic_photo_24dp, "OmiseGO Hat", "An amazing hat!", "฿100.00")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +50,7 @@ class ProductListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    inner class ProductListRecyclerAdapter(private val productList: List<Product>) : RecyclerView.Adapter<ProductListRecyclerAdapter.ProductViewHolder>() {
+    inner class ProductListRecyclerAdapter(private val productList: List<MockProduct>) : RecyclerView.Adapter<ProductListRecyclerAdapter.ProductViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_product, parent, false)
             return ProductViewHolder(itemView)
@@ -61,7 +64,7 @@ class ProductListActivity : AppCompatActivity() {
             private val tvDescription = itemView.tvDescription
             private val ivLogo = itemView.ivLogo
             private val btnPrice = itemView.btnPrice
-            fun bind(model: Product) {
+            fun bind(model: MockProduct) {
                 with(model) {
                     tvTitle.text = title
                     tvDescription.text = description

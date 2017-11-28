@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".pages.login.LoginActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +21,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".pages.register.RegisterActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ProductListActivity" />
-        <activity android:name=".CheckoutActivity" />
-        <activity android:name=".MyProfileActivity"></activity>
+        <activity android:name=".pages.products.ProductListActivity" />
+        <activity android:name=".pages.checkout.CheckoutActivity" />
+        <activity android:name=".pages.profile.MyProfileActivity"></activity>
     </application>
 
 </manifest>

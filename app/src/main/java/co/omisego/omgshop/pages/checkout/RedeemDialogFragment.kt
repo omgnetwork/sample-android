@@ -1,4 +1,4 @@
-package co.omisego.omgshop
+package co.omisego.omgshop.pages.checkout
 
 import android.graphics.Color
 import android.graphics.Point
@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment
 import android.view.*
 import android.widget.SeekBar
 import android.widget.Toast
+import co.omisego.omgshop.R
 import kotlinx.android.synthetic.main.dialog_redeem.*
 import kotlinx.android.synthetic.main.dialog_redeem.view.*
 
