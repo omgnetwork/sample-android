@@ -1,0 +1,11 @@
+{
+  "version": "1",
+  "success": true,
+  "data": {
+    "object": "user",
+    "id": "cec34607-0761-4a59-8357-18963e42a1aa",
+    "email": "john.doe@example.com",
+    "first_name": "John",
+    "last_name": "Doe"
+  }
+}

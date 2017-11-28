@@ -1,0 +1,10 @@
+{
+  "version": "1",
+  "success": true,
+  "data": {
+    "object": "authentication_token",
+    "user_id": "1",
+    "authentication_token": "azJRj09l7jvR8KhTqUs3",
+    "omisego_authentication_token": "iGn2Ol0ZmyVa1YbmL"
+  }
+}
