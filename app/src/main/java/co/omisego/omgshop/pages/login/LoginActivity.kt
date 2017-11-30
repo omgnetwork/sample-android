@@ -2,15 +2,14 @@ package co.omisego.omgshop.pages.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
+import co.omisego.omgshop.custom.MinimalTextChangeListener
 import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Login
@@ -51,22 +50,12 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
         tvRegister.movementMethod = LinkMovementMethod.getInstance()
 
 
-        etEmail.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(text: Editable) {
-                tilEmail.isErrorEnabled = !mPresenter.validateEmail(text.toString())
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        etEmail.addTextChangedListener(MinimalTextChangeListener {
+            tilEmail.isErrorEnabled = !mPresenter.validateEmail(it.toString())
         })
 
-        etPassword.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(text: Editable) {
-                tilPassword.isErrorEnabled = !mPresenter.validatePassword(text.toString())
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        etPassword.addTextChangedListener(MinimalTextChangeListener {
+            tilPassword.isErrorEnabled = !mPresenter.validatePassword(it.toString())
         })
     }
 

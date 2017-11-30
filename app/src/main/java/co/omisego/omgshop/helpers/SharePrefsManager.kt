@@ -8,6 +8,7 @@ import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_USER_ID
 import co.omisego.omgshop.models.Login
+import co.omisego.omgshop.models.Register
 
 
 /**
@@ -37,6 +38,14 @@ class SharePrefsManager(private val context: Context) {
             putString(REQUEST_KEY_AUTHENTICATION_TOKEN, authenticationToken)
             putString(REQUEST_KEY_USER_ID, userId)
             putString(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN, omisegoAuthenticationToken)
+        }.commit()
+    }
+
+    fun saveRegisterResponse(registerResponse: Register.Response): Boolean {
+        return with(sharePref.edit()) {
+            putString(REQUEST_KEY_AUTHENTICATION_TOKEN, registerResponse.authenticationToken)
+            putString(REQUEST_KEY_USER_ID, registerResponse.userId)
+            putString(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN, registerResponse.omisegoAuthenticationToken)
         }.commit()
     }
 

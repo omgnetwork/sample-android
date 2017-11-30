@@ -13,8 +13,12 @@ import java.util.regex.Pattern
 class Validator {
     private val EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$"
     private val pattern = Pattern.compile(EMAIL_PATTERN)
-
     fun validateEmail(email: String): Boolean = pattern.matcher(email).matches()
 
     fun validatePassword(password: String): Boolean = password.length >= 8
+
+    fun validateFirstName(firstName: String): Boolean = firstName.length > 0
+
+    fun validateLastName(lastName: String): Boolean = lastName.length > 0
+
 }

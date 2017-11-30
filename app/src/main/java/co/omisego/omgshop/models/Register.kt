@@ -1,8 +1,8 @@
 package co.omisego.omgshop.models
 
-import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_AUTHENTICATION_TOKEN
-import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN
-import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_USER_ID
+import co.omisego.omgshop.helpers.Contants.REQUEST_KEY_AUTHENTICATION_TOKEN
+import co.omisego.omgshop.helpers.Contants.REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN
+import co.omisego.omgshop.helpers.Contants.REQUEST_KEY_USER_ID
 import com.google.gson.annotations.SerializedName
 
 
