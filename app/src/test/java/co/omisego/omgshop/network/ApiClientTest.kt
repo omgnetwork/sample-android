@@ -1,11 +1,8 @@
 package co.omisego.omgshop.network
 
-import co.omisego.androidsdk.models.Response
+import co.omisego.omgshop.deserialize.OMGConverterFactory
+import co.omisego.omgshop.models.*
 import co.omisego.omgshop.testutils.RecordingObserver
-import co.omisego.omgshop.models.Login
-import co.omisego.omgshop.models.Product
-import co.omisego.omgshop.models.Register
-import co.omisego.omgshop.models.User
 import co.omisego.omgshop.testutils.readFile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -44,11 +41,13 @@ class ApiClientTest {
     private lateinit var loginFile: File
     private lateinit var productGetFile: File
     private lateinit var productBuyFile: File
+    private lateinit var errorFile: File
     private lateinit var responseUser: Response<User.Response>
     private lateinit var responseRegister: Response<Register.Response>
     private lateinit var responseLogin: Response<Login.Response>
     private lateinit var responseProductBuy: Response<Nothing>
     private lateinit var responseProductGet: Response<Product.Get.Response>
+    private lateinit var responseError: Response<Error>
 
 
     @Before
@@ -73,21 +72,28 @@ class ApiClientTest {
         productBuyFile = readFile("products.buy.response.success.json")
         productBuyFile shouldNotBe null
 
+        // Retrieves mocked error response from local json file
+        errorFile = readFile("response.error.json")
+        errorFile shouldNotBe null
+
         // Convert response using Gson converter
         val typeUserToken = object : TypeToken<Response<User.Response>>() {}.type
-        responseUser = Gson().fromJson<Response<User.Response>>(userFile.readText(), typeUserToken)
+        responseUser = Gson().fromJson<Response<User.Response>>(userFile.readText().replace("\n ", "").replace("\n  ", ""), typeUserToken)
 
         val typeRegisterToken = object : TypeToken<Response<Register.Response>>() {}.type
         responseRegister = Gson().fromJson<Response<Register.Response>>(registerFile.readText(), typeRegisterToken)
 
         val typeLoginToken = object : TypeToken<Response<Login.Response>>() {}.type
-        responseLogin = Gson().fromJson<Response<Login.Response>>(loginFile.readText(), typeLoginToken)
+        responseLogin = Gson().fromJson<Response<Login.Response>>(loginFile.readText().replace("\n ", "").replace("\n  ", ""), typeLoginToken)
 
         val typeProductGetToken = object : TypeToken<Response<Product.Get.Response>>() {}.type
         responseProductGet = Gson().fromJson<Response<Product.Get.Response>>(productGetFile.readText(), typeProductGetToken)
 
         val typeProductBuyToken = object : TypeToken<Response<Nothing>>() {}.type
         responseProductBuy = Gson().fromJson<Response<Nothing>>(productBuyFile.readText(), typeProductBuyToken)
+
+        val typeErrorToken = object : TypeToken<Response<Error>>() {}.type
+        responseError = Gson().fromJson<Response<Error>>(errorFile.readText(), typeErrorToken)
 
         // Setup retrofit with mock server
         val retrofit = Retrofit.Builder()
@@ -137,6 +143,7 @@ class ApiClientTest {
 
     @Test
     fun `verify login api return observable register response correctly`() {
+
         // Enqueued response from mock server
         mockWebServer.enqueue(MockResponse().setBody(loginFile.readText()))
 

@@ -13,8 +13,14 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', 'API_KEY', '"e8d4764f77f36bfd741bd9ed21400cf5"'
+            buildConfigField 'String', 'API_KEY_ID', '"1"'
+        }
         release {
             minifyEnabled false
+            buildConfigField 'String', 'API_KEY', '"e8d4764f77f36bfd741bd9ed21400cf5"'
+            buildConfigField 'String', 'API_KEY_ID', '"1"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -44,6 +50,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
     // For testing
     testImplementation 'junit:junit:4.12'

@@ -1,5 +1,6 @@
 package co.omisego.omgshop.models
 
+import co.omisego.androidsdk.models.Response
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.amshove.kluent.shouldEqual

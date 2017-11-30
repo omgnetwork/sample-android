@@ -1,10 +1,6 @@
 package co.omisego.omgshop.network
 
-import co.omisego.androidsdk.models.Response
-import co.omisego.omgshop.models.Login
-import co.omisego.omgshop.models.Product
-import co.omisego.omgshop.models.Register
-import co.omisego.omgshop.models.User
+import co.omisego.omgshop.models.*
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.POST
