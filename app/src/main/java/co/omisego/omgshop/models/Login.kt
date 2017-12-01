@@ -1,5 +1,8 @@
 package co.omisego.omgshop.models
 
+import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_AUTHENTICATION_TOKEN
+import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN
+import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_USER_ID
 import com.google.gson.annotations.SerializedName
 
 
@@ -14,8 +17,8 @@ object Login {
     data class Request(val email: String, val password: String)
 
     data class Response(
-            @SerializedName("user_id") val userId: String,
-            @SerializedName("authentication_token") val authenticationToken: String,
-            @SerializedName("omisego_authentication_token") val omisegoAuthenticationToken: String
+            @SerializedName(REQUEST_KEY_USER_ID) val userId: String,
+            @SerializedName(REQUEST_KEY_AUTHENTICATION_TOKEN) val authenticationToken: String,
+            @SerializedName(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN) val omisegoAuthenticationToken: String
     )
 }

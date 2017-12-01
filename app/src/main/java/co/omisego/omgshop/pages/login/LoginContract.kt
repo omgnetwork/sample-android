@@ -17,10 +17,15 @@ interface LoginContract {
         fun showLoginSuccess(response: Login.Response)
         fun showLoginFailed(response: Error)
         fun showRegister()
+        fun showPasswordErrorHint(msg: String)
+        fun showEmailErrorHint(msg: String)
     }
 
     interface Presenter : BaseContract.BasePresenter<View> {
         fun handleLogin(request: Login.Request)
         fun handleClickRegisterButton()
+        fun checkHasLogin()
+        fun validateEmail(email: String): Boolean
+        fun validatePassword(password: String): Boolean
     }
 }

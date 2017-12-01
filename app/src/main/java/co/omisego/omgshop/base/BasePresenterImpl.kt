@@ -1,5 +1,6 @@
 package co.omisego.omgshop.base
 
+import android.util.Log
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -32,6 +33,10 @@ abstract class BasePresenterImpl<V : BaseContract.BaseView> : BaseContract.BaseP
 
     override fun unsubscription() {
         mCompositeSubscription?.clear()
+    }
+
+    fun log(message: String) {
+        Log.d(this.javaClass.simpleName, message)
     }
 
 }

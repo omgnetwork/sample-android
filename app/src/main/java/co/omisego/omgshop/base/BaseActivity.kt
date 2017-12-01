@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 
 
 /**
@@ -32,5 +33,9 @@ abstract class BaseActivity<in V : BaseContract.BaseView, out P : BaseContract.B
 
     fun log(message: String) {
         Log.d(this.javaClass.name, message)
+    }
+
+    override fun showMessage(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }

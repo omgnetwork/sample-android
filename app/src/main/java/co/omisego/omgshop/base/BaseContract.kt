@@ -16,6 +16,7 @@ interface BaseContract {
     interface BaseView {
         fun showLoading(title: String, msg: String)
         fun View.hideLoading()
+        fun showMessage(msg: String)
     }
 
     interface BasePresenter<in V : BaseView> {
