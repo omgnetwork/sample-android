@@ -37,4 +37,6 @@
 
     <string name="menu_profile">Profile</string>
     <string name="viewholder_product_content_description_tshirt">T-shirt</string>
+    <string name="activity_login_email_error_hint">Email address is not valid</string>
+    <string name="activity_login_password_error_hint">Password length should not less than 8 characters</string>
 </resources>

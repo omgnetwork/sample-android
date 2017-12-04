@@ -1,8 +1,8 @@
 package co.omisego.omgshop.network
 
-import android.util.Base64
-import co.omisego.omgshop.BuildConfig
 import co.omisego.omgshop.deserialize.OMGConverterFactory
+import co.omisego.omgshop.helpers.Contextor
+import co.omisego.omgshop.helpers.SharePrefsManager
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,7 +18,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
  */
 
 object ApiClient {
-    private val BASE_URL = "https://omgshop.omisego.io/api/"
+    private val BASE_URL = Endpoints.BASE_URL
+    private val headerManager by lazy { HeaderManager() }
     var omiseGO: OmiseGOAPI
 
     init {
@@ -29,9 +30,12 @@ object ApiClient {
         val clientBuilder = OkHttpClient.Builder().apply {
             addInterceptor(interceptor)
             addNetworkInterceptor {
-                val header = "${BuildConfig.API_KEY_ID}:${BuildConfig.API_KEY}".toByteArray()
+                val endpoint = it.request().url().encodedPath().substringAfterLast("/")
+                val credential = SharePrefsManager(Contextor.context).readLoginResponse()
+                val authorization = headerManager.createAuthorization(endpoint, credential)
                 val request: Request = it.request().newBuilder()
-                        .addHeader("Authorization", "OMGShop ${String(Base64.encode(header, Base64.NO_WRAP))}").build()
+                        .addHeader("Authorization", authorization)
+                        .build()
                 it.proceed(request)
             }
         }

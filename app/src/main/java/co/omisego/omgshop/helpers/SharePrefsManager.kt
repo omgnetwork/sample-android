@@ -49,6 +49,14 @@ class SharePrefsManager(private val context: Context) {
         }.commit()
     }
 
+    fun saveRegisterResponse(registerResponse: Register.Response): Boolean {
+        return with(sharePref.edit()) {
+            putString(REQUEST_KEY_AUTHENTICATION_TOKEN, registerResponse.authenticationToken)
+            putString(REQUEST_KEY_USER_ID, registerResponse.userId)
+            putString(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN, registerResponse.omisegoAuthenticationToken)
+        }.commit()
+    }
+
     fun readLoginResponse(): Login.Response {
         with(sharePref) {
             val userId = getString(REQUEST_KEY_USER_ID, "")

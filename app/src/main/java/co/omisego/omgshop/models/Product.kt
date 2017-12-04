@@ -1,6 +1,8 @@
 package co.omisego.omgshop.models
 
 import com.google.gson.annotations.SerializedName
+import java.text.NumberFormat
+import java.util.*
 
 
 /**
@@ -22,7 +24,9 @@ object Product {
                 val description: String,
                 @SerializedName("image_url") val imageUrl: String,
                 val price: Int
-        )
+        ){
+            fun Int.asThousandCommaFormat(): String =NumberFormat.getNumberInstance(Locale.US).format(price)
+        }
     }
 
     object Buy {
