@@ -58,10 +58,6 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showLoading(title: String, msg: String) {
-        // TODO
-    }
-
     override fun showProductList(response: Product.Get.Response) {
         adapter.updateItem(response.data)
     }

@@ -74,10 +74,6 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showLoading(title: String, msg: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun showRegisterSuccess(response: Register.Response) {
         startActivity(Intent(this, ProductListActivity::class.java))
         finish()

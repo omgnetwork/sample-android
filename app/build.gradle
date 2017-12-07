@@ -14,11 +14,13 @@ android {
     }
     buildTypes {
         debug {
+            buildConfigField 'String', 'KUBERA_API_KEY', '"1482qNxPey7A4_rrKkAOb4kAOTsD2HoLysS7eQ1Zd3Y"'
             buildConfigField 'String', 'API_KEY', '"e8d4764f77f36bfd741bd9ed21400cf5"'
             buildConfigField 'String', 'API_KEY_ID', '"1"'
         }
         release {
             minifyEnabled false
+            buildConfigField 'String', 'KUBERA_API_KEY', '"1482qNxPey7A4_rrKkAOb4kAOTsD2HoLysS7eQ1Zd3Y"'
             buildConfigField 'String', 'API_KEY', '"e8d4764f77f36bfd741bd9ed21400cf5"'
             buildConfigField 'String', 'API_KEY_ID', '"1"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -40,6 +42,12 @@ repositories {
     }
 }
 
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -52,6 +60,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'com.github.bumptech.glide:glide:4.3.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.3'
 
     // For testing
     testImplementation 'junit:junit:4.12'

@@ -7,6 +7,7 @@ import co.omisego.omgshop.R
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_USER_ID
+import co.omisego.omgshop.helpers.Contants.SELECTED_MINTED_TOKEN_ID
 import co.omisego.omgshop.models.Login
 import co.omisego.omgshop.models.Register
 
@@ -42,18 +43,14 @@ class SharePrefsManager(private val context: Context) {
     }
 
     fun saveRegisterResponse(registerResponse: Register.Response): Boolean {
-        return with(sharePref.edit()) {
-            putString(REQUEST_KEY_AUTHENTICATION_TOKEN, registerResponse.authenticationToken)
-            putString(REQUEST_KEY_USER_ID, registerResponse.userId)
-            putString(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN, registerResponse.omisegoAuthenticationToken)
-        }.commit()
-    }
+        val authenticationToken = keyManager.encrypt(context, registerResponse.authenticationToken.toByteArray())
+        val userId = keyManager.encrypt(context, registerResponse.userId.toByteArray())
+        val omisegoAuthenticationToken = keyManager.encrypt(context, registerResponse.omisegoAuthenticationToken.toByteArray())
 
-    fun saveRegisterResponse(registerResponse: Register.Response): Boolean {
         return with(sharePref.edit()) {
-            putString(REQUEST_KEY_AUTHENTICATION_TOKEN, registerResponse.authenticationToken)
-            putString(REQUEST_KEY_USER_ID, registerResponse.userId)
-            putString(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN, registerResponse.omisegoAuthenticationToken)
+            putString(REQUEST_KEY_AUTHENTICATION_TOKEN, authenticationToken)
+            putString(REQUEST_KEY_USER_ID, userId)
+            putString(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN, omisegoAuthenticationToken)
         }.commit()
     }
 
@@ -73,5 +70,15 @@ class SharePrefsManager(private val context: Context) {
                 Login.Response("", "", "")
             }
         }
+    }
+
+    fun saveMintedTokenId(id: String): Boolean {
+        return with(sharePref.edit()) {
+            putString(SELECTED_MINTED_TOKEN_ID, id)
+        }.commit()
+    }
+
+    fun loadMintedTokenId(): String {
+        return sharePref.getString(SELECTED_MINTED_TOKEN_ID, "")
     }
 }

@@ -16,6 +16,7 @@ import android.widget.Toast
 
 abstract class BaseActivity<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : AppCompatActivity(), BaseContract.BaseView {
     protected abstract val mPresenter: P
+    private var mLoadingView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +28,16 @@ abstract class BaseActivity<in V : BaseContract.BaseView, out P : BaseContract.B
         mPresenter.detachView()
     }
 
-    override fun View.hideLoading() {
-        visibility = View.GONE
+    override fun showLoading() {
+        mLoadingView?.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        mLoadingView?.visibility = View.GONE
+    }
+
+    override fun setViewLoading(view: View) {
+        mLoadingView = view
     }
 
     fun log(message: String) {

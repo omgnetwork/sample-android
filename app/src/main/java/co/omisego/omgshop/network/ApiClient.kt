@@ -1,5 +1,8 @@
 package co.omisego.omgshop.network
 
+import android.util.Base64
+import android.util.Log
+import co.omisego.omgshop.BuildConfig
 import co.omisego.omgshop.deserialize.OMGConverterFactory
 import co.omisego.omgshop.helpers.Contextor
 import co.omisego.omgshop.helpers.SharePrefsManager

@@ -14,8 +14,9 @@ import io.reactivex.disposables.Disposable
 
 interface BaseContract {
     interface BaseView {
-        fun showLoading(title: String, msg: String)
-        fun View.hideLoading()
+        fun showLoading()
+        fun hideLoading()
+        fun setViewLoading(view: View)
         fun showMessage(msg: String)
     }
 

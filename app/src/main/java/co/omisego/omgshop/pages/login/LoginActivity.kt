@@ -59,10 +59,6 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
         })
     }
 
-    override fun showLoading(title: String, msg: String) {
-        log("show loading")
-    }
-
     override fun showLoginSuccess(response: Login.Response) {
         startActivity(Intent(this@LoginActivity, ProductListActivity::class.java))
         finish()
