@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
+import co.omisego.omgshop.extensions.thousandSeparator
+import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.CheckoutActivity
@@ -16,14 +18,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_product_list.*
+import kotlinx.android.synthetic.main.view_loading.*
 import kotlinx.android.synthetic.main.viewholder_product.view.*
 
 class ProductListActivity : BaseActivity<ProductListContract.View, ProductListContract.Presenter>(), ProductListContract.View {
     private lateinit var adapter: ProductListRecyclerAdapter
     override val mPresenter: ProductListContract.Presenter by lazy {
-        ProductListPresenter()
+        ProductListPresenter(SharePrefsManager(this))
     }
-
     private var productList: MutableList<Product.Get.Item> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
     private fun initInstance() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_product_list_toolbar_title)
+        setViewLoading(viewLoading)
 
         adapter = ProductListRecyclerAdapter(productList)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -58,8 +61,8 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showProductList(response: Product.Get.Response) {
-        adapter.updateItem(response.data)
+    override fun showProductList(items: List<Product.Get.Item>) {
+        adapter.updateItem(items)
     }
 
     override fun showLoadProductFail(response: Error) {
@@ -67,7 +70,9 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
     }
 
     override fun showClickProductItem(item: Product.Get.Item) {
-        startActivity(Intent(this@ProductListActivity, CheckoutActivity::class.java))
+        val intent = Intent(this@ProductListActivity, CheckoutActivity::class.java)
+        intent.putExtra(CheckoutActivity.INTENT_EXTRA_PRODUCT_ITEM, item)
+        startActivity(intent)
     }
 
     inner class ProductListRecyclerAdapter(private var productList: MutableList<Product.Get.Item>) : RecyclerView.Adapter<ProductListRecyclerAdapter.ProductViewHolder>() {
@@ -92,13 +97,13 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
             @SuppressLint("SetTextI18n")
             fun bind(model: Product.Get.Item) {
                 with(model) {
-                    tvTitle.text = title
+                    tvTitle.text = name
                     tvDescription.text = description
                     Glide.with(this@ProductListActivity)
                             .load(imageUrl)
                             .apply(RequestOptions().transforms(RoundedCorners(20)))
                             .into(ivLogo)
-                    btnPrice.text = "฿${price.asThousandCommaFormat()}"
+                    btnPrice.text = "฿${price.toDouble().thousandSeparator()}"
                     btnPrice.setOnClickListener { mPresenter.handleClickProductItem(id) }
                 }
             }

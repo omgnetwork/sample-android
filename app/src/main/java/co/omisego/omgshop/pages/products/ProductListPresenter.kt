@@ -1,7 +1,15 @@
 package co.omisego.omgshop.pages.products
 
+import android.util.Base64
+import co.omisego.androidsdk.Callback
+import co.omisego.androidsdk.OMGApiClient
+import co.omisego.androidsdk.models.Address
+import co.omisego.androidsdk.models.ApiError
+import co.omisego.androidsdk.models.Response
+import co.omisego.omgshop.BuildConfig
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
+import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.network.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,17 +23,51 @@ import io.reactivex.schedulers.Schedulers
  * Copyright © 2017 OmiseGO. All rights reserved.
  */
 
-class ProductListPresenter() : BasePresenterImpl<ProductListContract.View>(), ProductListContract.Presenter {
+class ProductListPresenter(private val sharePrefsManager: SharePrefsManager) : BasePresenterImpl<ProductListContract.View>(), ProductListContract.Presenter {
     private var productList: List<Product.Get.Item>? = null
+    private val omgApiClient by lazy {
+        val apiKey = BuildConfig.KUBERA_API_KEY
+        val authToken = sharePrefsManager.readLoginResponse().omisegoAuthenticationToken
+        val apiClientHeader = "OMGClient ${Base64.encodeToString("$apiKey:$authToken".toByteArray(), Base64.NO_WRAP)}"
+        OMGApiClient.Builder {
+            setAuthorizationToken(apiClientHeader)
+        }.build()
+    }
+
 
     override fun loadProductList() {
         mCompositeSubscription += ApiClient.omiseGO.getProducts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { mView?.showLoading() }
+                .doOnError { mView?.hideLoading() }
                 .subscribe({
-                    productList = it.data.data
-                    mView?.showProductList(it.data)
-                    log(it.toString())
+                    val balance = sharePrefsManager.loadSelectedTokenBalance()
+                    productList = it.data.data.map {
+                        it.copy(price = it.price / 100)
+                    }
+
+                    if (balance != null) {
+                        mView?.showProductList(productList!!)
+                        mView?.hideLoading()
+                        return@subscribe
+                    }
+
+                    omgApiClient.listBalances(object : Callback<List<Address>> {
+                        override fun fail(response: Response<ApiError>) {
+                            mView?.showMessage(response.data.description)
+                            mView?.hideLoading()
+                        }
+
+                        override fun success(response: Response<List<Address>>) {
+                            sharePrefsManager.saveSelectedTokenBalance(response.data[0].balances[0])
+
+                            mView?.showProductList(productList!!)
+                            mView?.hideLoading()
+
+                        }
+                    })
+
                 }, {
                     mView?.showMessage(it.errorResponse().data.description)
                     mView?.showLoadProductFail(it.errorResponse().data)

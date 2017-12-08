@@ -22,8 +22,8 @@ interface MyProfileContract {
     interface Presenter : BaseContract.BasePresenter<View> {
         fun loadSettings()
         fun loadUser()
-        fun saveSelectedMintedToken(id: String)
+        fun saveSelectedBalance(balance: Balance)
         fun logout()
-        fun getCurrentMintedTokenId(): String
+        fun getCurrentBalance(): Balance?
     }
 }

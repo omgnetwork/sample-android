@@ -1,5 +1,6 @@
 package co.omisego.omgshop.pages.login
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(), LoginContract.View {
     override val mPresenter: LoginContract.Presenter by lazy { LoginPresenter(SharePrefsManager(this)) }
+    private lateinit var mLoadingDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,11 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
 
     private fun initInstance() {
         mPresenter.checkHasLogin()
+
+        mLoadingDialog = ProgressDialog(this)
+        mLoadingDialog.setTitle(R.string.activity_login_loading_dialog_title)
+        mLoadingDialog.setMessage(getString(R.string.activity_login_loading_dialog_message))
+
         btnLogin.setOnClickListener {
             val request = Login.Request(etEmail.text.toString(), etPassword.text.toString())
             if (mPresenter.validateEmail(request.email) && mPresenter.validatePassword(request.password)) {
@@ -80,5 +87,13 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
 
     override fun showRegister() {
         startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+    }
+
+    override fun showLoading() {
+        mLoadingDialog.show()
+    }
+
+    override fun hideLoading() {
+        mLoadingDialog.dismiss()
     }
 }

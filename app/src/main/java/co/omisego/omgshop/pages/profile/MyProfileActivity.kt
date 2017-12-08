@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import co.omisego.androidsdk.models.Balance
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
-import co.omisego.omgshop.extensions.thousandSeparator
 import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.pages.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_my_profile.*
@@ -125,7 +124,7 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
             @SuppressLint("SetTextI18n")
             fun bind(token: Balance) {
                 // Set data
-                tvAmount.text = token.amount.toBigInteger().thousandSeparator()
+                tvAmount.text = token.displayAmount(0)
                 tvToken.text = token.mintedToken.symbol
 
                 val drawable = when (mCurrentSelectedTokenId) {
@@ -140,7 +139,7 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
                     val currentTokenIndex = listToken.indexOf(currentToken) + 1
 
                     // Save new token id
-                    mPresenter.saveSelectedMintedToken(listToken[layoutPosition - 1].mintedToken.id)
+                    mPresenter.saveSelectedBalance(listToken[layoutPosition - 1])
 
                     notifyItemChanged(layoutPosition)
                     notifyItemChanged(currentTokenIndex)

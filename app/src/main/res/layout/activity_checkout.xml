@@ -28,6 +28,7 @@
         android:padding="8dp">
 
         <ImageView
+            android:id="@+id/ivProductDetailLogo"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/ic_photo_24dp" />

@@ -3,10 +3,7 @@ package co.omisego.omgshop.pages.profile
 import android.util.Base64
 import co.omisego.androidsdk.Callback
 import co.omisego.androidsdk.OMGApiClient
-import co.omisego.androidsdk.models.Address
-import co.omisego.androidsdk.models.ApiError
-import co.omisego.androidsdk.models.Response
-import co.omisego.androidsdk.models.User
+import co.omisego.androidsdk.models.*
 import co.omisego.omgshop.BuildConfig
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.helpers.SharePrefsManager
@@ -45,15 +42,15 @@ class MyProfilePresenter(private val sharePrefsManager: SharePrefsManager) : Bas
                 log(response.toString())
 
                 // If user doesn't select default minted token, then set default value to the first item.
-                var selectedToken = getCurrentMintedTokenId()
-                if (selectedToken.isEmpty()) {
-                    val id = response.data[0].balances[0].mintedToken.id
-                    saveSelectedMintedToken(id)
-                    selectedToken = id
+                var selectedTokenId = getCurrentBalance()?.mintedToken?.id ?: ""
+                if (selectedTokenId.isEmpty()) {
+                    val balance = response.data[0].balances[0]
+                    saveSelectedBalance(balance)
+                    selectedTokenId = balance.mintedToken.id
                 }
 
                 // set selected token id
-                mView?.setCurrentSelectedTokenId(selectedToken)
+                mView?.setCurrentSelectedTokenId(selectedTokenId)
 
                 // update UI
                 val balances = response.data.flatMap { it.balances }
@@ -63,18 +60,20 @@ class MyProfilePresenter(private val sharePrefsManager: SharePrefsManager) : Bas
         })
     }
 
-    override fun saveSelectedMintedToken(id: String) {
-        sharePrefsManager.saveMintedTokenId(id)
-        mView?.setCurrentSelectedTokenId(id)
+    override fun saveSelectedBalance(balance: Balance) {
+        sharePrefsManager.saveSelectedTokenBalance(balance)
+        mView?.setCurrentSelectedTokenId(balance.mintedToken.id)
     }
 
     override fun logout() {
         sharePrefsManager.saveLoginResponse(Login.Response("", "", ""))
-        sharePrefsManager.saveMintedTokenId("")
+        sharePrefsManager.saveSelectedTokenBalance(null)
         mView?.showLogout()
     }
 
-    override fun getCurrentMintedTokenId() = sharePrefsManager.loadMintedTokenId()
+    override fun getCurrentBalance(): Balance? {
+        return sharePrefsManager.loadSelectedTokenBalance()
+    }
 
     override fun loadUser() {
         omgApiClient.getCurrentUser(object : Callback<User> {

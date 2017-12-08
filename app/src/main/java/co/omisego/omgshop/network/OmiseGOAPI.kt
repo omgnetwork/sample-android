@@ -14,18 +14,18 @@ import retrofit2.http.POST
  */
 
 interface OmiseGOAPI {
-    @POST("signup")
+    @POST(Endpoints.SIGN_UP)
     fun signup(@Body request: Register.Request): Observable<Response<Register.Response>>
 
-    @POST("login")
+    @POST(Endpoints.LOGIN)
     fun login(@Body request: Login.Request): Observable<Response<Login.Response>>
 
-    @POST("me.get")
+    @POST(Endpoints.PROFILE)
     fun getUser(): Observable<Response<User.Response>>
 
-    @POST("products.get")
+    @POST(Endpoints.GET_PRODUCT)
     fun getProducts(): Observable<Response<Product.Get.Response>>
 
-    @POST("products.buy")
-    fun buy(@Body request: Observable<Response<Product.Buy.Request>>): Observable<Response<Nothing>>
+    @POST(Endpoints.BUY_PRODUCT)
+    fun buy(@Body request: Product.Buy.Request): Observable<Response<Nothing>>
 }

@@ -1,5 +1,6 @@
 package co.omisego.omgshop.pages.register
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -16,6 +17,7 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
     override val mPresenter: RegisterContract.Presenter by lazy {
         RegisterPresenter(SharePrefsManager(this))
     }
+    private lateinit var mProgressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,10 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_register_toolbar_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        mProgressDialog = ProgressDialog(this)
+        mProgressDialog.setTitle(R.string.activity_register_loading_dialog_title)
+        mProgressDialog.setMessage(getString(R.string.activity_register_loading_dialog_message))
 
         btnRegister.setOnClickListener {
             val email = etEmail.text.toString()
@@ -101,5 +107,13 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
     override fun showEmailErrorHint(msg: String) {
         tilEmail.error = msg
         tilEmail.isErrorEnabled = true
+    }
+
+    override fun showLoading() {
+        mProgressDialog.show()
+    }
+
+    override fun hideLoading() {
+        mProgressDialog.dismiss()
     }
 }

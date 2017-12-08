@@ -17,11 +17,13 @@ import io.reactivex.schedulers.Schedulers
  * Copyright © 2017 OmiseGO. All rights reserved.
  */
 
-class LoginPresenter(val sharePrefsManager: SharePrefsManager, val validator: Validator = Validator()) : BasePresenterImpl<LoginContract.View>(), LoginContract.Presenter {
+class LoginPresenter(private val sharePrefsManager: SharePrefsManager, val validator: Validator = Validator()) : BasePresenterImpl<LoginContract.View>(), LoginContract.Presenter {
     override fun handleLogin(request: Login.Request) {
         mCompositeSubscription += ApiClient.omiseGO.login(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { mView?.showLoading() }
+                .doFinally { mView?.hideLoading() }
                 .subscribe({
                     sharePrefsManager.saveLoginResponse(it.data)
                     mView?.showLoginSuccess(it.data)

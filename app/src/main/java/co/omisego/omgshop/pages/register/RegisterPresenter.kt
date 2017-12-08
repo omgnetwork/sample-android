@@ -22,6 +22,8 @@ class RegisterPresenter(val sharePrefsManager: SharePrefsManager, val validator:
         mCompositeSubscription += ApiClient.omiseGO.signup(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { mView?.showLoading() }
+                .doFinally { mView?.hideLoading() }
                 .subscribe({
                     sharePrefsManager.saveRegisterResponse(it.data)
                     mView?.showRegisterSuccess(it.data)

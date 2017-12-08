@@ -41,7 +41,7 @@ abstract class BaseActivity<in V : BaseContract.BaseView, out P : BaseContract.B
     }
 
     fun log(message: String) {
-        Log.d(this.javaClass.name, message)
+        Log.d(this.javaClass.simpleName, message)
     }
 
     override fun showMessage(msg: String) {

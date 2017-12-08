@@ -9,10 +9,10 @@ package co.omisego.omgshop.network
  */
 
 object Endpoints {
-    val BASE_URL = "https://omgshop.omisego.io/api/"
-    val SIGN_UP = "signup"
-    val LOGIN = "login"
-    val PROFILE = "me.get"
-    val GET_PRODUCT = "products.get"
-    val BUY_PRODUCT = "products.buy"
+    const val BASE_URL = "https://omgshop.omisego.io/api/"
+    const val SIGN_UP = "signup"
+    const val LOGIN = "login"
+    const val PROFILE = "me.get"
+    const val GET_PRODUCT = "products.get"
+    const val BUY_PRODUCT = "product.buy"
 }

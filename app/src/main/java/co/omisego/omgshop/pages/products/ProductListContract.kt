@@ -14,7 +14,7 @@ import co.omisego.omgshop.models.Product
 
 interface ProductListContract {
     interface View : BaseContract.BaseView {
-        fun showProductList(response: Product.Get.Response)
+        fun showProductList(items: List<Product.Get.Item>)
         fun showLoadProductFail(response: Error)
         fun showClickProductItem(item: Product.Get.Item)
     }

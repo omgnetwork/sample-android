@@ -2,14 +2,16 @@ package co.omisego.omgshop.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
+import co.omisego.androidsdk.models.Balance
 import co.omisego.androidsdk.security.OMGKeyManager
 import co.omisego.omgshop.R
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_USER_ID
-import co.omisego.omgshop.helpers.Contants.SELECTED_MINTED_TOKEN_ID
+import co.omisego.omgshop.helpers.Contants.SELECTED_TOKEN_BALANCE
 import co.omisego.omgshop.models.Login
 import co.omisego.omgshop.models.Register
+import com.google.gson.Gson
 
 
 /**
@@ -72,13 +74,27 @@ class SharePrefsManager(private val context: Context) {
         }
     }
 
-    fun saveMintedTokenId(id: String): Boolean {
-        return with(sharePref.edit()) {
-            putString(SELECTED_MINTED_TOKEN_ID, id)
-        }.commit()
+    fun saveSelectedTokenBalance(balance: Balance?) {
+        if (balance != null) {
+            val gson = Gson()
+            val tokenBalanceJson = gson.toJson(balance)
+            with(sharePref.edit()) {
+                putString(SELECTED_TOKEN_BALANCE, tokenBalanceJson)
+            }.apply()
+        } else {
+            with(sharePref.edit()) {
+                putString(SELECTED_TOKEN_BALANCE, "")
+            }.apply()
+        }
     }
 
-    fun loadMintedTokenId(): String {
-        return sharePref.getString(SELECTED_MINTED_TOKEN_ID, "")
+    fun loadSelectedTokenBalance(): Balance? {
+        val gson = Gson()
+        val tokenBalanceJson = sharePref.getString(SELECTED_TOKEN_BALANCE, "")
+        return if (tokenBalanceJson.isNotEmpty()) {
+            gson.fromJson(tokenBalanceJson, Balance::class.java)
+        } else {
+            null
+        }
     }
 }
