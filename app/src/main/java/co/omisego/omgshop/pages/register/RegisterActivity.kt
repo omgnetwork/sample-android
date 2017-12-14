@@ -86,7 +86,7 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
     }
 
     override fun showRegisterFailed(response: Error) {
-        // TODO: handle some thing if needed
+        showMessage(response.description)
     }
 
     override fun showFirstNameErrorHint(msg: String) {

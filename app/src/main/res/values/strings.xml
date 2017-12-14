@@ -7,7 +7,7 @@
     <string name="activity_login_hint_email">Email</string>
     <string name="activity_login_hint_password">Password</string>
     <string name="activity_login_email_error_hint">Email address is not valid</string>
-    <string name="activity_login_password_error_hint">Password should be at least 6 characters long</string>
+    <string name="activity_login_password_error_hint">Password should be at least 8 characters long</string>
     <string name="activity_login_loading_dialog_title">Please wait</string>
     <string name="activity_login_loading_dialog_message">Logging in…</string>
 
@@ -21,6 +21,9 @@
     <string name="activity_product_list_toolbar_title">Products</string>
     <string name="activity_register_loading_dialog_title">Please wait</string>
     <string name="activity_register_loading_dialog_message">Registering…</string>
+    <string name="activity_register_email_error_validation">Email address is not valid</string>
+    <string name="activity_register_first_name_error_validation">First name must not be empty</string>
+    <string name="activity_register_last_name_error_validation">Last name must not be empty</string>
 
     <!-- Checkout -->
     <string name="activity_checkout_toolbar_title">Products</string>

@@ -17,8 +17,8 @@ class Validator {
 
     fun validatePassword(password: String): Boolean = password.length >= 8
 
-    fun validateFirstName(firstName: String): Boolean = firstName.length > 0
+    fun validateFirstName(firstName: String): Boolean = firstName.isNotEmpty()
 
-    fun validateLastName(lastName: String): Boolean = lastName.length > 0
+    fun validateLastName(lastName: String): Boolean = lastName.isNotEmpty()
 
 }

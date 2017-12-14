@@ -50,12 +50,11 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
 
         val ss = SpannableString(getString(R.string.activity_login_register))
 
-        // To make the word "RegisterActivity" clickable with hi.
+        // To make the word "Register" clickable.
         ss.setSpan(clickSpan, 27, 35, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         tvRegister.text = ss
         tvRegister.movementMethod = LinkMovementMethod.getInstance()
-
 
         etEmail.addTextChangedListener(MinimalTextChangeListener {
             tilEmail.isErrorEnabled = !mPresenter.validateEmail(it.toString())
@@ -72,7 +71,8 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
     }
 
     override fun showLoginFailed(response: Error) {
-        // TODO:
+        showMessage(response.description)
+
     }
 
     override fun showEmailErrorHint(msg: String) {

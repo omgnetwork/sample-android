@@ -94,6 +94,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
             private val tvDescription = itemView.tvDescription
             private val ivLogo = itemView.ivLogo
             private val btnPrice = itemView.btnPrice
+
             @SuppressLint("SetTextI18n")
             fun bind(model: Product.Get.Item) {
                 with(model) {

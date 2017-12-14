@@ -1,13 +1,6 @@
 package co.omisego.omgshop.pages.checkout
 
-import android.util.Base64
-import co.omisego.androidsdk.Callback
-import co.omisego.androidsdk.OMGApiClient
-import co.omisego.androidsdk.models.Address
-import co.omisego.androidsdk.models.ApiError
 import co.omisego.androidsdk.models.Balance
-import co.omisego.androidsdk.models.Response
-import co.omisego.omgshop.BuildConfig
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
@@ -15,9 +8,7 @@ import co.omisego.omgshop.extensions.thousandSeparator
 import co.omisego.omgshop.helpers.Contextor
 import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Product
-import co.omisego.omgshop.network.ApiClient
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import co.omisego.omgshop.network.OMGApiManager
 import java.math.BigDecimal
 
 
@@ -29,13 +20,8 @@ import java.math.BigDecimal
  */
 
 class CheckoutPresenter(private val sharePrefsManager: SharePrefsManager) : BasePresenterImpl<CheckoutContract.View>(), CheckoutContract.Presenter {
-    private val omgApiClient by lazy {
-        val apiKey = BuildConfig.KUBERA_API_KEY
-        val authToken = sharePrefsManager.readLoginResponse().omisegoAuthenticationToken
-        val apiClientHeader = "OMGClient ${Base64.encodeToString("$apiKey:$authToken".toByteArray(), Base64.NO_WRAP)}"
-        OMGApiClient.Builder {
-            setAuthorizationToken(apiClientHeader)
-        }.build()
+    private val authToken by lazy {
+        sharePrefsManager.readLoginResponse().omisegoAuthenticationToken
     }
 
     override fun pay(tokenValue: BigDecimal, productId: String) {
@@ -51,35 +37,23 @@ class CheckoutPresenter(private val sharePrefsManager: SharePrefsManager) : Base
 
         mView?.showLoading()
         // Buy item
-        mCompositeSubscription += ApiClient.omiseGO.buy(request)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mCompositeSubscription += OMGApiManager.buy(request)
                 .subscribe({
-                    log(it.toString())
-
-                    // Refresh remain balance
-                    omgApiClient.listBalances(object : Callback<List<Address>> {
-                        override fun fail(response: Response<ApiError>) {
-                            log(response.data.toString())
-                            mView?.showMessage(response.data.description)
-                            mView?.hideLoading()
-                            mView?.showBuySuccess()
-                        }
-
-                        override fun success(response: Response<List<Address>>) {
-                            // Update current balance to share preference
-                            var currentBalance = getCurrentTokenBalance()
-                            currentBalance = response.data[0].balances.first { it.mintedToken.id == currentBalance.mintedToken.id }
-                            sharePrefsManager.saveSelectedTokenBalance(currentBalance)
-                            mView?.hideLoading()
-                            mView?.showBuySuccess()
-                        }
-                    })
-
+                    OMGApiManager.listBalances(authToken, {
+                        mView?.hideLoading()
+                        mView?.showBuySuccess()
+                    }) { response ->
+                        // Update current balance to share preference
+                        var currentBalance = getCurrentTokenBalance()
+                        currentBalance = response.data[0].balances.first { it.mintedToken.id == currentBalance.mintedToken.id }
+                        sharePrefsManager.saveSelectedTokenBalance(currentBalance)
+                        mView?.hideLoading()
+                        mView?.showBuySuccess()
+                    }
                 }, {
                     val errorDescription = it.errorResponse().data.description
-                    log(errorDescription)
                     mView?.showBuyFailed(errorDescription)
+                    mView?.hideLoading()
                 })
     }
 

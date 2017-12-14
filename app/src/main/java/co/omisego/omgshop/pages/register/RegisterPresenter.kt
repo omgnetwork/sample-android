@@ -1,13 +1,13 @@
 package co.omisego.omgshop.pages.register
 
+import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
+import co.omisego.omgshop.helpers.Contextor.context
 import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.helpers.Validator
 import co.omisego.omgshop.models.Register
-import co.omisego.omgshop.network.ApiClient
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import co.omisego.omgshop.network.OMGApiManager
 
 
 /**
@@ -17,26 +17,22 @@ import io.reactivex.schedulers.Schedulers
  * Copyright © 2017 OmiseGO. All rights reserved.
  */
 
-class RegisterPresenter(val sharePrefsManager: SharePrefsManager, val validator: Validator = Validator()) : BasePresenterImpl<RegisterContract.View>(), RegisterContract.Presenter {
+class RegisterPresenter(private val sharePrefsManager: SharePrefsManager, private val validator: Validator = Validator()) : BasePresenterImpl<RegisterContract.View>(), RegisterContract.Presenter {
     override fun handleRegister(request: Register.Request) {
-        mCompositeSubscription += ApiClient.omiseGO.signup(request)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mCompositeSubscription += OMGApiManager.register(request)
                 .doOnSubscribe { mView?.showLoading() }
                 .doFinally { mView?.hideLoading() }
                 .subscribe({
                     sharePrefsManager.saveRegisterResponse(it.data)
                     mView?.showRegisterSuccess(it.data)
-                    log(it.toString())
                 }, {
-                    mView?.showMessage(it.errorResponse().data.description)
                     mView?.showRegisterFailed(it.errorResponse().data)
                 })
     }
 
     override fun validateEmail(email: String): Boolean {
         if (!validator.validateEmail(email)) {
-            mView?.showEmailErrorHint("Email address is not valid")
+            mView?.showEmailErrorHint(context.getString(R.string.activity_register_email_error_validation))
             return false
         }
         return true
@@ -44,7 +40,7 @@ class RegisterPresenter(val sharePrefsManager: SharePrefsManager, val validator:
 
     override fun validatePassword(password: String): Boolean {
         if (!validator.validatePassword(password)) {
-            mView?.showPasswordErrorHint("Password length should not less than 8 characters")
+            mView?.showPasswordErrorHint(context.getString(R.string.activity_login_password_error_hint))
             return false
         }
         return true
@@ -52,7 +48,7 @@ class RegisterPresenter(val sharePrefsManager: SharePrefsManager, val validator:
 
     override fun validateFirstName(firstName: String): Boolean {
         if (!validator.validateFirstName(firstName)) {
-            mView?.showFirstNameErrorHint("First name must not be empty")
+            mView?.showFirstNameErrorHint(context.getString(R.string.activity_register_first_name_error_validation))
             return false
         }
         return true
@@ -60,7 +56,7 @@ class RegisterPresenter(val sharePrefsManager: SharePrefsManager, val validator:
 
     override fun validateLastName(lastName: String): Boolean {
         if (!validator.validateLastName(lastName)) {
-            mView?.showLastNameErrorHint("Last name must not be empty")
+            mView?.showLastNameErrorHint(context.getString(R.string.activity_register_last_name_error_validation))
             return false
         }
         return true

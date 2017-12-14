@@ -1,14 +1,12 @@
 package co.omisego.omgshop.pages.checkout
 
-import android.graphics.Color
-import android.graphics.Point
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.SeekBar
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseDialogFragment
-import co.omisego.omgshop.helpers.SharePrefsManager
 import kotlinx.android.synthetic.main.dialog_redeem.*
 import kotlinx.android.synthetic.main.dialog_redeem.view.*
 

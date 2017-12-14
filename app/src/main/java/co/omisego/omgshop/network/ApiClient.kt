@@ -1,8 +1,5 @@
 package co.omisego.omgshop.network
 
-import android.util.Base64
-import android.util.Log
-import co.omisego.omgshop.BuildConfig
 import co.omisego.omgshop.deserialize.OMGConverterFactory
 import co.omisego.omgshop.helpers.Contextor
 import co.omisego.omgshop.helpers.SharePrefsManager
@@ -32,6 +29,7 @@ object ApiClient {
 
         val clientBuilder = OkHttpClient.Builder().apply {
             addInterceptor(interceptor)
+            retryOnConnectionFailure(true) // actually, it's auto-retry by default, just add it to be clear.
             addNetworkInterceptor {
                 val endpoint = it.request().url().encodedPath().substringAfterLast("/")
                 val credential = SharePrefsManager(Contextor.context).readLoginResponse()

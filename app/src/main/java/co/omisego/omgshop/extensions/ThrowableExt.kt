@@ -14,5 +14,5 @@ import co.omisego.omgshop.models.Response
 
 fun Throwable.errorResponse(): Response<Error> = when {
     this is OMGException -> this.error
-    else -> Response("1", false, Error("ClassCastException", "Unable to cast to OMGException"))
+    else -> Response("1", false, Error(this.javaClass.name, this.localizedMessage.trim().capitalize()))
 }
