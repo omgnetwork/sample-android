@@ -32,7 +32,7 @@ object ApiClient {
             retryOnConnectionFailure(true) // actually, it's auto-retry by default, just add it to be clear.
             addNetworkInterceptor {
                 val endpoint = it.request().url().encodedPath().substringAfterLast("/")
-                val credential = SharePrefsManager(Contextor.context).readLoginResponse()
+                val credential = SharePrefsManager(Contextor.context).loadCredential()
                 val authorization = headerManager.createAuthorization(endpoint, credential)
                 val request: Request = it.request().newBuilder()
                         .addHeader("Authorization", authorization)

@@ -1,5 +1,6 @@
 package co.omisego.omgshop.pages.products
 
+import android.util.Log
 import co.omisego.androidsdk.Callback
 import co.omisego.androidsdk.models.Address
 import co.omisego.androidsdk.models.ApiError
@@ -24,7 +25,7 @@ import io.reactivex.schedulers.Schedulers
 class ProductListPresenter(private val sharePrefsManager: SharePrefsManager) : BasePresenterImpl<ProductListContract.View>(), ProductListContract.Presenter {
     private var productList: List<Product.Get.Item>? = null
     private val authToken: String by lazy {
-        sharePrefsManager.readLoginResponse().omisegoAuthenticationToken
+        sharePrefsManager.loadCredential().omisegoAuthenticationToken
     }
 
     override fun loadProductList() {
@@ -53,7 +54,6 @@ class ProductListPresenter(private val sharePrefsManager: SharePrefsManager) : B
 
                         override fun success(response: Response<List<Address>>) {
                             sharePrefsManager.saveSelectedTokenBalance(response.data[0].balances[0])
-
                             mView?.showProductList(productList!!)
                             mView?.hideLoading()
 

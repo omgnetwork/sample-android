@@ -20,10 +20,4 @@ object Register {
             @SerializedName("email") val email: String,
             @SerializedName("password") val password: String
     )
-
-    data class Response(
-            @SerializedName(REQUEST_KEY_USER_ID) val userId: String,
-            @SerializedName(REQUEST_KEY_AUTHENTICATION_TOKEN) val authenticationToken: String,
-            @SerializedName(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN) val omisegoAuthenticationToken: String
-    )
 }

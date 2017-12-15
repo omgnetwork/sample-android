@@ -45,6 +45,8 @@
     <string name="activity_my_profile_selected">Selected</string>
     <string name="activity_my_profile_toolbar">My profile</string>
     <string name="activity_my_profile_loading">Loading...</string>
+    <string name="activity_my_profile_dialog_title">Please wait</string>
+    <string name="activity_my_profile_dialog_message">Logging out...</string>
     <string name="activity_my_profile_log_out">LOG OUT</string>
 
     <!-- Redeem dialog -->

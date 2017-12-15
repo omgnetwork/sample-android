@@ -8,6 +8,7 @@ import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.custom.MinimalTextChangeListener
 import co.omisego.omgshop.helpers.SharePrefsManager
+import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Register
 import co.omisego.omgshop.pages.products.ProductListActivity
@@ -80,8 +81,10 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showRegisterSuccess(response: Register.Response) {
-        startActivity(Intent(this, ProductListActivity::class.java))
+    override fun showRegisterSuccess(response: Credential) {
+        val intent = Intent(this, ProductListActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
         finish()
     }
 

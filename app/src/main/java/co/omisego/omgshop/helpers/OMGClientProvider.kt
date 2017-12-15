@@ -1,7 +1,6 @@
 package co.omisego.omgshop.helpers
 
 import android.util.Base64
-import android.util.Log
 import co.omisego.androidsdk.OMGApiClient
 import co.omisego.omgshop.BuildConfig
 
@@ -20,7 +19,6 @@ object OMGClientProvider {
         return if (omgApiClient == null) {
             val apiKey = BuildConfig.KUBERA_API_KEY
             val apiClientHeader = "OMGClient ${Base64.encodeToString("$apiKey:$authToken".toByteArray(), Base64.NO_WRAP)}"
-            Log.d("apiClientHeader", apiClientHeader)
             omgApiClient = OMGApiClient.Builder {
                 setAuthorizationToken(apiClientHeader)
             }.build()
@@ -28,5 +26,9 @@ object OMGClientProvider {
         } else {
             omgApiClient!!
         }
+    }
+
+    fun clearToken() {
+        omgApiClient = null
     }
 }

@@ -12,6 +12,7 @@ import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.custom.MinimalTextChangeListener
 import co.omisego.omgshop.helpers.SharePrefsManager
+import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Login
 import co.omisego.omgshop.pages.products.ProductListActivity
@@ -65,7 +66,7 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
         })
     }
 
-    override fun showLoginSuccess(response: Login.Response) {
+    override fun showLoginSuccess(response: Credential) {
         startActivity(Intent(this@LoginActivity, ProductListActivity::class.java))
         finish()
     }

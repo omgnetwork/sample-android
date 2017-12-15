@@ -23,7 +23,7 @@ class LoginPresenter(private val sharePrefsManager: SharePrefsManager, private v
                 .doOnSubscribe { mView?.showLoading() }
                 .doFinally { mView?.hideLoading() }
                 .subscribe({
-                    sharePrefsManager.saveLoginResponse(it.data)
+                    sharePrefsManager.saveCredential(it.data)
                     mView?.showLoginSuccess(it.data)
                 }, {
                     mView?.showMessage(it.errorResponse().data.description)
@@ -36,7 +36,7 @@ class LoginPresenter(private val sharePrefsManager: SharePrefsManager, private v
     }
 
     override fun checkHasLogin() {
-        val response = sharePrefsManager.readLoginResponse()
+        val response = sharePrefsManager.loadCredential()
         if (response.userId.isNotEmpty()) {
             mView?.showLoginSuccess(response)
         }

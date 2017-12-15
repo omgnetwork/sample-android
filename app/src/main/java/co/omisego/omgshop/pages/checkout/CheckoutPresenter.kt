@@ -21,7 +21,7 @@ import java.math.BigDecimal
 
 class CheckoutPresenter(private val sharePrefsManager: SharePrefsManager) : BasePresenterImpl<CheckoutContract.View>(), CheckoutContract.Presenter {
     private val authToken by lazy {
-        sharePrefsManager.readLoginResponse().omisegoAuthenticationToken
+        sharePrefsManager.loadCredential().omisegoAuthenticationToken
     }
 
     override fun pay(tokenValue: BigDecimal, productId: String) {

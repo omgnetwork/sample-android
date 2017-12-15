@@ -23,7 +23,7 @@ class RegisterPresenter(private val sharePrefsManager: SharePrefsManager, privat
                 .doOnSubscribe { mView?.showLoading() }
                 .doFinally { mView?.hideLoading() }
                 .subscribe({
-                    sharePrefsManager.saveRegisterResponse(it.data)
+                    sharePrefsManager.saveCredential(it.data)
                     mView?.showRegisterSuccess(it.data)
                 }, {
                     mView?.showRegisterFailed(it.errorResponse().data)

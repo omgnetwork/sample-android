@@ -1,6 +1,7 @@
 package co.omisego.omgshop.pages.register
 
 import co.omisego.omgshop.base.BaseContract
+import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Register
 
@@ -14,7 +15,7 @@ import co.omisego.omgshop.models.Register
 
 interface RegisterContract {
     interface View : BaseContract.BaseView {
-        fun showRegisterSuccess(response: Register.Response)
+        fun showRegisterSuccess(response: Credential)
         fun showRegisterFailed(response: Error)
         fun showPasswordErrorHint(msg: String)
         fun showFirstNameErrorHint(msg: String)

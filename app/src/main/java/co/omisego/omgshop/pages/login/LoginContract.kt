@@ -2,6 +2,7 @@ package co.omisego.omgshop.pages.login
 
 import co.omisego.androidsdk.models.ApiError
 import co.omisego.omgshop.base.BaseContract
+import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Login
 
@@ -15,7 +16,7 @@ import co.omisego.omgshop.models.Login
 
 interface LoginContract {
     interface View : BaseContract.BaseView {
-        fun showLoginSuccess(response: Login.Response)
+        fun showLoginSuccess(response: Credential)
         fun showLoginFailed(response: Error)
         fun showRegister()
         fun showPasswordErrorHint(msg: String)

@@ -1,6 +1,7 @@
 package co.omisego.omgshop.pages.profile
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -26,6 +27,8 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
     }
     private lateinit var myProfileContentAdapter: MyProfileContentAdapter
     private var mCurrentSelectedTokenId: String = ""
+    private lateinit var mLoadingDialog: ProgressDialog
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,11 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_my_profile_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        mLoadingDialog = ProgressDialog(this)
+        mLoadingDialog.setTitle(R.string.activity_my_profile_dialog_title)
+        mLoadingDialog.setMessage(getString(R.string.activity_my_profile_dialog_message))
+        mLoadingDialog.setCancelable(false)
 
         myProfileContentAdapter = MyProfileContentAdapter(mutableListOf())
         recyclerView.adapter = myProfileContentAdapter
@@ -79,6 +87,14 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
 
     override fun showUsername(email: String) {
         tvUsername.text = email
+    }
+
+    override fun showLoadingDialog() {
+        mLoadingDialog.show()
+    }
+
+    override fun hideLoadingDialog() {
+        mLoadingDialog.dismiss()
     }
 
     inner class MyProfileContentAdapter(private var listToken: MutableList<Balance>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -135,11 +151,11 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
 
                 // bind token click listener
                 layoutContainer.setOnClickListener {
-                    val currentToken = listToken.first { it.mintedToken.id == mCurrentSelectedTokenId }
+                    val currentToken = listToken.firstOrNull { it.mintedToken.id == mCurrentSelectedTokenId } ?: listToken[0]
                     val currentTokenIndex = listToken.indexOf(currentToken) + 1
 
                     // Save new token id
-                    mPresenter.saveSelectedBalance(listToken[layoutPosition - 1])
+                    mPresenter.saveSelectedToken(listToken[layoutPosition - 1])
 
                     notifyItemChanged(layoutPosition)
                     notifyItemChanged(currentTokenIndex)

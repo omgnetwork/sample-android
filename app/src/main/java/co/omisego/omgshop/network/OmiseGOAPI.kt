@@ -15,10 +15,10 @@ import retrofit2.http.POST
 
 interface OmiseGOAPI {
     @POST(Endpoints.SIGN_UP)
-    fun signup(@Body request: Register.Request): Observable<Response<Register.Response>>
+    fun signup(@Body request: Register.Request): Observable<Response<Credential>>
 
     @POST(Endpoints.LOGIN)
-    fun login(@Body request: Login.Request): Observable<Response<Login.Response>>
+    fun login(@Body request: Login.Request): Observable<Response<Credential>>
 
     @POST(Endpoints.PROFILE)
     fun getUser(): Observable<Response<User.Response>>

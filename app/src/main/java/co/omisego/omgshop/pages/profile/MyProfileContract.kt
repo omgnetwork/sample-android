@@ -17,13 +17,15 @@ interface MyProfileContract {
         fun setCurrentSelectedTokenId(id: String)
         fun showUsername(email: String)
         fun showLogout()
+        fun showLoadingDialog()
+        fun hideLoadingDialog()
     }
 
     interface Presenter : BaseContract.BasePresenter<View> {
         fun loadSettings()
         fun loadUser()
-        fun saveSelectedBalance(balance: Balance)
+        fun saveSelectedToken(balance: Balance)
         fun logout()
-        fun getCurrentBalance(): Balance?
+        fun getCurrentToken(): Balance?
     }
 }

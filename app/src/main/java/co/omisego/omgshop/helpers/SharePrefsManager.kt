@@ -9,8 +9,7 @@ import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_USER_ID
 import co.omisego.omgshop.helpers.Contants.SELECTED_TOKEN_BALANCE
-import co.omisego.omgshop.models.Login
-import co.omisego.omgshop.models.Register
+import co.omisego.omgshop.models.Credential
 import com.google.gson.Gson
 
 
@@ -32,10 +31,10 @@ class SharePrefsManager(private val context: Context) {
         }.build()
     }
 
-    fun saveLoginResponse(loginResponse: Login.Response): Boolean {
-        val authenticationToken = keyManager.encrypt(context, loginResponse.authenticationToken.toByteArray())
-        val userId = keyManager.encrypt(context, loginResponse.userId.toByteArray())
-        val omisegoAuthenticationToken = keyManager.encrypt(context, loginResponse.omisegoAuthenticationToken.toByteArray())
+    fun saveCredential(credential: Credential): Boolean {
+        val authenticationToken = keyManager.encrypt(context, credential.authenticationToken.toByteArray())
+        val userId = keyManager.encrypt(context, credential.userId.toByteArray())
+        val omisegoAuthenticationToken = keyManager.encrypt(context, credential.omisegoAuthenticationToken.toByteArray())
 
         return with(sharePref.edit()) {
             putString(REQUEST_KEY_AUTHENTICATION_TOKEN, authenticationToken)
@@ -44,32 +43,19 @@ class SharePrefsManager(private val context: Context) {
         }.commit()
     }
 
-    fun saveRegisterResponse(registerResponse: Register.Response): Boolean {
-        val authenticationToken = keyManager.encrypt(context, registerResponse.authenticationToken.toByteArray())
-        val userId = keyManager.encrypt(context, registerResponse.userId.toByteArray())
-        val omisegoAuthenticationToken = keyManager.encrypt(context, registerResponse.omisegoAuthenticationToken.toByteArray())
-
-        return with(sharePref.edit()) {
-            putString(REQUEST_KEY_AUTHENTICATION_TOKEN, authenticationToken)
-            putString(REQUEST_KEY_USER_ID, userId)
-            putString(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN, omisegoAuthenticationToken)
-        }.commit()
-    }
-
-    fun readLoginResponse(): Login.Response {
+    fun loadCredential(): Credential {
         with(sharePref) {
             val userId = getString(REQUEST_KEY_USER_ID, "")
             val authToken = getString(REQUEST_KEY_AUTHENTICATION_TOKEN, "")
             val omiseGoAuthToken = getString(REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN, "")
 
-            return if (userId.isNotEmpty()) {
-                Login.Response(
+            return try {
+                Credential(
                         keyManager.decrypt(context, userId.toByteArray()),
                         keyManager.decrypt(context, authToken.toByteArray()),
-                        keyManager.decrypt(context, omiseGoAuthToken.toByteArray())
-                )
-            } else {
-                Login.Response("", "", "")
+                        keyManager.decrypt(context, omiseGoAuthToken.toByteArray()))
+            } catch (e: Exception) {
+                Credential("", "", "")
             }
         }
     }

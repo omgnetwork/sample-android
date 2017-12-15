@@ -5,10 +5,7 @@ import co.omisego.androidsdk.models.Address
 import co.omisego.androidsdk.models.ApiError
 import co.omisego.androidsdk.models.User
 import co.omisego.omgshop.helpers.OMGClientProvider
-import co.omisego.omgshop.models.Login
-import co.omisego.omgshop.models.Product
-import co.omisego.omgshop.models.Register
-import co.omisego.omgshop.models.Response
+import co.omisego.omgshop.models.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -47,19 +44,32 @@ object OMGApiManager {
         })
     }
 
+    inline fun logout(authToken: String, crossinline fail: (SDKResponse<ApiError>) -> Unit, crossinline success: (SDKResponse<String>) -> Unit) {
+        OMGClientProvider.retrieve(authToken).logout(object : Callback<String> {
+            override fun fail(response: SDKResponse<ApiError>) {
+                fail.invoke(response)
+            }
+
+            override fun success(response: SDKResponse<String>) {
+                success.invoke(response)
+                OMGClientProvider.clearToken()
+            }
+        })
+    }
+
     fun buy(request: Product.Buy.Request): Observable<Response<Nothing>> {
         return ApiClient.omiseGO.buy(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun login(request: Login.Request): Observable<Response<Login.Response>> {
+    fun login(request: Login.Request): Observable<Response<Credential>> {
         return ApiClient.omiseGO.login(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun register(request: Register.Request): Observable<Response<Register.Response>> {
+    fun register(request: Register.Request): Observable<Response<Credential>> {
         return ApiClient.omiseGO.signup(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
