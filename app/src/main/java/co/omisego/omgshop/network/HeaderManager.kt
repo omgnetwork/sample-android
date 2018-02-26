@@ -1,9 +1,8 @@
 package co.omisego.omgshop.network
 
 import android.util.Base64
-import co.omisego.omgshop.BuildConfig
+import co.omisego.omgshop.helpers.Config
 import co.omisego.omgshop.models.Credential
-import co.omisego.omgshop.models.Login
 
 
 /**
@@ -17,11 +16,11 @@ class HeaderManager {
     fun createAuthorization(endpoint: String, credential: Credential): String {
         val header = when (endpoint) {
             Endpoints.PROFILE, Endpoints.BUY_PRODUCT -> {
-                "${BuildConfig.API_KEY_ID}:${BuildConfig.API_KEY}:${credential.userId}:${credential.authenticationToken}".toByteArray()
+                "${Config.API_KEY_ID}:${Config.API_KEY}:${credential.userId}:${credential.authenticationToken}".toByteArray()
             }
-            else -> "${BuildConfig.API_KEY_ID}:${BuildConfig.API_KEY}".toByteArray()
+            else -> "${Config.API_KEY_ID}:${Config.API_KEY}".toByteArray()
         }
 
-        return "OMGShop ${String(Base64.encode(header, Base64.NO_WRAP))}"
+        return "${Config.AUTHENTICATION_SCHEME} ${String(Base64.encode(header, Base64.NO_WRAP))}"
     }
 }

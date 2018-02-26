@@ -37,6 +37,8 @@
     <string name="activity_checkout_pay_success">Successfully bought</string>
     <string name="activity_checkout_loading_dialog_title">Please wait</string>
     <string name="activity_checkout_loading_dialog_message">Buying</string>
+    <string name="activity_checkout_price_format">฿%1$s</string>
+    <string name="activity_checkout_redeem_button">Redeem %1$s</string>
     <string name="activity_checkout_pay_error_token_not_set">The default token has not been selected/</string>
 
     <!-- My Profile -->

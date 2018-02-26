@@ -64,13 +64,13 @@ class SharePrefsManager(private val context: Context) {
         if (balance != null) {
             val gson = Gson()
             val tokenBalanceJson = gson.toJson(balance)
-            with(sharePref.edit()) {
-                putString(SELECTED_TOKEN_BALANCE, tokenBalanceJson)
-            }.apply()
+            sharePref.edit()
+                    .putString(SELECTED_TOKEN_BALANCE, tokenBalanceJson)
+                    .apply()
         } else {
-            with(sharePref.edit()) {
-                putString(SELECTED_TOKEN_BALANCE, "")
-            }.apply()
+            sharePref.edit()
+                    .putString(SELECTED_TOKEN_BALANCE, "")
+                    .apply()
         }
     }
 

@@ -14,6 +14,7 @@ import android.widget.Toast
  * Copyright © 2017 OmiseGO. All rights reserved.
  */
 
+@Suppress("UNCHECKED_CAST")
 abstract class BaseActivity<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : AppCompatActivity(), BaseContract.BaseView {
     protected abstract val mPresenter: P
     private var mLoadingView: View? = null

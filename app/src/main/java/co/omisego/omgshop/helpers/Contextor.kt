@@ -2,7 +2,6 @@ package co.omisego.omgshop.helpers
 
 import android.content.Context
 
-
 /**
  * OmiseGO
  *
