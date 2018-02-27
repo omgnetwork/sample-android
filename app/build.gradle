@@ -14,19 +14,13 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'String', 'KUBERA_API_KEY', '"1482qNxPey7A4_rrKkAOb4kAOTsD2HoLysS7eQ1Zd3Y"'
-            buildConfigField 'String', 'API_KEY', '"e8d4764f77f36bfd741bd9ed21400cf5"'
-            buildConfigField 'String', 'API_KEY_ID', '"1"'
         }
         release {
             minifyEnabled false
-            buildConfigField 'String', 'KUBERA_API_KEY', '"1482qNxPey7A4_rrKkAOb4kAOTsD2HoLysS7eQ1Zd3Y"'
-            buildConfigField 'String', 'API_KEY', '"e8d4764f77f36bfd741bd9ed21400cf5"'
-            buildConfigField 'String', 'API_KEY_ID', '"1"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '27.0.0'
+    buildToolsVersion '27.0.3'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -54,24 +48,24 @@ kotlin {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.0.1'
-    implementation 'com.android.support:design:27.0.1'
-    implementation(name: 'omgsdk-release', ext: 'aar')
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'com.github.bumptech.glide:glide:4.3.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.3'
+    implementation(name: 'omgsdk', ext: 'aar')
+    implementation kotlinDependencies.stdlib
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.design
+    implementation retrofitDependencies.retrofit
+    implementation retrofitDependencies.converterGson
+    implementation retrofitDependencies.adapterRxJava2
+    implementation rxJava2.rxandroid
+    implementation glide.glide
+    implementation okHttp3.loggingIntercepter
+    implementation coroutines.android
 
     // For testing
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.amshove.kluent:kluent-android:1.30'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:3.9.1'
-    testImplementation 'org.assertj:assertj-core:3.8.0'
-    testImplementation 'com.squareup.retrofit2:retrofit-mock:2.3.0'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    testImplementation junit.junit
+    testImplementation kluent.android
+    testImplementation assertJ.core
+    testImplementation okHttp3.mockWebserver
+    testImplementation retrofitDependencies.retrofitMock
+    androidTestImplementation testRunner.runner
+    androidTestImplementation espresso.core
 }

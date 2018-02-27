@@ -19,9 +19,10 @@ import android.widget.Toast
  * Copyright © 2017 OmiseGO. All rights reserved.
  */
 
+@Suppress("UNCHECKED_CAST")
 abstract class BaseDialogFragment<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : DialogFragment(), BaseContract.BaseView {
     protected abstract val mPresenter: P
-    protected lateinit var mLoadingView: View
+    private lateinit var mLoadingView: View
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)

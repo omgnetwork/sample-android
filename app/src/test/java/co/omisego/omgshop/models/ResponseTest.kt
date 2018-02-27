@@ -1,8 +1,11 @@
 package co.omisego.omgshop.models
 
+import android.content.Context
 import co.omisego.androidsdk.models.Response
+import co.omisego.omgshop.helpers.Config
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.amshove.kluent.mock
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldNotBe
 import org.junit.Before

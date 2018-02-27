@@ -21,7 +21,7 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
     private lateinit var mLoadingDialog: ProgressDialog
 
     companion object {
-        val INTENT_EXTRA_PRODUCT_ITEM = "product_item"
+        const val INTENT_EXTRA_PRODUCT_ITEM = "product_item"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,13 +93,13 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
 
 
     override fun showSummary(subTotal: String, discount: String, total: String) {
-        tvSubtotal.text = "฿$subTotal"
-        tvDiscount.text = "฿$discount"
-        tvTotal.text = "฿$total"
+        tvSubtotal.text = getString(R.string.activity_checkout_price_format, subTotal)
+        tvDiscount.text = getString(R.string.activity_checkout_price_format, discount)
+        tvTotal.text = getString(R.string.activity_checkout_price_format, total)
     }
 
     override fun showRedeemButton(tokenSymbol: String) {
-        btnRedeem.text = "Redeem ${tokenSymbol}"
+        btnRedeem.text = getString(R.string.activity_checkout_redeem_button, tokenSymbol)
     }
 
     override fun showBuyFailed(msg: String) {

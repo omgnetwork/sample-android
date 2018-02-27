@@ -1,6 +1,7 @@
 package co.omisego.omgshop.network
 
 import co.omisego.omgshop.deserialize.OMGConverterFactory
+import co.omisego.omgshop.helpers.Config
 import co.omisego.omgshop.helpers.Contextor
 import co.omisego.omgshop.helpers.SharePrefsManager
 import okhttp3.OkHttpClient
@@ -18,7 +19,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
  */
 
 object ApiClient {
-    private val BASE_URL = Endpoints.BASE_URL
     private val headerManager by lazy { HeaderManager() }
     var omiseGO: OmiseGOAPI
 
@@ -44,7 +44,7 @@ object ApiClient {
         val retrofit = Retrofit.Builder()
                 .addConverterFactory(OMGConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(BASE_URL)
+                .baseUrl(Config.HOST_URL)
                 .client(clientBuilder.build())
                 .build()
 

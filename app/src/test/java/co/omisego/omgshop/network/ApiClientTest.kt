@@ -1,6 +1,7 @@
 package co.omisego.omgshop.network
 
 import co.omisego.omgshop.deserialize.OMGConverterFactory
+import co.omisego.omgshop.helpers.Config
 import co.omisego.omgshop.models.*
 import co.omisego.omgshop.testutils.RecordingObserver
 import co.omisego.omgshop.testutils.readFile
@@ -43,8 +44,8 @@ class ApiClientTest {
     private lateinit var productBuyFile: File
     private lateinit var errorFile: File
     private lateinit var responseUser: Response<User.Response>
-    private lateinit var responseRegister: Response<Register.Response>
-    private lateinit var responseLogin: Response<Login.Response>
+    private lateinit var responseRegister: Response<Credential>
+    private lateinit var responseLogin: Response<Credential>
     private lateinit var responseProductBuy: Response<Nothing>
     private lateinit var responseProductGet: Response<Product.Get.Response>
     private lateinit var responseError: Response<Error>
@@ -52,6 +53,8 @@ class ApiClientTest {
 
     @Before
     fun setUp() {
+        Config.HOST_URL = "https://your.api.com/"
+
         // Retrieves mocked /me.get response from local json file
         userFile = readFile("user.response.success.json")
         userFile shouldNotBe null
@@ -80,11 +83,11 @@ class ApiClientTest {
         val typeUserToken = object : TypeToken<Response<User.Response>>() {}.type
         responseUser = Gson().fromJson<Response<User.Response>>(userFile.readText().replace("\n ", "").replace("\n  ", ""), typeUserToken)
 
-        val typeRegisterToken = object : TypeToken<Response<Register.Response>>() {}.type
-        responseRegister = Gson().fromJson<Response<Register.Response>>(registerFile.readText(), typeRegisterToken)
+        val typeRegisterToken = object : TypeToken<Response<Credential>>() {}.type
+        responseRegister = Gson().fromJson<Response<Credential>>(registerFile.readText(), typeRegisterToken)
 
-        val typeLoginToken = object : TypeToken<Response<Login.Response>>() {}.type
-        responseLogin = Gson().fromJson<Response<Login.Response>>(loginFile.readText().replace("\n ", "").replace("\n  ", ""), typeLoginToken)
+        val typeLoginToken = object : TypeToken<Response<Credential>>() {}.type
+        responseLogin = Gson().fromJson<Response<Credential>>(loginFile.readText().replace("\n ", "").replace("\n  ", ""), typeLoginToken)
 
         val typeProductGetToken = object : TypeToken<Response<Product.Get.Response>>() {}.type
         responseProductGet = Gson().fromJson<Response<Product.Get.Response>>(productGetFile.readText(), typeProductGetToken)
@@ -132,7 +135,7 @@ class ApiClientTest {
         mockWebServer.enqueue(MockResponse().setBody(registerFile.readText()))
 
         // create mock observable
-        val observer = observerRule.create<Response<Register.Response>>()
+        val observer = observerRule.create<Response<Credential>>()
 
         // subscribe mocked response to observable
         omiseGOAPI.signup(mock()).subscribe(observer)
@@ -148,7 +151,7 @@ class ApiClientTest {
         mockWebServer.enqueue(MockResponse().setBody(loginFile.readText()))
 
         // create mock observable
-        val observer = observerRule.create<Response<Login.Response>>()
+        val observer = observerRule.create<Response<Credential>>()
 
         // subscribe mocked response to observable
         omiseGOAPI.login(mock()).subscribe(observer)

@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package co.omisego.omgshop.base
 
 import android.content.Context
