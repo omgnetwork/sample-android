@@ -1,6 +1,6 @@
 package co.omisego.omgshop.pages.login
 
-import co.omisego.androidsdk.models.ApiError
+import co.omisego.omisego.models.ApiError
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error

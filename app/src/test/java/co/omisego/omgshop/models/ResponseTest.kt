@@ -1,7 +1,7 @@
 package co.omisego.omgshop.models
 
 import android.content.Context
-import co.omisego.androidsdk.models.Response
+import co.omisego.omisego.models.Response
 import co.omisego.omgshop.helpers.Config
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

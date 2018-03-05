@@ -1,6 +1,6 @@
 package co.omisego.omgshop.pages.checkout
 
-import co.omisego.androidsdk.models.Balance
+import co.omisego.omisego.models.Balance
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.models.Product
 import java.math.BigDecimal

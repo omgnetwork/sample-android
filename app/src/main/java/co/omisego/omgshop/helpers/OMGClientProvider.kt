@@ -1,7 +1,7 @@
 package co.omisego.omgshop.helpers
 
 import android.util.Base64
-import co.omisego.androidsdk.OMGApiClient
+import co.omisego.omisego.OMGApiClient
 
 
 /**

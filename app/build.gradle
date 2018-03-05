@@ -34,21 +34,10 @@ androidExtensions {
     experimental = true
 }
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
-
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation(name: 'omgsdk', ext: 'aar')
+//    implementation(name: 'omgsdk', ext: 'aar')
+    implementation omisego.sdk
     implementation kotlinDependencies.stdlib
     implementation supportDependencies.appCompat
     implementation supportDependencies.design
@@ -58,7 +47,6 @@ dependencies {
     implementation rxJava2.rxandroid
     implementation glide.glide
     implementation okHttp3.loggingIntercepter
-    implementation coroutines.android
 
     // For testing
     testImplementation junit.junit

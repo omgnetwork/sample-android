@@ -1,7 +1,7 @@
 package co.omisego.omgshop.pages.profile
 
-import co.omisego.androidsdk.models.Balance
 import co.omisego.omgshop.base.BaseContract
+import co.omisego.omisego.models.Balance
 
 
 /**

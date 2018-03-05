@@ -1,6 +1,5 @@
 package co.omisego.omgshop.pages.checkout
 
-import co.omisego.androidsdk.models.Balance
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
@@ -9,6 +8,7 @@ import co.omisego.omgshop.helpers.Contextor
 import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.network.OMGApiManager
+import co.omisego.omisego.models.Balance
 import java.math.BigDecimal
 
 

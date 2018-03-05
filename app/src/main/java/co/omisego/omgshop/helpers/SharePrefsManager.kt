@@ -2,8 +2,8 @@ package co.omisego.omgshop.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
-import co.omisego.androidsdk.models.Balance
-import co.omisego.androidsdk.security.OMGKeyManager
+import co.omisego.omisego.models.Balance
+import co.omisego.omisego.security.OMGKeyManager
 import co.omisego.omgshop.R
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN

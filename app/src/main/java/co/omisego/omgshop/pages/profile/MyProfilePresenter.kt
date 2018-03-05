@@ -1,10 +1,10 @@
 package co.omisego.omgshop.pages.profile
 
-import co.omisego.androidsdk.models.Balance
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.network.OMGApiManager
+import co.omisego.omisego.models.Balance
 
 
 /**

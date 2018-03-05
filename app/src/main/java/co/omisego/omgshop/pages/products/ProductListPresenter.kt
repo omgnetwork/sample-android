@@ -1,10 +1,10 @@
 package co.omisego.omgshop.pages.products
 
 import android.util.Log
-import co.omisego.androidsdk.Callback
-import co.omisego.androidsdk.models.Address
-import co.omisego.androidsdk.models.ApiError
-import co.omisego.androidsdk.models.Response
+import co.omisego.omisego.Callback
+import co.omisego.omisego.models.Address
+import co.omisego.omisego.models.ApiError
+import co.omisego.omisego.models.Response
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
 import co.omisego.omgshop.helpers.OMGClientProvider
