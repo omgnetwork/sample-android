@@ -1,5 +1,12 @@
 package co.omisego.omgshop.pages.checkout
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 11/24/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +16,6 @@ import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.dialog_redeem.*
 import kotlinx.android.synthetic.main.dialog_redeem.view.*
-
-
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 11/24/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
 
 class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, RedeemDialogContract.Presenter>(), RedeemDialogContract.View {
 

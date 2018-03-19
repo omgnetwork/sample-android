@@ -1,5 +1,12 @@
 package co.omisego.omgshop.network
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 11/27/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import co.omisego.omgshop.deserialize.OMGConverterFactory
 import co.omisego.omgshop.helpers.Config
 import co.omisego.omgshop.helpers.Contextor
@@ -9,14 +16,6 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-
-
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 11/27/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
 
 object ApiClient {
     private val headerManager by lazy { HeaderManager() }

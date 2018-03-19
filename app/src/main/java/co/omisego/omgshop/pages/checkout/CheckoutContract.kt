@@ -1,17 +1,16 @@
 package co.omisego.omgshop.pages.checkout
 
-import co.omisego.omisego.models.Balance
-import co.omisego.omgshop.base.BaseContract
-import co.omisego.omgshop.models.Product
-import java.math.BigDecimal
-
-
-/**
+/*
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
+import co.omisego.omgshop.base.BaseContract
+import co.omisego.omgshop.models.Product
+import co.omisego.omisego.model.Balance
+import java.math.BigDecimal
 
 interface CheckoutContract {
     interface View : BaseContract.BaseView {

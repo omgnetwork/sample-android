@@ -1,16 +1,15 @@
 package co.omisego.omgshop.network
 
-import android.util.Base64
-import co.omisego.omgshop.helpers.Config
-import co.omisego.omgshop.models.Credential
-
-
-/**
+/*
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
+import android.util.Base64
+import co.omisego.omgshop.helpers.Config
+import co.omisego.omgshop.models.Credential
 
 class HeaderManager {
     fun createAuthorization(endpoint: String, credential: Credential): String {

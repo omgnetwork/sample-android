@@ -1,11 +1,10 @@
 package co.omisego.omgshop.network
 
-
-/**
+/*
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
 object Endpoints {

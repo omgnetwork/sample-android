@@ -8,7 +8,7 @@ import co.omisego.omgshop.helpers.Contextor
 import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.network.OMGApiManager
-import co.omisego.omisego.models.Balance
+import co.omisego.omisego.model.Balance
 import java.math.BigDecimal
 
 
@@ -16,7 +16,7 @@ import java.math.BigDecimal
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
 class CheckoutPresenter(private val sharePrefsManager: SharePrefsManager) : BasePresenterImpl<CheckoutContract.View>(), CheckoutContract.Presenter {
@@ -45,7 +45,7 @@ class CheckoutPresenter(private val sharePrefsManager: SharePrefsManager) : Base
                     }) { response ->
                         // Update current balance to share preference
                         var currentBalance = getCurrentTokenBalance()
-                        currentBalance = response.data[0].balances.first { it.mintedToken.id == currentBalance.mintedToken.id }
+                        currentBalance = response.data.data[0].balances.first { it.mintedToken.id == currentBalance.mintedToken.id }
                         sharePrefsManager.saveSelectedTokenBalance(currentBalance)
                         mView?.hideLoading()
                         mView?.showBuySuccess()

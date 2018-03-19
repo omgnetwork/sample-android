@@ -1,24 +1,23 @@
 package co.omisego.omgshop.helpers
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 30/11/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.content.Context
 import android.content.SharedPreferences
-import co.omisego.omisego.models.Balance
-import co.omisego.omisego.security.OMGKeyManager
 import co.omisego.omgshop.R
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_OMISE_GO_AUTHENTICATION_TOKEN
 import co.omisego.omgshop.helpers.Constants.REQUEST_KEY_USER_ID
 import co.omisego.omgshop.helpers.Contants.SELECTED_TOKEN_BALANCE
 import co.omisego.omgshop.models.Credential
+import co.omisego.omisego.model.Balance
+import co.omisego.omisego.security.OMGKeyManager
 import com.google.gson.Gson
-
-
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 30/11/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
 
 class SharePrefsManager(private val context: Context) {
     private val sharePref: SharedPreferences by lazy {

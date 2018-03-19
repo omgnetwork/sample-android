@@ -1,18 +1,18 @@
 package co.omisego.omgshop.models
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 11/27/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import java.math.BigDecimal
 
-
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 11/27/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
 @SuppressLint("ParcelCreator")
 object Product {
     object Get {

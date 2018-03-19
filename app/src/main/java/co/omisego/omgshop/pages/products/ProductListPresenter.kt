@@ -1,16 +1,15 @@
 package co.omisego.omgshop.pages.products
 
-import android.util.Log
-import co.omisego.omisego.Callback
-import co.omisego.omisego.models.Address
-import co.omisego.omisego.models.ApiError
-import co.omisego.omisego.models.Response
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
 import co.omisego.omgshop.helpers.OMGClientProvider
 import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.network.ApiClient
+import co.omisego.omisego.custom.OMGCallback
+import co.omisego.omisego.model.APIError
+import co.omisego.omisego.model.BalanceList
+import co.omisego.omisego.model.OMGResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -19,7 +18,7 @@ import io.reactivex.schedulers.Schedulers
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 30/11/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
 class ProductListPresenter(private val sharePrefsManager: SharePrefsManager) : BasePresenterImpl<ProductListContract.View>(), ProductListContract.Presenter {
@@ -46,14 +45,14 @@ class ProductListPresenter(private val sharePrefsManager: SharePrefsManager) : B
                         return@subscribe
                     }
 
-                    OMGClientProvider.retrieve(authToken).listBalances(object : Callback<List<Address>> {
-                        override fun fail(response: Response<ApiError>) {
+                    OMGClientProvider.retrieve(authToken).listBalances().enqueue(object : OMGCallback<BalanceList> {
+                        override fun fail(response: OMGResponse<APIError>) {
                             mView?.showMessage(response.data.description)
                             mView?.hideLoading()
                         }
 
-                        override fun success(response: Response<List<Address>>) {
-                            sharePrefsManager.saveSelectedTokenBalance(response.data[0].balances[0])
+                        override fun success(response: OMGResponse<BalanceList>) {
+                            sharePrefsManager.saveSelectedTokenBalance(response.data.data[0].balances[0])
                             mView?.showProductList(productList!!)
                             mView?.hideLoading()
 

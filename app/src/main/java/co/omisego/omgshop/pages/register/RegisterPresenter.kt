@@ -1,5 +1,12 @@
 package co.omisego.omgshop.pages.register
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
@@ -8,14 +15,6 @@ import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.helpers.Validator
 import co.omisego.omgshop.models.Register
 import co.omisego.omgshop.network.OMGApiManager
-
-
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
 
 class RegisterPresenter(private val sharePrefsManager: SharePrefsManager, private val validator: Validator = Validator()) : BasePresenterImpl<RegisterContract.View>(), RegisterContract.Presenter {
     override fun handleRegister(request: Register.Request) {

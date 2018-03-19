@@ -1,5 +1,12 @@
 package co.omisego.omgshop.pages.checkout
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.MenuItem
@@ -47,7 +54,7 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
         }
 
         btnPay.setOnClickListener {
-            val subUnitToUnit = mPresenter.getCurrentTokenBalance().mintedToken.subUnitToUnit
+            val subUnitToUnit = mPresenter.getCurrentTokenBalance().mintedToken.subunitToUnit
             mPresenter.pay(tokenValue = subUnitToUnit.multiply(BigDecimal.valueOf(mDiscount.toDouble())), productId = mProductItem.id)
         }
 
@@ -79,7 +86,7 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
 
     override fun showRedeemDialog() {
         val currentBalance = mPresenter.getCurrentTokenBalance()
-        val balanceAmount = currentBalance.amount.divide(currentBalance.mintedToken.subUnitToUnit)
+        val balanceAmount = currentBalance.amount.divide(currentBalance.mintedToken.subunitToUnit)
         val dialog = RedeemDialogFragment.newInstance(mProductItem.price, balanceAmount.toBigInteger().toInt(), currentBalance.mintedToken.symbol)
         dialog.setRedeemDialogListener(object : RedeemDialogFragment.RedeemDialogListener {
             override fun onSetRedeem(amount: Int) {

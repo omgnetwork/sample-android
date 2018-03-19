@@ -1,5 +1,12 @@
 package co.omisego.omgshop.pages.register
 
+/**
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle

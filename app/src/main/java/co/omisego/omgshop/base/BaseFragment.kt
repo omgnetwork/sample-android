@@ -13,7 +13,7 @@ import android.widget.Toast
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
 abstract class BaseFragment<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : Fragment(), BaseContract.BaseView {

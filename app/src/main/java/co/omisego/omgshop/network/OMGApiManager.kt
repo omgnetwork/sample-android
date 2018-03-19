@@ -2,54 +2,50 @@ package co.omisego.omgshop.network
 
 import co.omisego.omgshop.helpers.OMGClientProvider
 import co.omisego.omgshop.models.*
-import co.omisego.omisego.Callback
-import co.omisego.omisego.models.Address
-import co.omisego.omisego.models.ApiError
+import co.omisego.omisego.custom.OMGCallback
+import co.omisego.omisego.model.APIError
+import co.omisego.omisego.model.BalanceList
+import co.omisego.omisego.model.Logout
+import co.omisego.omisego.model.OMGResponse
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import co.omisego.omisego.models.Response as SDKResponse
+
 
 /**
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 14/12/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
 object OMGApiManager {
-    inline fun listBalances(authToken: String, crossinline fail: (SDKResponse<ApiError>) -> Unit, crossinline success: (SDKResponse<List<Address>>) -> Unit) {
-        OMGClientProvider.retrieve(authToken).listBalances(object : Callback<List<Address>> {
-            override fun fail(response: SDKResponse<ApiError>) {
+    inline fun listBalances(authToken: String, crossinline fail: (OMGResponse<APIError>) -> Unit, crossinline success: (OMGResponse<BalanceList>) -> Unit) {
+        OMGClientProvider.retrieve(authToken).listBalances().enqueue(object : OMGCallback<BalanceList> {
+            override fun fail(response: OMGResponse<APIError>) = fail.invoke(response)
+            override fun success(response: OMGResponse<BalanceList>) = success.invoke(response)
+        })
+    }
+
+    inline fun loadUser(authToken: String, crossinline fail: (OMGResponse<APIError>) -> Unit, crossinline success: (OMGResponse<co.omisego.omisego.model.User>) -> Unit) {
+        OMGClientProvider.retrieve(authToken).getCurrentUser().enqueue(object : OMGCallback<co.omisego.omisego.model.User> {
+            override fun fail(response: OMGResponse<APIError>) {
                 fail.invoke(response)
             }
 
-            override fun success(response: SDKResponse<List<Address>>) {
+            override fun success(response: OMGResponse<co.omisego.omisego.model.User>) {
                 success.invoke(response)
             }
         })
     }
 
-    inline fun loadUser(authToken: String, crossinline fail: (SDKResponse<ApiError>) -> Unit, crossinline success: (SDKResponse<co.omisego.omisego.models.User>) -> Unit) {
-        OMGClientProvider.retrieve(authToken).getCurrentUser(object : Callback<co.omisego.omisego.models.User> {
-            override fun fail(response: SDKResponse<ApiError>) {
+    inline fun logout(authToken: String, crossinline fail: (OMGResponse<APIError>) -> Unit, crossinline success: (OMGResponse<Logout>) -> Unit) {
+        OMGClientProvider.retrieve(authToken).logout().enqueue(object : OMGCallback<Logout> {
+            override fun fail(response: OMGResponse<APIError>) {
                 fail.invoke(response)
             }
 
-            override fun success(response: SDKResponse<co.omisego.omisego.models.User>) {
-                success.invoke(response)
-            }
-        })
-    }
-
-
-    inline fun logout(authToken: String, crossinline fail: (SDKResponse<ApiError>) -> Unit, crossinline success: (SDKResponse<String>) -> Unit) {
-        OMGClientProvider.retrieve(authToken).logout(object : Callback<String> {
-            override fun fail(response: SDKResponse<ApiError>) {
-                fail.invoke(response)
-            }
-
-            override fun success(response: SDKResponse<String>) {
+            override fun success(response: OMGResponse<Logout>) {
                 success.invoke(response)
                 OMGClientProvider.clearToken()
             }

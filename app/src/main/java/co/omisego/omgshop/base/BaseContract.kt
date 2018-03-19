@@ -9,7 +9,7 @@ import io.reactivex.disposables.Disposable
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
 interface BaseContract {

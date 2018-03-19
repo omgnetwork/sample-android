@@ -27,7 +27,7 @@ import java.util.logging.Logger
  *
  *
  * Created by Phuchit Sirimongkolsathien on 11/27/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
 @Suppress("IllegalIdentifier")
@@ -43,7 +43,6 @@ class ApiClientTest {
     private lateinit var productGetFile: File
     private lateinit var productBuyFile: File
     private lateinit var errorFile: File
-    private lateinit var responseUser: Response<User.Response>
     private lateinit var responseRegister: Response<Credential>
     private lateinit var responseLogin: Response<Credential>
     private lateinit var responseProductBuy: Response<Nothing>
@@ -80,8 +79,6 @@ class ApiClientTest {
         errorFile shouldNotBe null
 
         // Convert response using Gson converter
-        val typeUserToken = object : TypeToken<Response<User.Response>>() {}.type
-        responseUser = Gson().fromJson<Response<User.Response>>(userFile.readText().replace("\n ", "").replace("\n  ", ""), typeUserToken)
 
         val typeRegisterToken = object : TypeToken<Response<Credential>>() {}.type
         responseRegister = Gson().fromJson<Response<Credential>>(registerFile.readText(), typeRegisterToken)
@@ -112,21 +109,6 @@ class ApiClientTest {
         // Disable unused logged from mock webserver
         LogManager.getLogManager().reset()
         Logger.getGlobal().level = Level.OFF
-    }
-
-    @Test
-    fun `verify get user api return observable user correctly`() {
-        // Enqueued response from mock server
-        mockWebServer.enqueue(MockResponse().setBody(userFile.readText()))
-
-        // create mock observable
-        val observer = observerRule.create<Response<User.Response>>()
-
-        // subscribe mocked response to observable
-        omiseGOAPI.getUser().subscribe(observer)
-
-        // assert observable value
-        observer.assertValue(responseUser).assertComplete()
     }
 
     @Test

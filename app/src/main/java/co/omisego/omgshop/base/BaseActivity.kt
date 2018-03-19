@@ -1,18 +1,17 @@
 package co.omisego.omgshop.base
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-
-
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
 
 @Suppress("UNCHECKED_CAST")
 abstract class BaseActivity<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : AppCompatActivity(), BaseContract.BaseView {

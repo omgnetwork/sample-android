@@ -1,5 +1,12 @@
 package co.omisego.omgshop.pages.products
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle

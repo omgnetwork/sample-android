@@ -1,17 +1,16 @@
 package co.omisego.omgshop.pages.register
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Register
-
-
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
 
 interface RegisterContract {
     interface View : BaseContract.BaseView {
