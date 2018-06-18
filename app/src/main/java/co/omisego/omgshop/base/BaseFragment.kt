@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 
-
 /**
  * OmiseGO
  *
@@ -46,8 +45,9 @@ abstract class BaseFragment<in V : BaseContract.BaseView, out P : BaseContract.B
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
+    override fun clearTokenAndGotoLogin() {}
+
     fun log(message: String) {
         Log.d(this.javaClass.name, message)
     }
-
 }

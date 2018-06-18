@@ -1,8 +1,11 @@
 package co.omisego.omgshop.network
 
-import co.omisego.omgshop.deserialize.OMGConverterFactory
 import co.omisego.omgshop.helpers.Config
-import co.omisego.omgshop.models.*
+import co.omisego.omgshop.models.Credential
+import co.omisego.omgshop.models.Error
+import co.omisego.omgshop.models.Product
+import co.omisego.omgshop.models.Response
+import co.omisego.omgshop.network.prototype.ShopAPI
 import co.omisego.omgshop.testutils.RecordingObserver
 import co.omisego.omgshop.testutils.readFile
 import com.google.gson.Gson
@@ -21,7 +24,6 @@ import java.util.logging.Level
 import java.util.logging.LogManager
 import java.util.logging.Logger
 
-
 /**
  * OmiseGO
  *
@@ -32,7 +34,7 @@ import java.util.logging.Logger
 
 @Suppress("IllegalIdentifier")
 class ApiClientTest {
-    private lateinit var omiseGOAPI: OmiseGOAPI
+    private lateinit var shopAPI: ShopAPI
 
     private val observerRule = RecordingObserver.Rule()
     private val mockWebServer: MockWebServer = MockWebServer()
@@ -48,7 +50,6 @@ class ApiClientTest {
     private lateinit var responseProductBuy: Response<Nothing>
     private lateinit var responseProductGet: Response<Product.Get.Response>
     private lateinit var responseError: Response<Error>
-
 
     @Before
     fun setUp() {
@@ -97,14 +98,12 @@ class ApiClientTest {
 
         // Setup retrofit with mock server
         val retrofit = Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(mockWebServer.url("/"))
-                .build()
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .baseUrl(mockWebServer.url("/"))
+            .build()
 
-        ApiClient.omiseGO = retrofit.create(OmiseGOAPI::class.java)
-
-        omiseGOAPI = ApiClient.omiseGO
+        shopAPI = retrofit.create(ShopAPI::class.java)
 
         // Disable unused logged from mock webserver
         LogManager.getLogManager().reset()
@@ -120,7 +119,7 @@ class ApiClientTest {
         val observer = observerRule.create<Response<Credential>>()
 
         // subscribe mocked response to observable
-        omiseGOAPI.signup(mock()).subscribe(observer)
+        shopAPI.signup(mock()).subscribe(observer)
 
         // assert observable value
         observer.assertValue(responseRegister).assertComplete()
@@ -136,7 +135,7 @@ class ApiClientTest {
         val observer = observerRule.create<Response<Credential>>()
 
         // subscribe mocked response to observable
-        omiseGOAPI.login(mock()).subscribe(observer)
+        shopAPI.login(mock()).subscribe(observer)
 
         // assert observable value
         observer.assertValue(responseLogin).assertComplete()
@@ -151,7 +150,7 @@ class ApiClientTest {
         val observer = observerRule.create<Response<Nothing>>()
 
         // subscribe mocked response to observable
-        omiseGOAPI.buy(mock()).subscribe(observer)
+        shopAPI.buy(mock()).subscribe(observer)
 
         // assert observable value
         observer.assertValue(responseProductBuy).assertComplete()
@@ -166,7 +165,7 @@ class ApiClientTest {
         val observer = observerRule.create<Response<Product.Get.Response>>()
 
         // subscribe mocked response to observable
-        omiseGOAPI.getProducts().subscribe(observer)
+        shopAPI.getProducts().subscribe(observer)
 
         // assert observable value
         observer.assertValue(responseProductGet).assertComplete()

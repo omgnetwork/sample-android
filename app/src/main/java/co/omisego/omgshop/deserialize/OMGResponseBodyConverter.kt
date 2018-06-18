@@ -18,7 +18,6 @@ import java.io.ByteArrayInputStream
 import java.io.InputStreamReader
 
 class OMGResponseBodyConverter<T>(private val gson: Gson, private val adapter: TypeAdapter<T>) : Converter<ResponseBody, T> {
-
     override fun convert(value: ResponseBody): T {
         val responseData = value.string()
         val json = JSONObject(responseData)
@@ -37,5 +36,4 @@ class OMGResponseBodyConverter<T>(private val gson: Gson, private val adapter: T
             return adapter.read(jsonReader)
         }
     }
-
 }

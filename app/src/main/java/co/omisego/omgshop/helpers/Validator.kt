@@ -19,5 +19,4 @@ class Validator {
     fun validateFirstName(firstName: String): Boolean = firstName.isNotEmpty()
 
     fun validateLastName(lastName: String): Boolean = lastName.isNotEmpty()
-
 }

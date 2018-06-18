@@ -14,7 +14,6 @@ import android.view.MenuItem
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.custom.MinimalTextChangeListener
-import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Register
@@ -23,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Presenter>(), RegisterContract.View {
     override val mPresenter: RegisterContract.Presenter by lazy {
-        RegisterPresenter(SharePrefsManager(this))
+        RegisterPresenter()
     }
     private lateinit var mProgressDialog: ProgressDialog
 
@@ -49,19 +48,18 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
             val firstName = etFirstName.text.toString()
             val lastName = etLastName.text.toString()
             if (mPresenter.validateEmail(email) &&
-                    mPresenter.validatePassword(password) &&
-                    mPresenter.validateFirstName(firstName) &&
-                    mPresenter.validateLastName(lastName)) {
+                mPresenter.validatePassword(password) &&
+                mPresenter.validateFirstName(firstName) &&
+                mPresenter.validateLastName(lastName)) {
 
                 val request = Register.Request(
-                        firstName,
-                        lastName,
-                        email,
-                        password
+                    firstName,
+                    lastName,
+                    email,
+                    password
                 )
                 mPresenter.handleRegister(request)
             }
-
         }
 
         etEmail.addTextChangedListener(MinimalTextChangeListener {

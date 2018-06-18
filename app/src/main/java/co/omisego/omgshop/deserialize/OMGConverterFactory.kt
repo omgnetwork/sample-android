@@ -7,7 +7,9 @@ package co.omisego.omgshop.deserialize
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.TypeAdapter
 import com.google.gson.reflect.TypeToken
 import okhttp3.RequestBody
@@ -28,6 +30,10 @@ class OMGConverterFactory(val gson: Gson) : Converter.Factory() {
     }
 
     companion object {
-        fun create(): OMGConverterFactory = OMGConverterFactory(Gson())
+        fun create(): OMGConverterFactory = OMGConverterFactory(
+            GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create()
+        )
     }
 }

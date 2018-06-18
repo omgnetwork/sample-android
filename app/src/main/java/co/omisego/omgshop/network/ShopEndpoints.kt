@@ -7,7 +7,7 @@ package co.omisego.omgshop.network
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-object Endpoints {
+object ShopEndpoints {
     const val SIGN_UP = "signup"
     const val LOGIN = "login"
     const val PROFILE = "me.get"

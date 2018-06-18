@@ -12,11 +12,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.extensions.thousandSeparator
-import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.CheckoutActivity
@@ -31,7 +34,7 @@ import kotlinx.android.synthetic.main.viewholder_product.view.*
 class ProductListActivity : BaseActivity<ProductListContract.View, ProductListContract.Presenter>(), ProductListContract.View {
     private lateinit var adapter: ProductListRecyclerAdapter
     override val mPresenter: ProductListContract.Presenter by lazy {
-        ProductListPresenter(SharePrefsManager(this))
+        ProductListPresenter()
     }
     private var productList: MutableList<Product.Get.Item> = mutableListOf()
 
@@ -50,7 +53,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        mPresenter.loadProductList()
+        mPresenter.fetchProductList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -108,14 +111,13 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
                     tvTitle.text = name
                     tvDescription.text = description
                     Glide.with(this@ProductListActivity)
-                            .load(imageUrl)
-                            .apply(RequestOptions().transforms(RoundedCorners(20)))
-                            .into(ivLogo)
+                        .load(imageUrl)
+                        .apply(RequestOptions().transforms(RoundedCorners(20)))
+                        .into(ivLogo)
                     btnPrice.text = "฿${price.toDouble().thousandSeparator()}"
                     btnPrice.setOnClickListener { mPresenter.handleClickProductItem(id) }
                 }
             }
         }
-
     }
 }

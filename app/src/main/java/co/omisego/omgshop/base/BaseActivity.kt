@@ -7,11 +7,15 @@ package co.omisego.omgshop.base
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import co.omisego.omgshop.helpers.Preference
+import co.omisego.omgshop.models.Credential
+import co.omisego.omgshop.pages.login.LoginActivity
 
 @Suppress("UNCHECKED_CAST")
 abstract class BaseActivity<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : AppCompatActivity(), BaseContract.BaseView {
@@ -42,6 +46,13 @@ abstract class BaseActivity<in V : BaseContract.BaseView, out P : BaseContract.B
 
     fun log(message: String) {
         Log.d(this.javaClass.simpleName, message)
+    }
+
+    override fun clearTokenAndGotoLogin() {
+        Preference.saveCredential(Credential("", "", ""))
+        startActivity(Intent(this, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
     }
 
     override fun showMessage(msg: String) {

@@ -2,7 +2,6 @@ package co.omisego.omgshop.pages.checkout
 
 import co.omisego.omgshop.base.BasePresenterImpl
 
-
 /**
  * OmiseGO
  *
@@ -22,5 +21,4 @@ class RedeemDialogPresenter : BasePresenterImpl<RedeemDialogContract.View>(), Re
         mView?.setTextDiscount("$value")
         mView?.setTextRedeemAmount("$value")
     }
-
 }

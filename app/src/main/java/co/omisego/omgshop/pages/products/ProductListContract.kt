@@ -19,7 +19,7 @@ interface ProductListContract {
     }
 
     interface Presenter : BaseContract.BasePresenter<View> {
-        fun loadProductList()
+        fun fetchProductList()
         fun handleClickProductItem(itemId: String)
     }
 }

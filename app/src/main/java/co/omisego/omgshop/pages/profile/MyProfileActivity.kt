@@ -20,7 +20,6 @@ import android.view.View
 import android.view.ViewGroup
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
-import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.pages.login.LoginActivity
 import co.omisego.omisego.model.Balance
 import kotlinx.android.synthetic.main.activity_my_profile.*
@@ -30,19 +29,17 @@ import kotlinx.android.synthetic.main.viewholder_content_my_profile.view.*
 class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract.Presenter>(), MyProfileContract.View {
 
     override val mPresenter: MyProfileContract.Presenter by lazy {
-        MyProfilePresenter(SharePrefsManager(this))
+        MyProfilePresenter()
     }
     private lateinit var myProfileContentAdapter: MyProfileContentAdapter
     private var mCurrentSelectedTokenId: String = ""
     private lateinit var mLoadingDialog: ProgressDialog
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_profile)
         initInstance()
     }
-
 
     private fun initInstance() {
         setViewLoading(viewLoading)
@@ -62,7 +59,7 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
 
         tvLogout.setOnClickListener { mPresenter.logout() }
 
-        mPresenter.loadSettings()
+        mPresenter.loadWallets()
         mPresenter.loadUser()
     }
 
@@ -113,7 +110,7 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
             notifyDataSetChanged()
         }
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             // Ignore the first position which is the header section
             if (position > 0) {
                 val contentViewHolder = holder as? MyProfileContentViewHolder
@@ -148,17 +145,17 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
             fun bind(token: Balance) {
                 // Set data
                 tvAmount.text = token.displayAmount(0)
-                tvToken.text = token.mintedToken.symbol
+                tvToken.text = token.token.symbol
 
                 val drawable = when (mCurrentSelectedTokenId) {
-                    token.mintedToken.id -> ContextCompat.getDrawable(itemView.context, R.drawable.ic_check_24dp)
+                    token.token.id -> ContextCompat.getDrawable(itemView.context, R.drawable.ic_check_24dp)
                     else -> null
                 }
                 ivSelected.setImageDrawable(drawable)
 
                 // bind token click listener
                 layoutContainer.setOnClickListener {
-                    val currentToken = listToken.firstOrNull { it.mintedToken.id == mCurrentSelectedTokenId } ?: listToken[0]
+                    val currentToken = listToken.firstOrNull { it.token.id == mCurrentSelectedTokenId } ?: listToken[0]
                     val currentTokenIndex = listToken.indexOf(currentToken) + 1
 
                     // Save new token id
@@ -170,6 +167,6 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
             }
         }
 
-        inner class MyProfileHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
+        inner class MyProfileHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     }
 }

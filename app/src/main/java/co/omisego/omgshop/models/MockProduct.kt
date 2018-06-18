@@ -1,6 +1,5 @@
 package co.omisego.omgshop.models
 
-
 /**
  * OmiseGO
  *

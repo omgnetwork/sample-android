@@ -17,23 +17,24 @@ import java.math.BigDecimal
 object Product {
     object Get {
         data class Response(
-                val data: List<Item>
+            val data: List<Item>
         )
 
         @Parcelize
         data class Item(
-                val id: String,
-                val name: String,
-                val description: String,
-                @SerializedName("image_url") val imageUrl: String,
-                val price: Int
+            val id: String,
+            val name: String,
+            val description: String,
+            @SerializedName("image_url") val imageUrl: String,
+            val price: Int
         ) : Parcelable
     }
 
     object Buy {
-        data class Request(@SerializedName("token_id") val tokenId: String,
-                           @SerializedName("token_value") val tokenValue: BigDecimal,
-                           @SerializedName("product_id") val productId: String)
-
+        data class Request(
+            @SerializedName("token_id") val tokenId: String,
+            val tokenValue: BigDecimal,
+            val productId: String
+        )
     }
 }

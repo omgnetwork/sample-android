@@ -8,6 +8,9 @@ package co.omisego.omgshop.base
  */
 
 import android.util.Log
+import co.omisego.omgshop.extensions.isAuthError
+import co.omisego.omgshop.models.Error
+import co.omisego.omisego.model.APIError
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -34,8 +37,17 @@ abstract class BasePresenterImpl<V : BaseContract.BaseView> : BaseContract.BaseP
         mCompositeSubscription?.clear()
     }
 
+    override fun goBackToLoginIfNeeded(error: APIError) {
+        if (error.isAuthError())
+            mView?.clearTokenAndGotoLogin()
+    }
+
+    override fun goBackToLoginIfNeeded(error: Error) {
+        if (error.isAuthError())
+            mView?.clearTokenAndGotoLogin()
+    }
+
     fun log(message: String) {
         Log.d(this.javaClass.simpleName, message)
     }
-
 }

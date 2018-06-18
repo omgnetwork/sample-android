@@ -52,6 +52,8 @@ abstract class BaseDialogFragment<in V : BaseContract.BaseView, out P : BaseCont
         mLoadingView.visibility = View.VISIBLE
     }
 
+    override fun clearTokenAndGotoLogin() {}
+
     override fun hideLoading() {
         mLoadingView.visibility = View.GONE
     }

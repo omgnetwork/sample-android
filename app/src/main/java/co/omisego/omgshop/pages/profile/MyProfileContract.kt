@@ -21,7 +21,7 @@ interface MyProfileContract {
     }
 
     interface Presenter : BaseContract.BasePresenter<View> {
-        fun loadSettings()
+        fun loadWallets()
         fun loadUser()
         fun saveSelectedToken(balance: Balance)
         fun logout()

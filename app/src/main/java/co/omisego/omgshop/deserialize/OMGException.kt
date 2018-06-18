@@ -3,7 +3,6 @@ package co.omisego.omgshop.deserialize
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Response
 
-
 /**
  * OmiseGO
  *
