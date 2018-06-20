@@ -10,7 +10,7 @@ package co.omisego.omgshop.pages.login
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
-import co.omisego.omgshop.models.Login
+import co.omisego.omgshop.pages.login.caller.LoginCallerContract
 
 interface LoginContract {
     interface View : BaseContract.BaseView {
@@ -21,10 +21,9 @@ interface LoginContract {
         fun showEmailErrorHint(msg: String)
     }
 
-    interface Presenter : BaseContract.BasePresenter<View> {
-        fun handleLogin(request: Login.Request)
-        fun handleClickRegisterButton()
+    interface Presenter : BaseContract.BasePresenter<View, LoginCallerContract.Caller> {
         fun checkHasLogin()
+        fun handleClickRegisterButton()
         fun validateEmail(email: String): Boolean
         fun validatePassword(password: String): Boolean
     }

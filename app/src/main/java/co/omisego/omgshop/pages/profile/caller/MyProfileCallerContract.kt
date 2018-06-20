@@ -1,5 +1,6 @@
 package co.omisego.omgshop.pages.profile.caller
 
+import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.models.Credential
 import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.Logout
@@ -14,7 +15,7 @@ import co.omisego.omisego.model.WalletList
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 interface MyProfileCallerContract {
-    interface Caller {
+    interface Caller : BaseContract.BaseCaller {
         val credential: Credential
         fun loadUser(authToken: String = credential.omisegoAuthenticationToken)
         fun loadWallets(authToken: String = credential.omisegoAuthenticationToken)
@@ -28,5 +29,6 @@ interface MyProfileCallerContract {
         fun handleLoadUserFailed(error: OMGResponse<APIError>)
         fun handleLoadWalletSuccess(response: OMGResponse<WalletList>)
         fun handleLoadWalletFailed(error: OMGResponse<APIError>)
+        fun showLoading(dialog: Boolean)
     }
 }

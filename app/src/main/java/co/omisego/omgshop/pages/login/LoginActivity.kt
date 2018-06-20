@@ -21,12 +21,13 @@ import co.omisego.omgshop.custom.MinimalTextChangeListener
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Login
+import co.omisego.omgshop.pages.login.caller.LoginCallerContract
 import co.omisego.omgshop.pages.products.ProductListActivity
 import co.omisego.omgshop.pages.register.RegisterActivity
 import co.omisego.omisego.security.OMGKeyManager
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(), LoginContract.View {
+class LoginActivity : BaseActivity<LoginContract.View, LoginCallerContract.Caller, LoginContract.Presenter>(), LoginContract.View {
     override val mPresenter: LoginContract.Presenter by lazy { LoginPresenter() }
     private lateinit var mLoadingDialog: ProgressDialog
     private lateinit var keyManager: OMGKeyManager
@@ -48,7 +49,7 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
         btnLogin.setOnClickListener {
             val request = Login.Request(etEmail.text.toString(), etPassword.text.toString())
             if (mPresenter.validateEmail(request.email) && mPresenter.validatePassword(request.password)) {
-                mPresenter.handleLogin(request)
+                mPresenter.caller?.login(request)
             }
         }
         val clickSpan = object : ClickableSpan() {

@@ -13,11 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import co.omisego.omgshop.R
+import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.dialog_redeem.*
 import kotlinx.android.synthetic.main.dialog_redeem.view.*
 
-class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, RedeemDialogContract.Presenter>(), RedeemDialogContract.View {
+class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseContract.BaseCaller, RedeemDialogContract.Presenter>(), RedeemDialogContract.View {
 
     override val mPresenter: RedeemDialogContract.Presenter by lazy { RedeemDialogPresenter() }
     private var mRedeemDialogListener: RedeemDialogListener? = null

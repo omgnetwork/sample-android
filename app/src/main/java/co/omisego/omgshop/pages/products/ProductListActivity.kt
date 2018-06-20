@@ -23,6 +23,7 @@ import co.omisego.omgshop.extensions.thousandSeparator
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.CheckoutActivity
+import co.omisego.omgshop.pages.products.caller.ProductListCallerContract
 import co.omisego.omgshop.pages.profile.MyProfileActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.activity_product_list.*
 import kotlinx.android.synthetic.main.view_loading.*
 import kotlinx.android.synthetic.main.viewholder_product.view.*
 
-class ProductListActivity : BaseActivity<ProductListContract.View, ProductListContract.Presenter>(), ProductListContract.View {
+class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCallerContract.Caller, ProductListContract.Presenter>(), ProductListContract.View {
     private lateinit var adapter: ProductListRecyclerAdapter
     override val mPresenter: ProductListContract.Presenter by lazy {
         ProductListPresenter()
@@ -53,7 +54,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        mPresenter.fetchProductList()
+        mPresenter.caller?.loadProductList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

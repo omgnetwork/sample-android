@@ -11,22 +11,30 @@ import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
 import co.omisego.omgshop.helpers.Contextor.context
-import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.helpers.Validator
-import co.omisego.omgshop.models.Register
-import co.omisego.omgshop.network.CombinedAPIManager
+import co.omisego.omgshop.models.Credential
+import co.omisego.omgshop.models.Response
+import co.omisego.omgshop.pages.register.caller.RegisterCaller
+import co.omisego.omgshop.pages.register.caller.RegisterCallerContract
 
-class RegisterPresenter(private val validator: Validator = Validator()) : BasePresenterImpl<RegisterContract.View>(), RegisterContract.Presenter {
-    override fun handleRegister(request: Register.Request) {
-        mCompositeSubscription += CombinedAPIManager.register(request)
-            .doOnSubscribe { mView?.showLoading() }
-            .doFinally { mView?.hideLoading() }
-            .subscribe({
-                Preference.saveCredential(it.data)
-                mView?.showRegisterSuccess(it.data)
-            }, {
-                mView?.showRegisterFailed(it.errorResponse().data)
-            })
+class RegisterPresenter(
+    private val validator: Validator = Validator()
+) : BasePresenterImpl<RegisterContract.View, RegisterCallerContract.Caller>(), RegisterContract.Presenter, RegisterCallerContract.Handler {
+
+    override var caller: RegisterCallerContract.Caller? = RegisterCaller(this)
+
+    override fun handleRegisterFailed(error: Throwable) {
+        mView?.hideLoading()
+        mView?.showRegisterFailed(error.errorResponse().data)
+    }
+
+    override fun handleRegisterSuccess(response: Response<Credential>) {
+        mView?.hideLoading()
+        mView?.showRegisterSuccess(response.data)
+    }
+
+    override fun showLoading() {
+        mView?.showLoading()
     }
 
     override fun validateEmail(email: String): Boolean {

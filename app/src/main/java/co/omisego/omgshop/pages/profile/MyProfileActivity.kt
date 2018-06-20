@@ -21,12 +21,13 @@ import android.view.ViewGroup
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.pages.login.LoginActivity
+import co.omisego.omgshop.pages.profile.caller.MyProfileCallerContract
 import co.omisego.omisego.model.Balance
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.view_loading.*
 import kotlinx.android.synthetic.main.viewholder_content_my_profile.view.*
 
-class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract.Presenter>(), MyProfileContract.View {
+class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileCallerContract.Caller, MyProfileContract.Presenter>(), MyProfileContract.View {
 
     override val mPresenter: MyProfileContract.Presenter by lazy {
         MyProfilePresenter()
@@ -57,10 +58,9 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileContract
         recyclerView.adapter = myProfileContentAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        tvLogout.setOnClickListener { mPresenter.logout() }
+        tvLogout.setOnClickListener { mPresenter.caller?.logout() }
 
-        mPresenter.loadWallets()
-        mPresenter.loadUser()
+        mPresenter.caller?.loadUser()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

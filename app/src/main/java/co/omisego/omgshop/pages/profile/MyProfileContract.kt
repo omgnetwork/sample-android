@@ -8,6 +8,7 @@ package co.omisego.omgshop.pages.profile
  */
 
 import co.omisego.omgshop.base.BaseContract
+import co.omisego.omgshop.pages.profile.caller.MyProfileCallerContract
 import co.omisego.omisego.model.Balance
 
 interface MyProfileContract {
@@ -20,11 +21,8 @@ interface MyProfileContract {
         fun hideLoadingDialog()
     }
 
-    interface Presenter : BaseContract.BasePresenter<View> {
-        fun loadWallets()
-        fun loadUser()
+    interface Presenter : BaseContract.BasePresenter<View, MyProfileCallerContract.Caller> {
         fun saveSelectedToken(balance: Balance)
-        fun logout()
         fun getCurrentToken(): Balance?
     }
 }

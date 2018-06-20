@@ -11,30 +11,18 @@ import android.util.Log
 import co.omisego.omgshop.extensions.isAuthError
 import co.omisego.omgshop.models.Error
 import co.omisego.omisego.model.APIError
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 
-abstract class BasePresenterImpl<V : BaseContract.BaseView> : BaseContract.BasePresenter<V> {
+abstract class BasePresenterImpl<V : BaseContract.BaseView, C : BaseContract.BaseCaller> : BaseContract.BasePresenter<V, C> {
     protected var mView: V? = null
-    protected var mCompositeSubscription: CompositeDisposable? = null
 
     override fun attachView(view: V) {
-        mCompositeSubscription = CompositeDisposable()
         mView = view
+        caller?.createCompositeSubscription()
     }
 
     override fun detachView() {
         mView = null
-        mCompositeSubscription?.dispose()
-        mCompositeSubscription = null
-    }
-
-    override fun CompositeDisposable?.plusAssign(d: Disposable) {
-        mCompositeSubscription?.add(d)
-    }
-
-    override fun unsubscription() {
-        mCompositeSubscription?.clear()
+        caller?.disposeCompositeSubscription()
     }
 
     override fun goBackToLoginIfNeeded(error: APIError) {

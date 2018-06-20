@@ -18,7 +18,7 @@ import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.pages.login.LoginActivity
 
 @Suppress("UNCHECKED_CAST")
-abstract class BaseActivity<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : AppCompatActivity(), BaseContract.BaseView {
+abstract class BaseActivity<in V : BaseContract.BaseView, C: BaseContract.BaseCaller, out P : BaseContract.BasePresenter<V, C>> : AppCompatActivity(), BaseContract.BaseView {
     protected abstract val mPresenter: P
     private var mLoadingView: View? = null
 

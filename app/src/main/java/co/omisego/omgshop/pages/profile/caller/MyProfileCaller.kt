@@ -1,5 +1,6 @@
 package co.omisego.omgshop.pages.profile.caller
 
+import co.omisego.omgshop.base.BaseCaller
 import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.network.CombinedAPIManager
@@ -13,13 +14,19 @@ import co.omisego.omgshop.network.CombinedAPIManager
 class MyProfileCaller(
     private val handler: MyProfileCallerContract.Handler,
     override val credential: Credential = Preference.loadCredential()
-) : MyProfileCallerContract.Caller {
-    override fun loadUser(authToken: String) =
+) : BaseCaller(), MyProfileCallerContract.Caller {
+    override fun loadUser(authToken: String) {
+        handler.showLoading(dialog = false)
         CombinedAPIManager.loadUser(authToken, handler::handleLoadUserFailed, handler::handleLoadUserSuccess)
+    }
 
-    override fun loadWallets(authToken: String) =
+    override fun loadWallets(authToken: String) {
+        handler.showLoading(dialog = false)
         CombinedAPIManager.getWallets(authToken, handler::handleLoadWalletFailed, handler::handleLoadWalletSuccess)
+    }
 
-    override fun logout(authToken: String) =
+    override fun logout(authToken: String) {
+        handler.showLoading(dialog = true)
         CombinedAPIManager.logout(authToken, handler::handleLogoutFailed, handler::handleLogoutSuccess)
+    }
 }

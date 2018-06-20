@@ -9,8 +9,8 @@ package co.omisego.omgshop.pages.checkout
 
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.models.Product
+import co.omisego.omgshop.pages.checkout.caller.CheckoutCallerContract
 import co.omisego.omisego.model.Balance
-import java.math.BigDecimal
 
 interface CheckoutContract {
     interface View : BaseContract.BaseView {
@@ -23,8 +23,7 @@ interface CheckoutContract {
         fun setDiscount(discount: Int)
     }
 
-    interface Presenter : BaseContract.BasePresenter<View> {
-        fun pay(tokenValue: BigDecimal, productId: String)
+    interface Presenter : BaseContract.BasePresenter<View, CheckoutCallerContract.Caller> {
         fun redeem()
         fun calculateTotal(subTotal: Double, discount: Double)
         fun handleProductDetail(productItem: Product.Get.Item)

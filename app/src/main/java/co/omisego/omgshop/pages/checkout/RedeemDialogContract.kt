@@ -16,7 +16,7 @@ interface RedeemDialogContract {
         fun sendDiscountToCheckoutPage(discount: Int)
     }
 
-    interface Presenter : BaseContract.BasePresenter<View> {
+    interface Presenter : BaseContract.BasePresenter<View, BaseContract.BaseCaller> {
         fun redeemChanged(value: Int, symbol: String)
         fun handleClickRedeem()
     }

@@ -22,12 +22,18 @@ interface BaseContract {
         fun clearTokenAndGotoLogin()
     }
 
-    interface BasePresenter<in V : BaseView> {
+    interface BasePresenter<in V : BaseView, C : BaseCaller> {
+        var caller: C?
         fun attachView(view: V)
         fun detachView()
-        fun unsubscription()
         fun goBackToLoginIfNeeded(error: APIError)
         fun goBackToLoginIfNeeded(error: Error)
+    }
+
+    interface BaseCaller {
+        fun createCompositeSubscription()
+        fun disposeCompositeSubscription()
+        fun unsubscription()
         operator fun CompositeDisposable?.plusAssign(d: Disposable)
     }
 }

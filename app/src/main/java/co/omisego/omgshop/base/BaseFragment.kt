@@ -15,7 +15,7 @@ import android.widget.Toast
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-abstract class BaseFragment<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : Fragment(), BaseContract.BaseView {
+abstract class BaseFragment<in V : BaseContract.BaseView, C : BaseContract.BaseCaller, out P : BaseContract.BasePresenter<V, C>> : Fragment(), BaseContract.BaseView {
     protected abstract val mPresenter: P
     private var mLoadingView: View? = null
 

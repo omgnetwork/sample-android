@@ -1,5 +1,6 @@
 package co.omisego.omgshop.pages.checkout
 
+import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.base.BasePresenterImpl
 
 /**
@@ -9,7 +10,8 @@ import co.omisego.omgshop.base.BasePresenterImpl
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-class RedeemDialogPresenter : BasePresenterImpl<RedeemDialogContract.View>(), RedeemDialogContract.Presenter {
+class RedeemDialogPresenter : BasePresenterImpl<RedeemDialogContract.View, BaseContract.BaseCaller>(), RedeemDialogContract.Presenter {
+    override var caller: BaseContract.BaseCaller? = null
     private var mRedeemValue: Int = 0
 
     override fun handleClickRedeem() {

@@ -19,7 +19,7 @@ import android.view.WindowManager
 import android.widget.Toast
 
 @Suppress("UNCHECKED_CAST")
-abstract class BaseDialogFragment<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : DialogFragment(), BaseContract.BaseView {
+abstract class BaseDialogFragment<in V : BaseContract.BaseView, C : BaseContract.BaseCaller, out P : BaseContract.BasePresenter<V, C>> : DialogFragment(), BaseContract.BaseView {
     protected abstract val mPresenter: P
     private lateinit var mLoadingView: View
 

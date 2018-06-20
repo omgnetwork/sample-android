@@ -13,14 +13,16 @@ import android.view.MenuItem
 import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
+import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Product
+import co.omisego.omgshop.pages.checkout.caller.CheckoutCallerContract
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_checkout.*
 import java.math.BigDecimal
 
-class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Presenter>(), CheckoutContract.View {
+class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContract.Caller, CheckoutContract.Presenter>(), CheckoutContract.View {
     override val mPresenter: CheckoutContract.Presenter by lazy { CheckoutPresenter() }
     private lateinit var mProductItem: Product.Get.Item
     private var mDiscount: Int = 0
@@ -54,7 +56,10 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
 
         btnPay.setOnClickListener {
             val subUnitToUnit = mPresenter.getCurrentTokenBalance().token.subunitToUnit
-            mPresenter.pay(tokenValue = subUnitToUnit.multiply(BigDecimal.valueOf(mDiscount.toDouble())), productId = mProductItem.id)
+            val tokenId = Preference.loadSelectedTokenBalance()?.token?.id ?: ""
+            val tokenValue = subUnitToUnit.multiply(BigDecimal.valueOf(mDiscount.toDouble()))
+            val productId = mProductItem.id
+            mPresenter.caller?.buy(Product.Buy.Request(tokenId, tokenValue, productId))
         }
 
         log(mProductItem.toString())

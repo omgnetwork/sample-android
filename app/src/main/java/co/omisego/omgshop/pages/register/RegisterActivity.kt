@@ -18,12 +18,11 @@ import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Register
 import co.omisego.omgshop.pages.products.ProductListActivity
+import co.omisego.omgshop.pages.register.caller.RegisterCallerContract
 import kotlinx.android.synthetic.main.activity_register.*
 
-class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Presenter>(), RegisterContract.View {
-    override val mPresenter: RegisterContract.Presenter by lazy {
-        RegisterPresenter()
-    }
+class RegisterActivity : BaseActivity<RegisterContract.View, RegisterCallerContract.Caller, RegisterContract.Presenter>(), RegisterContract.View {
+    override val mPresenter: RegisterContract.Presenter by lazy { RegisterPresenter() }
     private lateinit var mProgressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +57,7 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
                     email,
                     password
                 )
-                mPresenter.handleRegister(request)
+                mPresenter.caller?.register(request)
             }
         }
 

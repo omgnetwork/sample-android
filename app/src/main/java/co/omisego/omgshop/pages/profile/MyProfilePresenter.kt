@@ -19,20 +19,10 @@ import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.User
 import co.omisego.omisego.model.WalletList
 
-class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View>(), MyProfileContract.Presenter, MyProfileCallerContract.Handler {
-    private val caller by lazy { MyProfileCaller(this) }
-
-    override fun loadWallets() {
-        mView?.showLoading()
-        caller.loadWallets()
-    }
-
-    override fun logout() {
-        mView?.showLoadingDialog()
-        caller.logout()
-    }
-
-    override fun loadUser() = caller.loadUser()
+class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCallerContract.Caller>(),
+    MyProfileContract.Presenter,
+    MyProfileCallerContract.Handler {
+    override var caller: MyProfileCallerContract.Caller? = MyProfileCaller(this)
 
     override fun saveSelectedToken(balance: Balance) {
         Preference.saveSelectedTokenBalance(balance)
@@ -44,6 +34,7 @@ class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View>(), MyProfil
     }
 
     override fun handleLoadWalletSuccess(response: OMGResponse<WalletList>) {
+        mView?.hideLoading()
         // If user doesn't select default minted token, then set default value to the first item.
         var selectedToken = getCurrentToken()
 
@@ -56,31 +47,41 @@ class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View>(), MyProfil
         // update UI
         val balances = response.data.data.flatMap { it.balances }
         mView?.showBalances(balances)
-        mView?.hideLoading()
     }
 
     override fun handleLoadWalletFailed(error: OMGResponse<APIError>) {
-        mView?.showMessage(error.data.description)
         mView?.hideLoading()
+        mView?.showMessage(error.data.description)
     }
 
     override fun handleLogoutFailed(error: OMGResponse<APIError>) {
-        mView?.showMessage(error.data.description)
         mView?.hideLoadingDialog()
+        mView?.showMessage(error.data.description)
     }
 
     override fun handleLogoutSuccess(response: OMGResponse<Logout>) {
+        mView?.hideLoadingDialog()
         Preference.saveCredential(Credential("", "", ""))
         Preference.saveSelectedTokenBalance(null)
-        mView?.hideLoadingDialog()
         mView?.showLogout()
     }
 
     override fun handleLoadUserSuccess(response: OMGResponse<User>) {
+        mView?.hideLoading()
         mView?.showUsername(response.data.username)
+        caller?.loadWallets()
     }
 
     override fun handleLoadUserFailed(error: OMGResponse<APIError>) {
+        mView?.hideLoading()
         mView?.showMessage(error.data.description)
+        caller?.loadWallets()
+    }
+
+    override fun showLoading(dialog: Boolean) {
+        if (dialog)
+            mView?.showLoadingDialog()
+        else
+            mView?.showLoading()
     }
 }

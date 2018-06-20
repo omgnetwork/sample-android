@@ -6,8 +6,10 @@ import co.omisego.omgshop.extensions.errorResponse
 import co.omisego.omgshop.helpers.Contextor.context
 import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.helpers.Validator
-import co.omisego.omgshop.models.Login
-import co.omisego.omgshop.network.CombinedAPIManager
+import co.omisego.omgshop.models.Credential
+import co.omisego.omgshop.models.Response
+import co.omisego.omgshop.pages.login.caller.LoginCaller
+import co.omisego.omgshop.pages.login.caller.LoginCallerContract
 
 /**
  * OmiseGO
@@ -18,23 +20,28 @@ import co.omisego.omgshop.network.CombinedAPIManager
 
 class LoginPresenter(
     private val validator: Validator = Validator()
-) : BasePresenterImpl<LoginContract.View>(), LoginContract.Presenter {
-    override fun handleLogin(request: Login.Request) {
-        mCompositeSubscription += CombinedAPIManager.login(request)
-            .doOnSubscribe { mView?.showLoading() }
-            .doFinally { mView?.hideLoading() }
-            .subscribe({
-                Preference.saveCredential(it.data)
-                mView?.showLoginSuccess(it.data)
-            }, {
-                it.printStackTrace()
-                mView?.showMessage(it.errorResponse().data.description)
-                mView?.showLoginFailed(it.errorResponse().data)
-            })
+) : BasePresenterImpl<LoginContract.View, LoginCallerContract.Caller>(), LoginContract.Presenter, LoginCallerContract.Handler {
+    override var caller: LoginCallerContract.Caller? = LoginCaller(this)
+
+    override fun handleLoginSuccess(response: Response<Credential>) {
+        mView?.hideLoading()
+        Preference.saveCredential(response.data)
+        mView?.showLoginSuccess(response.data)
+    }
+
+    override fun handleLoginFailed(error: Throwable) {
+        mView?.hideLoading()
+        error.printStackTrace()
+        mView?.showMessage(error.errorResponse().data.description)
+        mView?.showLoginFailed(error.errorResponse().data)
     }
 
     override fun handleClickRegisterButton() {
         mView?.showRegister()
+    }
+
+    override fun showLoading() {
+        mView?.showLoading()
     }
 
     override fun checkHasLogin() {

@@ -10,6 +10,7 @@ package co.omisego.omgshop.pages.products
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Product
+import co.omisego.omgshop.pages.products.caller.ProductListCallerContract
 
 interface ProductListContract {
     interface View : BaseContract.BaseView {
@@ -18,8 +19,7 @@ interface ProductListContract {
         fun showClickProductItem(item: Product.Get.Item)
     }
 
-    interface Presenter : BaseContract.BasePresenter<View> {
-        fun fetchProductList()
+    interface Presenter : BaseContract.BasePresenter<View, ProductListCallerContract.Caller> {
         fun handleClickProductItem(itemId: String)
     }
 }
