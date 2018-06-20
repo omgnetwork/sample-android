@@ -79,9 +79,7 @@ class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCa
     }
 
     override fun showLoading(dialog: Boolean) {
-        if (dialog)
-            mView?.showLoadingDialog()
-        else
-            mView?.showLoading()
+        if (dialog) mView?.showLoadingDialog()
+        else mView?.showLoading()
     }
 }

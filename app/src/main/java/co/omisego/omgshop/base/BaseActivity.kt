@@ -13,12 +13,15 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import co.omisego.omgshop.base.BaseContract.BaseCaller
+import co.omisego.omgshop.base.BaseContract.BasePresenter
+import co.omisego.omgshop.base.BaseContract.BaseView
 import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.pages.login.LoginActivity
 
 @Suppress("UNCHECKED_CAST")
-abstract class BaseActivity<in V : BaseContract.BaseView, C: BaseContract.BaseCaller, out P : BaseContract.BasePresenter<V, C>> : AppCompatActivity(), BaseContract.BaseView {
+abstract class BaseActivity<in V : BaseView, C : BaseCaller, out P : BasePresenter<V, C>> : AppCompatActivity(), BaseView {
     protected abstract val mPresenter: P
     private var mLoadingView: View? = null
 
