@@ -1,6 +1,6 @@
 package co.omisego.omgshop.pages.checkout
 
-import co.omisego.androidsdk.models.MintedToken
+import co.omisego.omisego.models.MintedToken
 import co.omisego.omgshop.base.BaseContract
 
 

@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import co.omisego.androidsdk.models.Balance
+import co.omisego.omisego.models.Balance
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.helpers.SharePrefsManager

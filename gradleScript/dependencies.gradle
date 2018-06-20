@@ -60,4 +60,8 @@ ext {
     espresso = [
             core: "com.android.support.test.espresso:espresso-core:3.0.1",
     ]
+
+    omisego = [
+            sdk: "co.omisego:omisego-sdk:0.8.0",
+    ]
 }
