@@ -23,8 +23,8 @@ import co.omisego.omisego.model.WalletList
  */
 
 class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCallerContract.Caller>(),
-    CheckoutContract.Presenter,
-    CheckoutCallerContract.Handler {
+        CheckoutContract.Presenter,
+        CheckoutCallerContract.Handler {
     override var caller: CheckoutCallerContract.Caller? = CheckoutCaller(this)
 
     override fun handleBuySuccess(response: Response<Credential>) {

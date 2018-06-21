@@ -7,13 +7,14 @@ ext {
     rxandroid = '2.0.1'
     glide = '4.5.0'
     okhttp3 = '3.9.1'
-    
+
     omisego = [
         sdk: "co.omisego:omisego-sdk:${omisego}",
     ]
     supportDependencies = [
         design   : "com.android.support:design:${supportLibrary}",
         appCompat: "com.android.support:appcompat-v7:${supportLibrary}",
+        cardView : "com.android.support:cardview-v7:${supportLibrary}"
     ]
     kotlinDependencies = [
         stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlin}",
@@ -48,9 +49,5 @@ ext {
     ]
     espresso = [
         core: "com.android.support.test.espresso:espresso-core:3.0.1",
-    ]
-
-    omisego = [
-            sdk: "co.omisego:omisego-sdk:0.9.0",
     ]
 }

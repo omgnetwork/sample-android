@@ -5,7 +5,7 @@
     <color name="colorAccent">#6d7fff</color>
     <color name="colorWhite">#FAFAFA</color>
     <color name="colorBlack">#212121</color>
-    <color name="colorGray">#BDBDBD</color>
+    <color name="colorGray">#EEEEEE</color>
     <color name="colorGreen">#75e900</color>
     <color name="colorRed">#f44336</color>
 </resources>

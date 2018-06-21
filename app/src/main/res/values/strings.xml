@@ -19,6 +19,7 @@
   <string name="activity_register_register">Register</string>
   <string name="activity_register_toolbar_title">Register</string>
   <string name="activity_product_list_toolbar_title">Products</string>
+  <string name="activity_transaction_history_list_toolbar_title">Transaction history</string>
   <string name="activity_register_loading_dialog_title">Please wait</string>
   <string name="activity_register_loading_dialog_message">Registering…</string>
   <string name="activity_register_email_error_validation">Email address is not valid</string>
@@ -62,4 +63,5 @@
   <string name="menu_profile">Profile</string>
   <string name="menu_profile_history">History</string>
   <string name="viewholder_product_content_description_tshirt">T-shirt</string>
+  <string name="activity_transaction_history_my_address">My address:</string>
 </resources>

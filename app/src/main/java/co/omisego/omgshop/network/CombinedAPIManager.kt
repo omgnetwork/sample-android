@@ -1,15 +1,14 @@
 package co.omisego.omgshop.network
 
-import co.omisego.omgshop.models.Credential
-import co.omisego.omgshop.models.Login
-import co.omisego.omgshop.models.Product
-import co.omisego.omgshop.models.Register
-import co.omisego.omgshop.models.Response
+import co.omisego.omgshop.models.*
 import co.omisego.omisego.custom.OMGCallback
 import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.Logout
 import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.WalletList
+import co.omisego.omisego.model.pagination.PaginationList
+import co.omisego.omisego.model.transaction.list.Transaction
+import co.omisego.omisego.model.transaction.list.TransactionListParams
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -23,9 +22,9 @@ import io.reactivex.schedulers.Schedulers
 
 object CombinedAPIManager {
     inline fun getWallets(
-        authToken: String,
-        crossinline fail: (OMGResponse<APIError>) -> Unit,
-        crossinline success: (OMGResponse<WalletList>) -> Unit
+            authToken: String,
+            crossinline fail: (OMGResponse<APIError>) -> Unit,
+            crossinline success: (OMGResponse<WalletList>) -> Unit
     ) {
         ClientProvider.provideOMGClient(authToken).client.getWallets()
             .enqueue(object : OMGCallback<WalletList> {
@@ -35,65 +34,83 @@ object CombinedAPIManager {
     }
 
     inline fun loadUser(
-        authToken: String,
-        crossinline fail: (OMGResponse<APIError>) -> Unit,
-        crossinline success: (OMGResponse<co.omisego.omisego.model.User>) -> Unit
+            authToken: String,
+            crossinline fail: (OMGResponse<APIError>) -> Unit,
+            crossinline success: (OMGResponse<co.omisego.omisego.model.User>) -> Unit
     ) {
         ClientProvider.provideOMGClient(authToken).client.getCurrentUser()
-            .enqueue(object : OMGCallback<co.omisego.omisego.model.User> {
-                override fun fail(response: OMGResponse<APIError>) {
-                    fail.invoke(response)
-                }
+                .enqueue(object : OMGCallback<co.omisego.omisego.model.User> {
+                    override fun fail(response: OMGResponse<APIError>) {
+                        fail.invoke(response)
+                    }
 
-                override fun success(response: OMGResponse<co.omisego.omisego.model.User>) {
-                    success.invoke(response)
-                }
-            })
+                    override fun success(response: OMGResponse<co.omisego.omisego.model.User>) {
+                        success.invoke(response)
+                    }
+                })
     }
 
     inline fun logout(
-        authToken: String,
-        crossinline fail: (OMGResponse<APIError>) -> Unit,
-        crossinline success: (OMGResponse<Logout>) -> Unit
+            authToken: String,
+            crossinline fail: (OMGResponse<APIError>) -> Unit,
+            crossinline success: (OMGResponse<Logout>) -> Unit
     ) {
         ClientProvider.provideOMGClient(authToken).client.logout()
-            .enqueue(object : OMGCallback<Logout> {
-                override fun fail(response: OMGResponse<APIError>) {
-                    fail.invoke(response)
-                }
+                .enqueue(object : OMGCallback<Logout> {
+                    override fun fail(response: OMGResponse<APIError>) {
+                        fail.invoke(response)
+                    }
 
-                override fun success(response: OMGResponse<Logout>) {
-                    success.invoke(response)
-                }
-            })
+                    override fun success(response: OMGResponse<Logout>) {
+                        success.invoke(response)
+                    }
+                })
+    }
+
+    inline fun getTransactions(
+            authToken: String,
+            request: TransactionListParams,
+            crossinline fail: (OMGResponse<APIError>) -> Unit,
+            crossinline success: (OMGResponse<PaginationList<Transaction>>) -> Unit
+    ) {
+        ClientProvider.provideOMGClient(authToken).client.getTransactions(request)
+                .enqueue(object : OMGCallback<PaginationList<Transaction>> {
+                    override fun fail(response: OMGResponse<APIError>) {
+                        fail.invoke(response)
+                    }
+
+                    override fun success(response: OMGResponse<PaginationList<Transaction>>) {
+                        success.invoke(response)
+                    }
+                })
     }
 
     fun getProductList(credential: Credential): Observable<Response<Product.Get.Response>> {
         val (userId, authenticationToken) = credential
         return ClientProvider.provideShopClient(userId, authenticationToken).client
-            .getProducts()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+                .getProducts()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun buy(credential: Credential, request: Product.Buy.Request): Observable<Response<Nothing>> {
         return ClientProvider.provideShopClient(credential.userId, credential.authenticationToken).client
-            .buy(request)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+                .buy(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun login(request: Login.Request): Observable<Response<Credential>> {
         return ClientProvider.provideShopClient().client
-            .login(request)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+                .login(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun register(request: Register.Request): Observable<Response<Credential>> {
         return ClientProvider.provideShopClient().client
-            .signup(request)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+                .signup(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 }

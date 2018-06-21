@@ -42,6 +42,7 @@ dependencies {
     implementation kotlinDependencies.stdlib
     implementation supportDependencies.appCompat
     implementation supportDependencies.design
+    implementation supportDependencies.cardView
     implementation retrofitDependencies.retrofit
     implementation retrofitDependencies.converterGson
     implementation retrofitDependencies.adapterRxJava2

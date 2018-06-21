@@ -1,21 +1,40 @@
 package co.omisego.omgshop.pages.history
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import co.omisego.omgshop.R
-import kotlinx.android.synthetic.main.activity_my_profile.*
+import co.omisego.omgshop.base.BaseActivity
+import co.omisego.omgshop.extensions.logi
+import co.omisego.omgshop.helpers.GsonProvider
+import co.omisego.omgshop.models.TransactionDirection
+import co.omisego.omgshop.models.TransactionHistory
+import co.omisego.omgshop.models.TransactionRecord
+import co.omisego.omgshop.pages.checkout.caller.TransactionHistoryCallerContract
+import co.omisego.omisego.model.transaction.list.TransactionListParams
+import kotlinx.android.synthetic.main.activity_transaction_history.*
+import kotlinx.android.synthetic.main.viewholder_transaction_record.view.*
 
-class TransactionHistoryActivity : AppCompatActivity() {
+class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View, TransactionHistoryCallerContract.Caller, TransactionHistoryContract.Presenter>(), TransactionHistoryContract.View {
+    override val mPresenter: TransactionHistoryContract.Presenter by lazy { TransactionHistoryPresenter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_history)
+        setupToolbar()
+        setupRecyclerView()
+        mPresenter.caller?.loadTransactionList(TransactionListParams.create(searchTerm = null))
+    }
 
+    private fun getJson(): String {
         val mockJson = """
-            {
+    {
   "data": [
     {
       "transaction_id": "495a196e-fe0d-4fa0-a11a-6b8b206e45b6",
@@ -140,22 +159,80 @@ class TransactionHistoryActivity : AppCompatActivity() {
   ]
 }
         """.trimIndent()
-
-        recyclerView.adapter
+        return mockJson
     }
 
-    inner class TransactionHistoryAdapter : RecyclerView.Adapter<TransactionHistoryAdapter.TransactionHistoryViewHolder>() {
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.activity_transaction_history_list_toolbar_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun setupRecyclerView() {
+        val transactionHistory = GsonProvider.create().fromJson(getJson(), TransactionHistory::class.java)
+        recyclerView.adapter = TransactionHistoryAdapter(transactionHistory.data)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun showTransactionList(transactionList: List<TransactionRecord>) {
+        // Do something
+        logi("Show transaction list: $transactionList")
+    }
+
+    override fun showLoadTransactionListFail() {
+        // Do something
+        logi("Failed to fetch transaction list")
+    }
+
+    inner class TransactionHistoryAdapter(private val transactionList: List<TransactionRecord>) : RecyclerView.Adapter<TransactionHistoryAdapter.TransactionHistoryViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionHistoryViewHolder {
+            val rootView = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_transaction_record, parent, false)
+            return TransactionHistoryViewHolder(rootView)
         }
 
-        override fun getItemCount(): Int {
-        }
+        override fun getItemCount() = transactionList.size
 
         override fun onBindViewHolder(holder: TransactionHistoryViewHolder, position: Int) {
+            holder.bindItem(transactionList[position])
         }
 
         inner class TransactionHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            fun bindItem(record: TransactionRecord) {
+                with(record) {
+                    itemView.tvTransactionId.text = transactionId
+                    itemView.tvTransactionDirection.text = transactionDirection.value.capitalize()
+                    itemView.tvTransactionDate.text = transactionDateTime
+                    itemView.tvTransactionAmount.text = transactionAmount
 
+                    colorizedTransactionAmount(transactionDirection)
+                    prefixTransactionAmountByDirection(transactionDirection)
+                }
+            }
+
+            private fun colorizedTransactionAmount(direction: TransactionDirection) {
+                val color = when (direction) {
+                    TransactionDirection.FROM -> ContextCompat.getColor(itemView.context, R.color.colorGreen)
+                    TransactionDirection.TO -> ContextCompat.getColor(itemView.context, R.color.colorRed)
+                }
+                itemView.tvTransactionAmount.setTextColor(color)
+            }
+
+            private fun prefixTransactionAmountByDirection(direction: TransactionDirection) {
+                val amount = itemView.tvTransactionAmount.text
+                val prefix = when (direction) {
+                    TransactionDirection.FROM -> "+"
+                    TransactionDirection.TO -> "-"
+                }
+                itemView.tvTransactionAmount.text = "$prefix $amount"
+            }
         }
     }
 }

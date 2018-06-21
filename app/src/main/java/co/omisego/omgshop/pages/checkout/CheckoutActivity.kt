@@ -66,6 +66,8 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
         mPresenter.handleProductDetail(mProductItem)
         mPresenter.calculateTotal(mProductItem.price.toDouble(), 0.0)
         mPresenter.resolveRedeemButtonName()
+
+        mPresenter.checkIfBalanceAvailable()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
