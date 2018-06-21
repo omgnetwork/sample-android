@@ -1,7 +1,5 @@
 package co.omisego.omgshop.models
 
-import com.google.gson.annotations.SerializedName
-
 /**
  * OmiseGO
  *
@@ -11,9 +9,9 @@ import com.google.gson.annotations.SerializedName
 
 object Register {
     data class Request(
-        @SerializedName("first_name") val firstName: String,
-        @SerializedName("last_name") val lastName: String,
-        @SerializedName("email") val email: String,
-        @SerializedName("password") val password: String
+        val firstName: String,
+        val lastName: String,
+        val email: String,
+        val password: String
     )
 }

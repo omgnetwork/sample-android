@@ -9,7 +9,6 @@ package co.omisego.omgshop.models
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import java.math.BigDecimal
 
@@ -25,14 +24,14 @@ object Product {
             val id: String,
             val name: String,
             val description: String,
-            @SerializedName("image_url") val imageUrl: String,
+            val imageUrl: String,
             val price: Int
         ) : Parcelable
     }
 
     object Buy {
         data class Request(
-            @SerializedName("token_id") val tokenId: String,
+            val tokenId: String,
             val tokenValue: BigDecimal,
             val productId: String
         )
