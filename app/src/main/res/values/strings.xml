@@ -20,6 +20,7 @@
     <string name="activity_register_toolbar_title">Register</string>
     <string name="activity_product_list_toolbar_title">Products</string>
     <string name="activity_transaction_history_list_toolbar_title">Transaction history</string>
+    <string name="activity_qr_code_toolbar_title">QR Code</string>
     <string name="activity_register_loading_dialog_title">Please wait</string>
     <string name="activity_register_loading_dialog_message">Registering…</string>
     <string name="activity_register_email_error_validation">Email address is not valid</string>
@@ -62,11 +63,14 @@
 
     <string name="menu_profile">Profile</string>
     <string name="menu_profile_history">History</string>
-    <string name="viewholder_product_content_description_tshirt">T-shirt</string>
     <string name="activity_transaction_history_my_address">My address:</string>
     <string name="load_more">Load next %d items</string>
     <string name="load_more_disable">No more transactions left</string>
     <string name="transaction_status">- %s</string>
     <string name="transaction_amount_to">- %s %s</string>
     <string name="transaction_amount_from">+ %s %s</string>
+    <string name="menu_scan">Scan</string>
+    <string name="viewholder_product_content_description_tshirt">T-shirt</string>
+    <string name="activity_qrcode_scan">Scan QR Code</string>
+    <string name="activity_qrcode_generate">Generate QR Code</string>
 </resources>

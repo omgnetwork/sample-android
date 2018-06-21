@@ -23,6 +23,7 @@ import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.extensions.thousandSeparator
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Product
+import co.omisego.omgshop.pages.qrcode.QRCodeActivity
 import co.omisego.omgshop.pages.checkout.CheckoutActivity
 import co.omisego.omgshop.pages.products.caller.ProductListCallerContract
 import co.omisego.omgshop.pages.profile.MyProfileActivity
@@ -67,6 +68,10 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCa
         when (item.itemId) {
             R.id.profile -> {
                 startActivity(Intent(this, MyProfileActivity::class.java))
+                return true
+            }
+            R.id.scan -> {
+                startActivity(Intent(this, QRCodeActivity::class.java))
                 return true
             }
         }
