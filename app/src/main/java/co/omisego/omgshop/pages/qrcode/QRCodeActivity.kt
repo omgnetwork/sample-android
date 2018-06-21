@@ -4,16 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import co.omisego.omgshop.R
 import co.omisego.omgshop.pages.scan.ScanActivity
+import co.omisego.omisego.model.transaction.request.TransactionRequest
 import kotlinx.android.synthetic.main.activity_qrcode.*
 
 class QRCodeActivity : AppCompatActivity() {
 
     companion object {
-        val REQUEST_CODE_SCAN = 100
+        const val REQUEST_CODE_SCAN = 100
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +33,11 @@ class QRCodeActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(resultCode == Activity.RESULT_OK){
-            when(requestCode){
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
                 REQUEST_CODE_SCAN -> {
-                    // do something
-                    Log.d("test", "Finish Scan QR")
+                    val transactionRequest = data?.getParcelableExtra<TransactionRequest>(ScanActivity.ACTIVITY_RESULT_TRANSACTION_REQUEST)
+                    // TODO: Go to consume transaction
                 }
             }
         }
