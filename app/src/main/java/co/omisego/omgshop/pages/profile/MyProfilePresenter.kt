@@ -16,7 +16,6 @@ import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.Balance
 import co.omisego.omisego.model.Logout
 import co.omisego.omisego.model.OMGResponse
-import co.omisego.omisego.model.User
 import co.omisego.omisego.model.WalletList
 
 class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCallerContract.Caller>(),
@@ -47,6 +46,7 @@ class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCa
         // update UI
         val balances = response.data.data.flatMap { it.balances }
         mView?.showBalances(balances)
+        mView?.showUsername(response.data.data[0].user?.username ?: "Cannot found the user")
     }
 
     override fun handleLoadWalletFailed(error: OMGResponse<APIError>) {
@@ -64,18 +64,6 @@ class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCa
         Preference.saveCredential(Credential("", "", ""))
         Preference.saveSelectedTokenBalance(null)
         mView?.showLogout()
-    }
-
-    override fun handleLoadUserSuccess(response: OMGResponse<User>) {
-        mView?.hideLoading()
-        mView?.showUsername(response.data.username)
-        caller?.loadWallets()
-    }
-
-    override fun handleLoadUserFailed(error: OMGResponse<APIError>) {
-        mView?.hideLoading()
-        mView?.showMessage(error.data.description)
-        caller?.loadWallets()
     }
 
     override fun showLoading(dialog: Boolean) {

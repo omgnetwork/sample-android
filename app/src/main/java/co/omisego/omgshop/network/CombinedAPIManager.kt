@@ -27,7 +27,7 @@ object CombinedAPIManager {
         crossinline fail: (OMGResponse<APIError>) -> Unit,
         crossinline success: (OMGResponse<WalletList>) -> Unit
     ) {
-        ClientProvider.provideOMGClient(authToken).client.listWallets()
+        ClientProvider.provideOMGClient(authToken).client.getWallets()
             .enqueue(object : OMGCallback<WalletList> {
                 override fun fail(response: OMGResponse<APIError>) = fail.invoke(response)
                 override fun success(response: OMGResponse<WalletList>) = success.invoke(response)

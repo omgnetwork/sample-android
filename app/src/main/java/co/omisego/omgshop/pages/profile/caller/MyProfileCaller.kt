@@ -15,11 +15,6 @@ class MyProfileCaller(
     private val handler: MyProfileCallerContract.Handler,
     override val credential: Credential = Preference.loadCredential()
 ) : BaseCaller(), MyProfileCallerContract.Caller {
-    override fun loadUser(authToken: String) {
-        handler.showLoading(dialog = false)
-        CombinedAPIManager.loadUser(authToken, handler::handleLoadUserFailed, handler::handleLoadUserSuccess)
-    }
-
     override fun loadWallets(authToken: String) {
         handler.showLoading(dialog = false)
         CombinedAPIManager.getWallets(authToken, handler::handleLoadWalletFailed, handler::handleLoadWalletSuccess)

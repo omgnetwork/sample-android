@@ -60,7 +60,7 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileCallerCo
 
         tvLogout.setOnClickListener { mPresenter.caller?.logout() }
 
-        mPresenter.caller?.loadUser()
+        mPresenter.caller?.loadWallets()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

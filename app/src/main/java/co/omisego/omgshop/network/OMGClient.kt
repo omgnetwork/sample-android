@@ -20,6 +20,7 @@ class OMGClient(
     private val eWalletClient by lazy {
         EWalletClient.Builder {
             clientConfiguration = ClientConfiguration(baseURL, apiKey, authToken)
+            debug = true
         }.build()
     }
 
