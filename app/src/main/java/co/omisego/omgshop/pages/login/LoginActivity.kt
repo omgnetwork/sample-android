@@ -42,6 +42,8 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginCallerContract.Calle
     private fun initInstance() {
         mPresenter.checkHasLogin()
 
+//        startActivity(Intent(this, QRCodeActivity::class.java))
+
         mLoadingDialog = ProgressDialog(this)
         mLoadingDialog.setTitle(R.string.activity_login_loading_dialog_title)
         mLoadingDialog.setMessage(getString(R.string.activity_login_loading_dialog_message))
