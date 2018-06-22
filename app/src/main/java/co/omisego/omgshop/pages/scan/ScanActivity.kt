@@ -46,6 +46,7 @@ class ScanActivity : AppCompatActivity(), OMGQRScannerContract.Callback {
             putExtra(ACTIVITY_RESULT_TRANSACTION_REQUEST, transactionRequest.data)
         }
         setResult(Activity.RESULT_OK, result)
+        finish()
     }
 
     override fun scannerDidFailToDecode(view: OMGQRScannerContract.View, exception: OMGResponse<APIError>) {

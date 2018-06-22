@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import co.omisego.omgshop.R
 import co.omisego.omgshop.pages.scan.ScanActivity
@@ -37,6 +38,7 @@ class QRCodeActivity : AppCompatActivity() {
             when (requestCode) {
                 REQUEST_CODE_SCAN -> {
                     val transactionRequest = data?.getParcelableExtra<TransactionRequest>(ScanActivity.ACTIVITY_RESULT_TRANSACTION_REQUEST)
+                    Log.d("test", transactionRequest?.toString())
                     // TODO: Go to consume transaction
                 }
             }
