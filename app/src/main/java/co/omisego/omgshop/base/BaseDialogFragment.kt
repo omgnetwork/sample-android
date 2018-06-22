@@ -1,5 +1,12 @@
 package co.omisego.omgshop.base
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
@@ -11,16 +18,8 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 
-
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
-
 @Suppress("UNCHECKED_CAST")
-abstract class BaseDialogFragment<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : DialogFragment(), BaseContract.BaseView {
+abstract class BaseDialogFragment<in V : BaseContract.BaseView, C : BaseContract.BaseCaller, out P : BaseContract.BasePresenter<V, C>> : DialogFragment(), BaseContract.BaseView {
     protected abstract val mPresenter: P
     private lateinit var mLoadingView: View
 
@@ -52,6 +51,8 @@ abstract class BaseDialogFragment<in V : BaseContract.BaseView, out P : BaseCont
     override fun showLoading() {
         mLoadingView.visibility = View.VISIBLE
     }
+
+    override fun clearTokenAndGotoLogin() {}
 
     override fun hideLoading() {
         mLoadingView.visibility = View.GONE

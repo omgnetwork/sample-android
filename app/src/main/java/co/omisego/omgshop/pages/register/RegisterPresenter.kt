@@ -1,33 +1,42 @@
 package co.omisego.omgshop.pages.register
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
 import co.omisego.omgshop.helpers.Contextor.context
-import co.omisego.omgshop.helpers.SharePrefsManager
+import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.helpers.Validator
-import co.omisego.omgshop.models.Register
-import co.omisego.omgshop.network.OMGApiManager
+import co.omisego.omgshop.models.Credential
+import co.omisego.omgshop.models.Response
+import co.omisego.omgshop.pages.register.caller.RegisterCaller
+import co.omisego.omgshop.pages.register.caller.RegisterCallerContract
 
+class RegisterPresenter(
+    private val validator: Validator = Validator()
+) : BasePresenterImpl<RegisterContract.View, RegisterCallerContract.Caller>(), RegisterContract.Presenter, RegisterCallerContract.Handler {
 
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
+    override var caller: RegisterCallerContract.Caller? = RegisterCaller(this)
 
-class RegisterPresenter(private val sharePrefsManager: SharePrefsManager, private val validator: Validator = Validator()) : BasePresenterImpl<RegisterContract.View>(), RegisterContract.Presenter {
-    override fun handleRegister(request: Register.Request) {
-        mCompositeSubscription += OMGApiManager.register(request)
-                .doOnSubscribe { mView?.showLoading() }
-                .doFinally { mView?.hideLoading() }
-                .subscribe({
-                    sharePrefsManager.saveCredential(it.data)
-                    mView?.showRegisterSuccess(it.data)
-                }, {
-                    mView?.showRegisterFailed(it.errorResponse().data)
-                })
+    override fun handleRegisterFailed(error: Throwable) {
+        mView?.hideLoading()
+        mView?.showRegisterFailed(error.errorResponse().data)
+    }
+
+    override fun handleRegisterSuccess(response: Response<Credential>) {
+        mView?.hideLoading()
+        Preference.saveCredential(response.data)
+        mView?.showRegisterSuccess(response.data)
+    }
+
+    override fun showLoading() {
+        mView?.showLoading()
     }
 
     override fun validateEmail(email: String): Boolean {

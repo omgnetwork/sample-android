@@ -1,16 +1,15 @@
 package co.omisego.omgshop.helpers
 
-import android.content.Context
-import co.omisego.omgshop.R
-import java.util.*
-
-
-/**
+/*
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 26/2/2018 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
+import android.content.Context
+import co.omisego.omgshop.R
+import java.util.Properties
 
 object Config {
     lateinit var OMG_HOST_URL: String
@@ -19,7 +18,6 @@ object Config {
     lateinit var API_KEY_ID: String
     lateinit var OMG_API_KEY: String
     lateinit var AUTHENTICATION_SCHEME: String
-
 
     fun init(context: Context) {
         val resource = context.resources

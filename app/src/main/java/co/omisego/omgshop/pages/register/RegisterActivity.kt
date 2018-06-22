@@ -1,5 +1,12 @@
 package co.omisego.omgshop.pages.register
 
+/**
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -7,17 +14,15 @@ import android.view.MenuItem
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.custom.MinimalTextChangeListener
-import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Register
 import co.omisego.omgshop.pages.products.ProductListActivity
+import co.omisego.omgshop.pages.register.caller.RegisterCallerContract
 import kotlinx.android.synthetic.main.activity_register.*
 
-class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Presenter>(), RegisterContract.View {
-    override val mPresenter: RegisterContract.Presenter by lazy {
-        RegisterPresenter(SharePrefsManager(this))
-    }
+class RegisterActivity : BaseActivity<RegisterContract.View, RegisterCallerContract.Caller, RegisterContract.Presenter>(), RegisterContract.View {
+    override val mPresenter: RegisterContract.Presenter by lazy { RegisterPresenter() }
     private lateinit var mProgressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,19 +47,18 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
             val firstName = etFirstName.text.toString()
             val lastName = etLastName.text.toString()
             if (mPresenter.validateEmail(email) &&
-                    mPresenter.validatePassword(password) &&
-                    mPresenter.validateFirstName(firstName) &&
-                    mPresenter.validateLastName(lastName)) {
+                mPresenter.validatePassword(password) &&
+                mPresenter.validateFirstName(firstName) &&
+                mPresenter.validateLastName(lastName)) {
 
                 val request = Register.Request(
-                        firstName,
-                        lastName,
-                        email,
-                        password
+                    firstName,
+                    lastName,
+                    email,
+                    password
                 )
-                mPresenter.handleRegister(request)
+                mPresenter.caller?.register(request)
             }
-
         }
 
         etEmail.addTextChangedListener(MinimalTextChangeListener {

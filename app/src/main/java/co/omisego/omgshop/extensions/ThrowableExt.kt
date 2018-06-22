@@ -1,16 +1,15 @@
 package co.omisego.omgshop.extensions
 
-import co.omisego.omgshop.deserialize.OMGException
-import co.omisego.omgshop.models.Error
-import co.omisego.omgshop.models.Response
-
-
-/**
+/*
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
+import co.omisego.omgshop.deserialize.OMGException
+import co.omisego.omgshop.models.Error
+import co.omisego.omgshop.models.Response
 
 fun Throwable.errorResponse(): Response<Error> = when {
     this is OMGException -> this.error

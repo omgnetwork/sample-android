@@ -1,16 +1,16 @@
 package co.omisego.omgshop.pages.products
 
-import co.omisego.omgshop.base.BaseContract
-import co.omisego.omgshop.models.Error
-import co.omisego.omgshop.models.Product
-
-
-/**
+/*
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
+import co.omisego.omgshop.base.BaseContract
+import co.omisego.omgshop.models.Error
+import co.omisego.omgshop.models.Product
+import co.omisego.omgshop.pages.products.caller.ProductListCallerContract
 
 interface ProductListContract {
     interface View : BaseContract.BaseView {
@@ -19,8 +19,7 @@ interface ProductListContract {
         fun showClickProductItem(item: Product.Get.Item)
     }
 
-    interface Presenter : BaseContract.BasePresenter<View> {
-        fun loadProductList()
+    interface Presenter : BaseContract.BasePresenter<View, ProductListCallerContract.Caller> {
         fun handleClickProductItem(itemId: String)
     }
 }

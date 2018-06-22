@@ -1,21 +1,29 @@
 package co.omisego.omgshop.pages.checkout
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
-import co.omisego.omgshop.helpers.SharePrefsManager
+import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Product
+import co.omisego.omgshop.pages.checkout.caller.CheckoutCallerContract
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_checkout.*
 import java.math.BigDecimal
 
-class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Presenter>(), CheckoutContract.View {
-    override val mPresenter: CheckoutContract.Presenter by lazy { CheckoutPresenter(SharePrefsManager(this)) }
+class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContract.Caller, CheckoutContract.Presenter>(), CheckoutContract.View {
+    override val mPresenter: CheckoutContract.Presenter by lazy { CheckoutPresenter() }
     private lateinit var mProductItem: Product.Get.Item
     private var mDiscount: Int = 0
     private lateinit var mLoadingDialog: ProgressDialog
@@ -47,8 +55,11 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
         }
 
         btnPay.setOnClickListener {
-            val subUnitToUnit = mPresenter.getCurrentTokenBalance().mintedToken.subUnitToUnit
-            mPresenter.pay(tokenValue = subUnitToUnit.multiply(BigDecimal.valueOf(mDiscount.toDouble())), productId = mProductItem.id)
+            val subUnitToUnit = mPresenter.getCurrentTokenBalance().token.subunitToUnit
+            val tokenId = Preference.loadSelectedTokenBalance()?.token?.id ?: ""
+            val tokenValue = subUnitToUnit.multiply(BigDecimal.valueOf(mDiscount.toDouble()))
+            val productId = mProductItem.id
+            mPresenter.caller?.buy(Product.Buy.Request(tokenId, tokenValue, productId))
         }
 
         log(mProductItem.toString())
@@ -68,9 +79,9 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
         tvProductTitle.text = productTitle
         tvPrice.text = productPrice
         Glide.with(this)
-                .load(imageUrl)
-                .apply(RequestOptions().transforms(RoundedCorners(20)))
-                .into(ivProductDetailLogo)
+            .load(imageUrl)
+            .apply(RequestOptions().transforms(RoundedCorners(20)))
+            .into(ivProductDetailLogo)
     }
 
     override fun setDiscount(discount: Int) {
@@ -79,8 +90,8 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
 
     override fun showRedeemDialog() {
         val currentBalance = mPresenter.getCurrentTokenBalance()
-        val balanceAmount = currentBalance.amount.divide(currentBalance.mintedToken.subUnitToUnit)
-        val dialog = RedeemDialogFragment.newInstance(mProductItem.price, balanceAmount.toBigInteger().toInt(), currentBalance.mintedToken.symbol)
+        val balanceAmount = currentBalance.amount.divide(currentBalance.token.subunitToUnit)
+        val dialog = RedeemDialogFragment.newInstance(mProductItem.price, balanceAmount.toBigInteger().toInt(), currentBalance.token.symbol)
         dialog.setRedeemDialogListener(object : RedeemDialogFragment.RedeemDialogListener {
             override fun onSetRedeem(amount: Int) {
                 log(amount.toString())
@@ -88,9 +99,7 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
             }
         })
         dialog.show(supportFragmentManager, "")
-
     }
-
 
     override fun showSummary(subTotal: String, discount: String, total: String) {
         tvSubtotal.text = getString(R.string.activity_checkout_price_format, subTotal)
@@ -111,6 +120,11 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutContract.Pr
         val message = getString(R.string.activity_checkout_pay_success)
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         finish()
+    }
+
+    override fun showBalanceNotAvailable() {
+        btnRedeem.text = "No balance available"
+        btnRedeem.isEnabled = false
     }
 
     override fun showLoading() {

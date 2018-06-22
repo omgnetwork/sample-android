@@ -1,24 +1,24 @@
 package co.omisego.omgshop.pages.checkout
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 11/24/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import co.omisego.omgshop.R
+import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.dialog_redeem.*
 import kotlinx.android.synthetic.main.dialog_redeem.view.*
 
-
-/**
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 11/24/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
- */
-
-class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, RedeemDialogContract.Presenter>(), RedeemDialogContract.View {
+class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseContract.BaseCaller, RedeemDialogContract.Presenter>(), RedeemDialogContract.View {
 
     override val mPresenter: RedeemDialogContract.Presenter by lazy { RedeemDialogPresenter() }
     private var mRedeemDialogListener: RedeemDialogListener? = null

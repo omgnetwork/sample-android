@@ -4,39 +4,48 @@ import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
 import co.omisego.omgshop.helpers.Contextor.context
-import co.omisego.omgshop.helpers.SharePrefsManager
+import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.helpers.Validator
-import co.omisego.omgshop.models.Login
-import co.omisego.omgshop.network.OMGApiManager
-
+import co.omisego.omgshop.models.Credential
+import co.omisego.omgshop.models.Response
+import co.omisego.omgshop.pages.login.caller.LoginCaller
+import co.omisego.omgshop.pages.login.caller.LoginCallerContract
 
 /**
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-class LoginPresenter(private val sharePrefsManager: SharePrefsManager, private val validator: Validator = Validator()) : BasePresenterImpl<LoginContract.View>(), LoginContract.Presenter {
-    override fun handleLogin(request: Login.Request) {
-        mCompositeSubscription += OMGApiManager.login(request)
-                .doOnSubscribe { mView?.showLoading() }
-                .doFinally { mView?.hideLoading() }
-                .subscribe({
-                    sharePrefsManager.saveCredential(it.data)
-                    mView?.showLoginSuccess(it.data)
-                }, {
-                    mView?.showMessage(it.errorResponse().data.description)
-                    mView?.showLoginFailed(it.errorResponse().data)
-                })
+class LoginPresenter(
+    private val validator: Validator = Validator()
+) : BasePresenterImpl<LoginContract.View, LoginCallerContract.Caller>(), LoginContract.Presenter, LoginCallerContract.Handler {
+    override var caller: LoginCallerContract.Caller? = LoginCaller(this)
+
+    override fun handleLoginSuccess(response: Response<Credential>) {
+        mView?.hideLoading()
+        Preference.saveCredential(response.data)
+        mView?.showLoginSuccess(response.data)
+    }
+
+    override fun handleLoginFailed(error: Throwable) {
+        mView?.hideLoading()
+        error.printStackTrace()
+        mView?.showMessage(error.errorResponse().data.description)
+        mView?.showLoginFailed(error.errorResponse().data)
     }
 
     override fun handleClickRegisterButton() {
         mView?.showRegister()
     }
 
+    override fun showLoading() {
+        mView?.showLoading()
+    }
+
     override fun checkHasLogin() {
-        val response = sharePrefsManager.loadCredential()
+        val response = Preference.loadCredential()
         if (response.userId.isNotEmpty()) {
             mView?.showLoginSuccess(response)
         }

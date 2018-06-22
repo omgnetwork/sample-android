@@ -1,60 +1,66 @@
 package co.omisego.omgshop.pages.checkout
 
-import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
 import co.omisego.omgshop.extensions.thousandSeparator
-import co.omisego.omgshop.helpers.Contextor
-import co.omisego.omgshop.helpers.SharePrefsManager
+import co.omisego.omgshop.helpers.Preference
+import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Product
-import co.omisego.omgshop.network.OMGApiManager
-import co.omisego.omisego.models.Balance
-import java.math.BigDecimal
-
+import co.omisego.omgshop.models.Response
+import co.omisego.omgshop.pages.checkout.caller.CheckoutCaller
+import co.omisego.omgshop.pages.checkout.caller.CheckoutCallerContract
+import co.omisego.omisego.extension.bd
+import co.omisego.omisego.model.APIError
+import co.omisego.omisego.model.Balance
+import co.omisego.omisego.model.OMGResponse
+import co.omisego.omisego.model.WalletList
 
 /**
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-class CheckoutPresenter(private val sharePrefsManager: SharePrefsManager) : BasePresenterImpl<CheckoutContract.View>(), CheckoutContract.Presenter {
-    private val authToken by lazy {
-        sharePrefsManager.loadCredential().omisegoAuthenticationToken
+class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCallerContract.Caller>(),
+    CheckoutContract.Presenter,
+    CheckoutCallerContract.Handler {
+
+    override var caller: CheckoutCallerContract.Caller? = CheckoutCaller(this)
+
+    override fun handleBuySuccess(response: Response<Credential>) {
+        mView?.hideLoading()
+        caller?.getWallets()
     }
 
-    override fun pay(tokenValue: BigDecimal, productId: String) {
-        val tokenId = sharePrefsManager.loadSelectedTokenBalance()?.mintedToken?.id ?: ""
+    override fun handleBuyFailed(error: Throwable) {
+        mView?.hideLoading()
+        val errorDescription = error.errorResponse().data.description
+        mView?.showBuyFailed(errorDescription)
+    }
 
-        if (tokenId.isEmpty()) {
-            // This should not be possible, since we always set the default token.
-            mView?.showBuyFailed(Contextor.context.getString(R.string.activity_checkout_pay_error_token_not_set))
-            return
+    override fun handleLoadWalletSuccess(response: OMGResponse<WalletList>) {
+        mView?.hideLoading()
+        // Update current balance to share preference
+        var currentBalance = getCurrentTokenBalance()
+        currentBalance = response.data.data[0].balances.first { it.token.id == currentBalance.token.id }
+        Preference.saveSelectedTokenBalance(currentBalance)
+        mView?.showBuySuccess()
+    }
+
+    override fun handleLoadWalletFailed(response: OMGResponse<APIError>) {
+        mView?.hideLoading()
+        mView?.showBuySuccess()
+    }
+
+    override fun checkIfBalanceAvailable() {
+        if (getCurrentTokenBalance().amount <= 0.bd) {
+            mView?.showBalanceNotAvailable()
         }
+    }
 
-        val request = Product.Buy.Request(tokenId, tokenValue, productId)
-
+    override fun showLoading() {
         mView?.showLoading()
-        // Buy item
-        mCompositeSubscription += OMGApiManager.buy(request)
-                .subscribe({
-                    OMGApiManager.listBalances(authToken, {
-                        mView?.hideLoading()
-                        mView?.showBuySuccess()
-                    }) { response ->
-                        // Update current balance to share preference
-                        var currentBalance = getCurrentTokenBalance()
-                        currentBalance = response.data[0].balances.first { it.mintedToken.id == currentBalance.mintedToken.id }
-                        sharePrefsManager.saveSelectedTokenBalance(currentBalance)
-                        mView?.hideLoading()
-                        mView?.showBuySuccess()
-                    }
-                }, {
-                    val errorDescription = it.errorResponse().data.description
-                    mView?.showBuyFailed(errorDescription)
-                    mView?.hideLoading()
-                })
     }
 
     override fun redeem() {
@@ -72,11 +78,11 @@ class CheckoutPresenter(private val sharePrefsManager: SharePrefsManager) : Base
     }
 
     override fun resolveRedeemButtonName() {
-        val symbol = sharePrefsManager.loadSelectedTokenBalance()?.mintedToken?.symbol ?: ""
+        val symbol = Preference.loadSelectedTokenBalance()?.token?.symbol ?: ""
         mView?.showRedeemButton(symbol)
     }
 
     override fun getCurrentTokenBalance(): Balance {
-        return sharePrefsManager.loadSelectedTokenBalance()!!
+        return Preference.loadSelectedTokenBalance()!!
     }
 }

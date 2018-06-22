@@ -1,42 +1,41 @@
 package co.omisego.omgshop.base
 
-import android.util.Log
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-
-
-/**
+/*
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-abstract class BasePresenterImpl<V : BaseContract.BaseView> : BaseContract.BasePresenter<V> {
+import android.util.Log
+import co.omisego.omgshop.extensions.isAuthError
+import co.omisego.omgshop.models.Error
+import co.omisego.omisego.model.APIError
+
+abstract class BasePresenterImpl<V : BaseContract.BaseView, C : BaseContract.BaseCaller> : BaseContract.BasePresenter<V, C> {
     protected var mView: V? = null
-    protected var mCompositeSubscription: CompositeDisposable? = null
 
     override fun attachView(view: V) {
-        mCompositeSubscription = CompositeDisposable()
         mView = view
+        caller?.createCompositeSubscription()
     }
 
     override fun detachView() {
         mView = null
-        mCompositeSubscription?.dispose()
-        mCompositeSubscription = null
+        caller?.disposeCompositeSubscription()
     }
 
-    override fun CompositeDisposable?.plusAssign(d: Disposable) {
-        mCompositeSubscription?.add(d)
+    override fun goBackToLoginIfNeeded(error: APIError) {
+        if (error.isAuthError())
+            mView?.clearTokenAndGotoLogin()
     }
 
-    override fun unsubscription() {
-        mCompositeSubscription?.clear()
+    override fun goBackToLoginIfNeeded(error: Error) {
+        if (error.isAuthError())
+            mView?.clearTokenAndGotoLogin()
     }
 
     fun log(message: String) {
         Log.d(this.javaClass.simpleName, message)
     }
-
 }

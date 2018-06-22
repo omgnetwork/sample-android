@@ -1,16 +1,17 @@
 package co.omisego.omgshop.pages.checkout
 
+import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.base.BasePresenterImpl
-
 
 /**
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-class RedeemDialogPresenter : BasePresenterImpl<RedeemDialogContract.View>(), RedeemDialogContract.Presenter {
+class RedeemDialogPresenter : BasePresenterImpl<RedeemDialogContract.View, BaseContract.BaseCaller>(), RedeemDialogContract.Presenter {
+    override var caller: BaseContract.BaseCaller? = null
     private var mRedeemValue: Int = 0
 
     override fun handleClickRedeem() {
@@ -22,5 +23,4 @@ class RedeemDialogPresenter : BasePresenterImpl<RedeemDialogContract.View>(), Re
         mView?.setTextDiscount("$value")
         mView?.setTextRedeemAmount("$value")
     }
-
 }

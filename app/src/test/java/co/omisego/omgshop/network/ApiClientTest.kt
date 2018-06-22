@@ -1,8 +1,11 @@
 package co.omisego.omgshop.network
 
-import co.omisego.omgshop.deserialize.OMGConverterFactory
 import co.omisego.omgshop.helpers.Config
-import co.omisego.omgshop.models.*
+import co.omisego.omgshop.models.Credential
+import co.omisego.omgshop.models.Error
+import co.omisego.omgshop.models.Product
+import co.omisego.omgshop.models.Response
+import co.omisego.omgshop.network.prototype.ShopAPI
 import co.omisego.omgshop.testutils.RecordingObserver
 import co.omisego.omgshop.testutils.readFile
 import com.google.gson.Gson
@@ -21,18 +24,17 @@ import java.util.logging.Level
 import java.util.logging.LogManager
 import java.util.logging.Logger
 
-
 /**
  * OmiseGO
  *
  *
  * Created by Phuchit Sirimongkolsathien on 11/27/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
 @Suppress("IllegalIdentifier")
 class ApiClientTest {
-    private lateinit var omiseGOAPI: OmiseGOAPI
+    private lateinit var shopAPI: ShopAPI
 
     private val observerRule = RecordingObserver.Rule()
     private val mockWebServer: MockWebServer = MockWebServer()
@@ -43,13 +45,11 @@ class ApiClientTest {
     private lateinit var productGetFile: File
     private lateinit var productBuyFile: File
     private lateinit var errorFile: File
-    private lateinit var responseUser: Response<User.Response>
     private lateinit var responseRegister: Response<Credential>
     private lateinit var responseLogin: Response<Credential>
     private lateinit var responseProductBuy: Response<Nothing>
     private lateinit var responseProductGet: Response<Product.Get.Response>
     private lateinit var responseError: Response<Error>
-
 
     @Before
     fun setUp() {
@@ -80,8 +80,6 @@ class ApiClientTest {
         errorFile shouldNotBe null
 
         // Convert response using Gson converter
-        val typeUserToken = object : TypeToken<Response<User.Response>>() {}.type
-        responseUser = Gson().fromJson<Response<User.Response>>(userFile.readText().replace("\n ", "").replace("\n  ", ""), typeUserToken)
 
         val typeRegisterToken = object : TypeToken<Response<Credential>>() {}.type
         responseRegister = Gson().fromJson<Response<Credential>>(registerFile.readText(), typeRegisterToken)
@@ -100,33 +98,16 @@ class ApiClientTest {
 
         // Setup retrofit with mock server
         val retrofit = Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(mockWebServer.url("/"))
-                .build()
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .baseUrl(mockWebServer.url("/"))
+            .build()
 
-        ApiClient.omiseGO = retrofit.create(OmiseGOAPI::class.java)
-
-        omiseGOAPI = ApiClient.omiseGO
+        shopAPI = retrofit.create(ShopAPI::class.java)
 
         // Disable unused logged from mock webserver
         LogManager.getLogManager().reset()
         Logger.getGlobal().level = Level.OFF
-    }
-
-    @Test
-    fun `verify get user api return observable user correctly`() {
-        // Enqueued response from mock server
-        mockWebServer.enqueue(MockResponse().setBody(userFile.readText()))
-
-        // create mock observable
-        val observer = observerRule.create<Response<User.Response>>()
-
-        // subscribe mocked response to observable
-        omiseGOAPI.getUser().subscribe(observer)
-
-        // assert observable value
-        observer.assertValue(responseUser).assertComplete()
     }
 
     @Test
@@ -138,7 +119,7 @@ class ApiClientTest {
         val observer = observerRule.create<Response<Credential>>()
 
         // subscribe mocked response to observable
-        omiseGOAPI.signup(mock()).subscribe(observer)
+        shopAPI.signup(mock()).subscribe(observer)
 
         // assert observable value
         observer.assertValue(responseRegister).assertComplete()
@@ -154,7 +135,7 @@ class ApiClientTest {
         val observer = observerRule.create<Response<Credential>>()
 
         // subscribe mocked response to observable
-        omiseGOAPI.login(mock()).subscribe(observer)
+        shopAPI.login(mock()).subscribe(observer)
 
         // assert observable value
         observer.assertValue(responseLogin).assertComplete()
@@ -169,7 +150,7 @@ class ApiClientTest {
         val observer = observerRule.create<Response<Nothing>>()
 
         // subscribe mocked response to observable
-        omiseGOAPI.buy(mock()).subscribe(observer)
+        shopAPI.buy(mock()).subscribe(observer)
 
         // assert observable value
         observer.assertValue(responseProductBuy).assertComplete()
@@ -184,7 +165,7 @@ class ApiClientTest {
         val observer = observerRule.create<Response<Product.Get.Response>>()
 
         // subscribe mocked response to observable
-        omiseGOAPI.getProducts().subscribe(observer)
+        shopAPI.getProducts().subscribe(observer)
 
         // assert observable value
         observer.assertValue(responseProductGet).assertComplete()

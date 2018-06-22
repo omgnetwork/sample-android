@@ -1,74 +1,64 @@
 package co.omisego.omgshop.pages.products
 
-import android.util.Log
-import co.omisego.omisego.Callback
-import co.omisego.omisego.models.Address
-import co.omisego.omisego.models.ApiError
-import co.omisego.omisego.models.Response
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
-import co.omisego.omgshop.helpers.OMGClientProvider
-import co.omisego.omgshop.helpers.SharePrefsManager
+import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Product
-import co.omisego.omgshop.network.ApiClient
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-
+import co.omisego.omgshop.pages.products.caller.ProductListCaller
+import co.omisego.omgshop.pages.products.caller.ProductListCallerContract
+import co.omisego.omisego.model.APIError
+import co.omisego.omisego.model.OMGResponse
+import co.omisego.omisego.model.WalletList
 
 /**
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 30/11/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-class ProductListPresenter(private val sharePrefsManager: SharePrefsManager) : BasePresenterImpl<ProductListContract.View>(), ProductListContract.Presenter {
+class ProductListPresenter : BasePresenterImpl<ProductListContract.View, ProductListCallerContract.Caller>(),
+    ProductListContract.Presenter,
+    ProductListCallerContract.Handler {
     private var productList: List<Product.Get.Item>? = null
-    private val authToken: String by lazy {
-        sharePrefsManager.loadCredential().omisegoAuthenticationToken
+    override var caller: ProductListCallerContract.Caller? = ProductListCaller(this)
+
+    override fun handleLoadProductListSuccess(response: List<Product.Get.Item>) {
+        mView?.hideLoading()
+        productList = response
+        if (Preference.loadSelectedTokenBalance() != null) {
+            mView?.showProductList(response)
+            return
+        }
+        caller?.loadWallets()
     }
 
-    override fun loadProductList() {
-        mCompositeSubscription += ApiClient.omiseGO.getProducts()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { mView?.showLoading() }
-                .doOnError { mView?.hideLoading() }
-                .subscribe({
-                    val balance = sharePrefsManager.loadSelectedTokenBalance()
-                    productList = it.data.data.map {
-                        it.copy(price = it.price / 100)
-                    }
+    override fun handleLoadProductListFailed(throwable: Throwable) {
+        mView?.hideLoading()
+        mView?.showMessage(throwable.errorResponse().data.description)
+        mView?.showLoadProductFail(throwable.errorResponse().data)
+        goBackToLoginIfNeeded(throwable.errorResponse().data)
+    }
 
-                    if (balance != null) {
-                        mView?.showProductList(productList!!)
-                        mView?.hideLoading()
-                        return@subscribe
-                    }
+    override fun handleLoadWalletSuccess(response: OMGResponse<WalletList>) {
+        mView?.hideLoading()
+        Preference.saveSelectedTokenBalance(response.data.data[0].balances[0])
+        mView?.showProductList(productList ?: return)
+    }
 
-                    OMGClientProvider.retrieve(authToken).listBalances(object : Callback<List<Address>> {
-                        override fun fail(response: Response<ApiError>) {
-                            mView?.showMessage(response.data.description)
-                            mView?.hideLoading()
-                        }
-
-                        override fun success(response: Response<List<Address>>) {
-                            sharePrefsManager.saveSelectedTokenBalance(response.data[0].balances[0])
-                            mView?.showProductList(productList!!)
-                            mView?.hideLoading()
-
-                        }
-                    })
-
-                }, {
-                    mView?.showMessage(it.errorResponse().data.description)
-                    mView?.showLoadProductFail(it.errorResponse().data)
-                })
+    override fun handleLoadWalletFailed(error: OMGResponse<APIError>) {
+        mView?.hideLoading()
+        mView?.showMessage(error.data.description)
+        goBackToLoginIfNeeded(error.data)
     }
 
     override fun handleClickProductItem(itemId: String) {
         productList?.let {
             mView?.showClickProductItem(productList!!.first { it.id == itemId })
         }
+    }
+
+    override fun showLoading() {
+        mView?.showLoading()
     }
 }

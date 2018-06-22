@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 android {
     compileSdkVersion 27
@@ -12,14 +13,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
-        debug {
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
     buildToolsVersion '27.0.3'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -28,15 +21,23 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+    lintOptions {
+        disable 'ParcelCreator'
+    }
 }
 
 androidExtensions {
     experimental = true
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-//    implementation(name: 'omgsdk', ext: 'aar')
     implementation omisego.sdk
     implementation kotlinDependencies.stdlib
     implementation supportDependencies.appCompat

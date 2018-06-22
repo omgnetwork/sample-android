@@ -8,15 +8,14 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 
-
 /**
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-abstract class BaseFragment<in V : BaseContract.BaseView, out P : BaseContract.BasePresenter<V>> : Fragment(), BaseContract.BaseView {
+abstract class BaseFragment<in V : BaseContract.BaseView, C : BaseContract.BaseCaller, out P : BaseContract.BasePresenter<V, C>> : Fragment(), BaseContract.BaseView {
     protected abstract val mPresenter: P
     private var mLoadingView: View? = null
 
@@ -46,8 +45,9 @@ abstract class BaseFragment<in V : BaseContract.BaseView, out P : BaseContract.B
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
+    override fun clearTokenAndGotoLogin() {}
+
     fun log(message: String) {
         Log.d(this.javaClass.name, message)
     }
-
 }

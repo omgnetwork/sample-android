@@ -1,16 +1,15 @@
 package co.omisego.omgshop
 
-import android.app.Application
-import co.omisego.omgshop.helpers.Config
-import co.omisego.omgshop.helpers.Contextor
-
-
-/**
+/*
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 30/11/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
+import android.app.Application
+import co.omisego.omgshop.helpers.Config
+import co.omisego.omgshop.helpers.Contextor
 
 class OmiseShopApplication : Application() {
     override fun onCreate() {

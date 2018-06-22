@@ -1,15 +1,15 @@
 package co.omisego.omgshop.pages.profile
 
-import co.omisego.omgshop.base.BaseContract
-import co.omisego.omisego.models.Balance
-
-
 /**
  * OmiseGO
  *
  * Created by Phuchit Sirimongkolsathien on 4/12/2017 AD.
- * Copyright © 2017 OmiseGO. All rights reserved.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
+import co.omisego.omgshop.base.BaseContract
+import co.omisego.omgshop.pages.profile.caller.MyProfileCallerContract
+import co.omisego.omisego.model.Balance
 
 interface MyProfileContract {
     interface View : BaseContract.BaseView {
@@ -21,11 +21,8 @@ interface MyProfileContract {
         fun hideLoadingDialog()
     }
 
-    interface Presenter : BaseContract.BasePresenter<View> {
-        fun loadSettings()
-        fun loadUser()
+    interface Presenter : BaseContract.BasePresenter<View, MyProfileCallerContract.Caller> {
         fun saveSelectedToken(balance: Balance)
-        fun logout()
         fun getCurrentToken(): Balance?
     }
 }

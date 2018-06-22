@@ -26,16 +26,21 @@
         android:text="@string/activity_my_profile_loading"
         android:textColor="@android:color/black" />
 
-
-    <include layout="@layout/view_loading" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
         android:layout_marginTop="16dp"
-        android:layout_weight="1" />
+        android:layout_marginBottom="16dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/view_loading" />
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/tvLogout"

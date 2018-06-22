@@ -1,18 +1,30 @@
 package co.omisego.omgshop.pages.products
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 11/28/2017 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.extensions.thousandSeparator
-import co.omisego.omgshop.helpers.SharePrefsManager
 import co.omisego.omgshop.models.Error
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.CheckoutActivity
+import co.omisego.omgshop.pages.products.caller.ProductListCallerContract
 import co.omisego.omgshop.pages.profile.MyProfileActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -21,10 +33,10 @@ import kotlinx.android.synthetic.main.activity_product_list.*
 import kotlinx.android.synthetic.main.view_loading.*
 import kotlinx.android.synthetic.main.viewholder_product.view.*
 
-class ProductListActivity : BaseActivity<ProductListContract.View, ProductListContract.Presenter>(), ProductListContract.View {
+class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCallerContract.Caller, ProductListContract.Presenter>(), ProductListContract.View {
     private lateinit var adapter: ProductListRecyclerAdapter
     override val mPresenter: ProductListContract.Presenter by lazy {
-        ProductListPresenter(SharePrefsManager(this))
+        ProductListPresenter()
     }
     private var productList: MutableList<Product.Get.Item> = mutableListOf()
 
@@ -43,7 +55,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        mPresenter.loadProductList()
+        mPresenter.caller?.loadProductList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,7 +78,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
     }
 
     override fun showLoadProductFail(response: Error) {
-        // TODO
+        Toast.makeText(this, response.description, Toast.LENGTH_SHORT).show()
     }
 
     override fun showClickProductItem(item: Product.Get.Item) {
@@ -101,14 +113,13 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCo
                     tvTitle.text = name
                     tvDescription.text = description
                     Glide.with(this@ProductListActivity)
-                            .load(imageUrl)
-                            .apply(RequestOptions().transforms(RoundedCorners(20)))
-                            .into(ivLogo)
+                        .load(imageUrl)
+                        .apply(RequestOptions().transforms(RoundedCorners(20)))
+                        .into(ivLogo)
                     btnPrice.text = "฿${price.toDouble().thousandSeparator()}"
                     btnPrice.setOnClickListener { mPresenter.handleClickProductItem(id) }
                 }
             }
         }
-
     }
 }
