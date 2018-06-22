@@ -1,6 +1,6 @@
 ext {
     /* Version */
-    omisego = '0.9.42'
+    omisego = '0.9.5-alpha2'
     supportLibrary = '27.1.0'
     kotlin = '1.2.50'
     retrofit = '2.3.0'
