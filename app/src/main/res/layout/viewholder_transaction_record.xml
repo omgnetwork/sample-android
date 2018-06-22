@@ -8,11 +8,11 @@
 
     <TextView
         android:id="@+id/tvTransactionDirection"
+        style="@style/OMGTextMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif"
         android:inputType="textCapSentences"
         android:text="from"
         android:textSize="14sp"
@@ -22,11 +22,11 @@
 
     <TextView
         android:id="@+id/tvTransactionAddress"
+        style="@style/OMGTextBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-medium"
         android:text="64419d4b-c45e-41ce-a009-e08fec608aee"
         android:textColor="@color/colorBlack"
         app:layout_constraintStart_toEndOf="@+id/tvTransactionDirection"
@@ -35,12 +35,12 @@
 
     <TextView
         android:id="@+id/tvTransactionDate"
+        style="@style/OMGTextItalicBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-smallcaps"
         android:text="19 Jun 2018 10:53:32"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,18 +51,36 @@
 
     <TextView
         android:id="@+id/tvTransactionAmount"
+        style="@style/OMGTextMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-black"
         android:text="+ 955.0 OMG"
         android:textColor="@color/colorGreen"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTransactionDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/tvTransactionDate"
         app:layout_constraintTop_toBottomOf="@+id/tvTransactionAddress"
         tools:text="@sample/transaction_history_list.json/data/transaction_amount" />
+
+    <TextView
+        android:id="@+id/tvTransactionStatus"
+        style="@style/OMGTextItalicBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Confirmed"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTransactionDate"
+        app:layout_constraintEnd_toStartOf="@+id/tvTransactionAmount"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvTransactionDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionAddress" />
 
 </android.support.constraint.ConstraintLayout>

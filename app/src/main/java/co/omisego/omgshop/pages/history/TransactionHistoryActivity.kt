@@ -13,6 +13,8 @@ import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.extensions.logi
 import co.omisego.omgshop.pages.checkout.caller.TransactionHistoryCallerContract
+import co.omisego.omisego.model.pagination.Paginable
+import co.omisego.omisego.model.pagination.Paginable.Transaction.TransactionStatus
 import co.omisego.omisego.model.pagination.PaginationList
 import co.omisego.omisego.model.transaction.list.Transaction
 import co.omisego.omisego.model.transaction.list.TransactionSource
@@ -83,9 +85,11 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
                     val isSameAddress = isSameAddress(record.from)
 
                     setTransactionDirection(isSameAddress)
-                    record.setTransactionAddress(isSameAddress)
                     colorizedTransactionAmount(isSameAddress)
+                    record.setTransactionAddress(isSameAddress)
+                    record.status.colorizedTransactionStatus()
                     record.from.formatTransactionAmount(isSameAddress)
+                    itemView.tvTransactionStatus.text = "- ${record.status.value.capitalize()}"
                     itemView.tvTransactionDate.text = dateFormat.format(record.createdAt)
                 }
             }
@@ -108,8 +112,18 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
                 itemView.tvTransactionAmount.setTextColor(color)
             }
 
+            private fun Paginable.Transaction.TransactionStatus.colorizedTransactionStatus() {
+                val color = when (this) {
+                    TransactionStatus.PENDING -> ContextCompat.getColor(itemView.context, R.color.colorYellow)
+                    TransactionStatus.CONFIRMED -> ContextCompat.getColor(itemView.context, R.color.colorGreen)
+                    TransactionStatus.FAILED, TransactionStatus.UNKNOWN -> ContextCompat.getColor(itemView.context, R.color.colorRed)
+                }
+
+                itemView.tvTransactionStatus.setTextColor(color)
+            }
+
             private fun TransactionSource.formatTransactionAmount(sameAddress: Boolean) {
-                val amount = this.amount.divide(this.token.subunitToUnit, RoundingMode.FLOOR)
+                val amount = String.format("%.1f", this.amount.divide(this.token.subunitToUnit, RoundingMode.FLOOR))
                 val prefix = if (sameAddress) {
                     "-"
                 } else {
