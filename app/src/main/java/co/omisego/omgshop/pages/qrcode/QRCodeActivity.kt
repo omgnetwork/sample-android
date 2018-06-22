@@ -1,12 +1,17 @@
 package co.omisego.omgshop.pages.qrcode
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import co.omisego.omgshop.R
+import co.omisego.omgshop.extensions.requestPermission
 import co.omisego.omgshop.pages.scan.ScanActivity
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import kotlinx.android.synthetic.main.activity_qrcode.*
@@ -23,8 +28,43 @@ class QRCodeActivity : AppCompatActivity() {
         setupToolbar()
 
         btnScan.setOnClickListener {
-            startActivityForResult(Intent(this, ScanActivity::class.java), REQUEST_CODE_SCAN)
+            CameraPermission.handle(
+                this,
+                this::handleShowPermissionRationale,
+                this::handlePermissionGranted,
+                this::handlePermissionShouldManuallyGranted)
         }
+    }
+
+    private fun handleShowPermissionRationale() {
+        Snackbar.make(rootLayout, R.string.permission_camera_rationale, Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.ok) {
+                requestPermission(Manifest.permission.CAMERA, CameraPermission.REQUEST_PERMISSION_CAMERA_ID)
+            }
+            .show()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            CameraPermission.REQUEST_PERMISSION_CAMERA_ID -> {
+                handlePermissionGranted()
+            }
+        }
+    }
+
+    private fun handlePermissionGranted() {
+        startActivityForResult(Intent(this, ScanActivity::class.java), REQUEST_CODE_SCAN)
+    }
+
+    private fun handlePermissionShouldManuallyGranted() {
+        Snackbar.make(rootLayout, R.string.permission_should_manually_granted, Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.ok) {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", packageName, null))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
+            .show()
     }
 
     private fun setupToolbar() {

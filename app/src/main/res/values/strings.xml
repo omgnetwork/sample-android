@@ -1,77 +1,89 @@
 <resources>
-    <string name="app_name">OMGShop</string>
+  <string name="app_name">OMGShop</string>
 
-    <!-- Login -->
-    <string name="activity_login_register">Don\'t have an account yet? Register</string>
-    <string name="activity_login_button_login">Log in</string>
-    <string name="activity_login_hint_email">Email</string>
-    <string name="activity_login_hint_password">Password</string>
-    <string name="activity_login_email_error_hint">Email address is not valid</string>
-    <string name="activity_login_password_error_hint">Password should be at least 8 characters long</string>
-    <string name="activity_login_loading_dialog_title">Please wait</string>
-    <string name="activity_login_loading_dialog_message">Logging in…</string>
+  <!-- Login -->
+  <string name="activity_login_register">Don\'t have an account yet? Register</string>
+  <string name="activity_login_button_login">Log in</string>
+  <string name="activity_login_hint_email">Email</string>
+  <string name="activity_login_hint_password">Password</string>
+  <string name="activity_login_email_error_hint">Email address is not valid</string>
+  <string name="activity_login_password_error_hint">Password should be at least 8 characters long</string>
+  <string name="activity_login_loading_dialog_title">Please wait</string>
+  <string name="activity_login_loading_dialog_message">Logging in…</string>
 
-    <!-- Register -->
-    <string name="activity_register_last_name">Last name</string>
-    <string name="activity_register_first_name">First name</string>
-    <string name="activity_register_email">Email</string>
-    <string name="activity_register_password">Password</string>
-    <string name="activity_register_register">Register</string>
-    <string name="activity_register_toolbar_title">Register</string>
-    <string name="activity_product_list_toolbar_title">Products</string>
-    <string name="activity_transaction_history_list_toolbar_title">Transaction history</string>
-    <string name="activity_scan_qr_toolbar_title">Scan QR</string>
-    <string name="activity_qr_code_toolbar_title">QR Code</string>
-    <string name="activity_register_loading_dialog_title">Please wait</string>
-    <string name="activity_register_loading_dialog_message">Registering…</string>
-    <string name="activity_register_email_error_validation">Email address is not valid</string>
-    <string name="activity_register_first_name_error_validation">First name must not be empty</string>
-    <string name="activity_register_last_name_error_validation">Last name must not be empty</string>
+  <!-- Register -->
+  <string name="activity_register_last_name">Last name</string>
+  <string name="activity_register_first_name">First name</string>
+  <string name="activity_register_email">Email</string>
+  <string name="activity_register_password">Password</string>
+  <string name="activity_register_register">Register</string>
+  <string name="activity_register_toolbar_title">Register</string>
+  <string name="activity_product_list_toolbar_title">Products</string>
+  <string name="activity_transaction_history_list_toolbar_title">Transaction history</string>
+  <string name="activity_scan_qr_toolbar_title">Scan QR</string>
+  <string name="activity_qr_code_toolbar_title">QR Code</string>
+  <string name="activity_register_loading_dialog_title">Please wait</string>
+  <string name="activity_register_loading_dialog_message">Registering…</string>
+  <string name="activity_register_email_error_validation">Email address is not valid</string>
+  <string name="activity_register_first_name_error_validation">First name must not be empty</string>
+  <string name="activity_register_last_name_error_validation">Last name must not be empty</string>
 
-    <!-- Checkout -->
-    <string name="activity_checkout_toolbar_title">Products</string>
-    <string name="activity_checkout_section_1_header">Your Product</string>
-    <string name="activity_checkout_section_2_header">Summary</string>
-    <string name="activity_checkout_sub_total">Sub total</string>
-    <string name="activity_checkout_discount">Discount</string>
-    <string name="activity_checkout_total">Total</string>
-    <string name="activity_checkout_button_redeem">Redeem</string>
-    <string name="activity_checkout_button_pay">Pay</string>
-    <string name="activity_checkout_pay_success">Successfully bought</string>
-    <string name="activity_checkout_loading_dialog_title">Please wait</string>
-    <string name="activity_checkout_loading_dialog_message">Buying</string>
-    <string name="activity_checkout_price_format">฿%1$s</string>
-    <string name="activity_checkout_redeem_button">Redeem %1$s</string>
-    <string name="activity_checkout_pay_error_token_not_set">The default token has not been selected/</string>
+  <!-- Checkout -->
+  <string name="activity_checkout_toolbar_title">Products</string>
+  <string name="activity_checkout_section_1_header">Your Product</string>
+  <string name="activity_checkout_section_2_header">Summary</string>
+  <string name="activity_checkout_sub_total">Sub total</string>
+  <string name="activity_checkout_discount">Discount</string>
+  <string name="activity_checkout_total">Total</string>
+  <string name="activity_checkout_button_redeem">Redeem</string>
+  <string name="activity_checkout_button_pay">Pay</string>
+  <string name="activity_checkout_pay_success">Successfully bought</string>
+  <string name="activity_checkout_loading_dialog_title">Please wait</string>
+  <string name="activity_checkout_loading_dialog_message">Buying</string>
+  <string name="activity_checkout_price_format">฿%1$s</string>
+  <string name="activity_checkout_redeem_button">Redeem %1$s</string>
+  <string name="activity_checkout_pay_error_token_not_set">The default token has not been selected/</string>
 
-    <!-- My Profile -->
-    <string name="activity_my_profile_token">Token</string>
-    <string name="activity_my_profile_amount">Amount</string>
-    <string name="activity_my_profile_selected">Selected</string>
-    <string name="activity_my_profile_toolbar">My profile</string>
-    <string name="activity_my_profile_loading">Loading...</string>
-    <string name="activity_my_profile_dialog_title">Please wait</string>
-    <string name="activity_my_profile_dialog_message">Logging out...</string>
-    <string name="activity_my_profile_log_out">LOG OUT</string>
+  <!-- My Profile -->
+  <string name="activity_my_profile_token">Token</string>
+  <string name="activity_my_profile_amount">Amount</string>
+  <string name="activity_my_profile_selected">Selected</string>
+  <string name="activity_my_profile_toolbar">My profile</string>
+  <string name="activity_my_profile_loading">Loading...</string>
+  <string name="activity_my_profile_dialog_title">Please wait</string>
+  <string name="activity_my_profile_dialog_message">Logging out...</string>
+  <string name="activity_my_profile_log_out">LOG OUT</string>
 
-    <!-- Redeem dialog -->
-    <string name="dialog_redeem_title">Redeem #symbol coins</string>
-    <string name="dialog_redeem_description">You have #amount to redeem</string>
-    <string name="dialog_redeem_redeem_amount">Redeem #amount</string>
-    <string name="dialog_redeem_total_discount">Get discount #amount</string>
-    <string name="dialog_redeem_button_cancel">Cancel</string>
-    <string name="dialog_redeem_button_redeem">Redeem</string>
+  <!-- Product -->
+  <string name="viewholder_product_content_description_tshirt">T-shirt</string>
 
-    <string name="menu_profile">Profile</string>
-    <string name="menu_profile_history">History</string>
-    <string name="activity_transaction_history_my_address">My address:</string>
-    <string name="load_more">Load next %d items</string>
-    <string name="load_more_disable">No more transactions left</string>
-    <string name="transaction_status">- %s</string>
-    <string name="transaction_amount_to">- %s %s</string>
-    <string name="transaction_amount_from">+ %s %s</string>
-    <string name="menu_scan">Scan</string>
-    <string name="viewholder_product_content_description_tshirt">T-shirt</string>
-    <string name="activity_qrcode_scan">Scan QR Code</string>
-    <string name="activity_qrcode_generate">Generate QR Code</string>
+  <!-- Redeem dialog -->
+  <string name="dialog_redeem_title">Redeem #symbol coins</string>
+  <string name="dialog_redeem_description">You have #amount to redeem</string>
+  <string name="dialog_redeem_redeem_amount">Redeem #amount</string>
+  <string name="dialog_redeem_total_discount">Get discount #amount</string>
+  <string name="dialog_redeem_button_cancel">Cancel</string>
+  <string name="dialog_redeem_button_redeem">Redeem</string>
+
+  <!-- Menus -->
+  <string name="menu_profile">Profile</string>
+  <string name="menu_profile_history">History</string>
+  <string name="menu_scan">Scan</string>
+
+  <!-- Transaction History -->
+  <string name="activity_transaction_history_my_address">My address:</string>
+  <string name="load_more">Load next %d items</string>
+  <string name="load_more_disable">No more transactions left</string>
+  <string name="transaction_status">- %s</string>
+  <string name="transaction_amount_to">- %s %s</string>
+  <string name="transaction_amount_from">+ %s %s</string>
+
+  <!-- QR code -->
+  <string name="activity_qrcode_scan">Scan QR Code</string>
+  <string name="activity_qrcode_generate">Generate QR Code</string>
+
+  <!-- Permission -->
+  <string name="permission_camera_rationale">Camera permission is needed to show the QR code scanner.</string>
+  <string name="permission_should_manually_granted">Enable camera permission in setting first to use QR code scanner.</string>
+  <string name="ok">OK</string>
 </resources>
