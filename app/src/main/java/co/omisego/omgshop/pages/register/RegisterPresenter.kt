@@ -11,6 +11,7 @@ import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
 import co.omisego.omgshop.helpers.Contextor.context
+import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.helpers.Validator
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.models.Response
@@ -30,6 +31,7 @@ class RegisterPresenter(
 
     override fun handleRegisterSuccess(response: Response<Credential>) {
         mView?.hideLoading()
+        Preference.saveCredential(response.data)
         mView?.showRegisterSuccess(response.data)
     }
 

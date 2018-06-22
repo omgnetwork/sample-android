@@ -18,7 +18,7 @@ interface CheckoutCallerContract {
     interface Caller : BaseContract.BaseCaller {
         val credential: Credential
         fun buy(request: Product.Buy.Request)
-        fun getWallets(authToken: String = credential.authenticationToken)
+        fun getWallets(authToken: String = credential.omisegoAuthenticationToken)
     }
 
     interface Handler {

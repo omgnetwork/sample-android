@@ -46,7 +46,7 @@ class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCa
         // update UI
         val balances = response.data.data.flatMap { it.balances }
         mView?.showBalances(balances)
-        mView?.showUsername(response.data.data[0].user?.username ?: "Cannot found the user")
+        mView?.showUsername(response.data.data[0].user?.username?.split("|")?.get(0) ?: "Cannot found the user")
     }
 
     override fun handleLoadWalletFailed(error: OMGResponse<APIError>) {

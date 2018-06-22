@@ -9,6 +9,7 @@ import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.models.Response
 import co.omisego.omgshop.pages.checkout.caller.CheckoutCaller
 import co.omisego.omgshop.pages.checkout.caller.CheckoutCallerContract
+import co.omisego.omisego.extension.bd
 import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.Balance
 import co.omisego.omisego.model.OMGResponse
@@ -50,6 +51,12 @@ class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCalle
     override fun handleLoadWalletFailed(response: OMGResponse<APIError>) {
         mView?.hideLoading()
         mView?.showBuySuccess()
+    }
+
+    override fun checkIfBalanceAvailable() {
+        if (getCurrentTokenBalance().amount <= 0.bd) {
+            mView?.showBalanceNotAvailable()
+        }
     }
 
     override fun showLoading() {

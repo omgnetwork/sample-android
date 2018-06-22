@@ -17,6 +17,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.extensions.thousandSeparator
@@ -77,7 +78,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCa
     }
 
     override fun showLoadProductFail(response: Error) {
-        // TODO
+        Toast.makeText(this, response.description, Toast.LENGTH_SHORT).show()
     }
 
     override fun showClickProductItem(item: Product.Get.Item) {

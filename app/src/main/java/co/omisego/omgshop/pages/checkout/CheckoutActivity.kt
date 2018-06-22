@@ -122,6 +122,11 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
         finish()
     }
 
+    override fun showBalanceNotAvailable() {
+        btnRedeem.text = "No balance available"
+        btnRedeem.isEnabled = false
+    }
+
     override fun showLoading() {
         mLoadingDialog.show()
     }

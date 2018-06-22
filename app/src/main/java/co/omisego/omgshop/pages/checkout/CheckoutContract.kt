@@ -21,6 +21,7 @@ interface CheckoutContract {
         fun showBuySuccess()
         fun showBuyFailed(msg: String = "")
         fun setDiscount(discount: Int)
+        fun showBalanceNotAvailable()
     }
 
     interface Presenter : BaseContract.BasePresenter<View, CheckoutCallerContract.Caller> {
@@ -29,5 +30,6 @@ interface CheckoutContract {
         fun handleProductDetail(productItem: Product.Get.Item)
         fun resolveRedeemButtonName()
         fun getCurrentTokenBalance(): Balance
+        fun checkIfBalanceAvailable()
     }
 }
