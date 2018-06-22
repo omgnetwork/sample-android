@@ -1,5 +1,12 @@
 package co.omisego.omgshop.pages.history.viewholder
 
+/*
+ * OmiseGO
+ *
+ * Created by Phuchit Sirimongkolsathien on 22/6/2018 AD.
+ * Copyright © 2017-2018 OmiseGO. All rights reserved.
+ */
+
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -10,16 +17,12 @@ import co.omisego.omisego.model.transaction.list.TransactionSource
 import kotlinx.android.synthetic.main.viewholder_transaction_record.view.*
 import java.math.RoundingMode
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
-
-/*
- * OmiseGO
- *
- * Created by Phuchit Sirimongkolsathien on 22/6/2018 AD.
- * Copyright © 2017-2018 OmiseGO. All rights reserved.
- */
-class TransactionHistoryViewHolder(itemView: View, val myAddress: String) : RecyclerView.ViewHolder(itemView) {
+class TransactionHistoryViewHolder(
+    itemView: View,
+    private val myAddress: String
+) : RecyclerView.ViewHolder(itemView) {
     private val dateFormat by lazy { SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.US) }
 
     fun bindItem(record: Transaction) {
