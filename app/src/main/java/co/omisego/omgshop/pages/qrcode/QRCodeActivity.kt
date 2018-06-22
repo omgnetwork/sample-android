@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import co.omisego.omgshop.R
 import co.omisego.omgshop.extensions.requestPermission
 import co.omisego.omgshop.pages.scan.ScanActivity
@@ -53,6 +54,7 @@ class QRCodeActivity : AppCompatActivity() {
     }
 
     private fun handlePermissionGranted() {
+        setLoading(true)
         startActivityForResult(Intent(this, ScanActivity::class.java), REQUEST_CODE_SCAN)
     }
 
@@ -71,6 +73,25 @@ class QRCodeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_qr_code_toolbar_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setLoading(false)
+    }
+
+    private fun setLoading(isLoad: Boolean) {
+        if (isLoad) {
+            progressBar.visibility = View.VISIBLE
+            btnScan.isEnabled = false
+            btnGenerate.isEnabled = false
+            divider.alpha = 0.1f
+        } else {
+            progressBar.visibility = View.GONE
+            btnScan.isEnabled = true
+            btnGenerate.isEnabled = true
+            divider.alpha = 1f
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

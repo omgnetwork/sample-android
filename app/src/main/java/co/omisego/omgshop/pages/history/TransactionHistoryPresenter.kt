@@ -26,7 +26,7 @@ class TransactionHistoryPresenter : BasePresenterImpl<TransactionHistoryContract
             page = page,
             perPage = PaginationConfig.PER_PAGE,
             sortBy = PaginationConfig.SORT_BY,
-            sortDir = PaginationConfig.SORT_DIR,
+            sortDirection = PaginationConfig.SORT_DIR,
             searchTerm = null
         )
     }
