@@ -36,8 +36,16 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
         setContentView(R.layout.activity_transaction_history)
         setupToolbar()
         setupRecyclerView()
-        mPresenter.caller?.loadTransactionList(mPresenter.createTransactionListParams(currentPage + 1))
+        loadTransactions()
         mPresenter.loadCurrentAddress()
+        swipeRefresh.setOnRefreshListener {
+            transactionListAdapter.clear()
+            loadTransactions()
+        }
+    }
+
+    private fun loadTransactions(page: Int = 1) {
+        mPresenter.caller?.loadTransactionList(mPresenter.createTransactionListParams(page))
     }
 
     private fun setupToolbar() {
@@ -65,13 +73,15 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
     }
 
     override fun addTransactions(transactionList: List<Transaction>, page: Int) {
+        swipeRefresh.isRefreshing = false
         transactionListAdapter.getLoadingListener()?.onFinished()
         transactionListAdapter.addTransactions(transactionList)
         currentPage = page
     }
 
     override fun showLoadTransactionListFail() {
-        // Do something
+        swipeRefresh.isRefreshing = false
+        transactionListAdapter.getLoadingListener()?.onFinished()
         logi("Failed to fetch transaction list")
     }
 
@@ -122,6 +132,16 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
             val diffResult = DiffUtil.calculateDiff(transactionHistoryDiffCallback)
             diffResult.dispatchUpdatesTo(this)
             this.transactionList.addAll(newTransactionList)
+        }
+
+        fun clear() {
+            val transactionHistoryDiffCallback = TransactionHistoryDiffCallback(
+                    this.transactionList,
+                    mutableListOf()
+            )
+            val diffResult = DiffUtil.calculateDiff(transactionHistoryDiffCallback)
+            diffResult.dispatchUpdatesTo(this)
+            this.transactionList.clear()
         }
 
         inner class TransactionHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

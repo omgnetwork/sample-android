@@ -43,18 +43,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textSize="16sp"
                 android:text="13bef5d2-4dd6-4f58-8729-da06419c918d"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp" />
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".pages.history.TransactionHistoryActivity"
-        tools:listitem="@layout/viewholder_transaction_record" />
+        android:layout_height="wrap_content">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".pages.history.TransactionHistoryActivity"
+            tools:listitem="@layout/viewholder_transaction_record" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
