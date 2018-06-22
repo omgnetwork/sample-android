@@ -22,6 +22,5 @@ interface TransactionHistoryContract {
     interface Presenter : BaseContract.BasePresenter<View, TransactionHistoryCallerContract.Caller> {
         fun loadCurrentAddress()
         fun createTransactionListParams(page: Int) : TransactionListParams
-        fun getPerPage(): Int
     }
 }
