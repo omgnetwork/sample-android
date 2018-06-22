@@ -21,7 +21,7 @@
         tools:text="@sample/transaction_history_list.json/data/transaction_direction" />
 
     <TextView
-        android:id="@+id/tvTransactionId"
+        android:id="@+id/tvTransactionAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -45,7 +45,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTransactionId"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionAddress"
         app:layout_constraintVertical_bias="0.0"
         tools:text="@sample/transaction_history_list.json/data/transaction_date_time" />
 
@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/tvTransactionDate"
-        app:layout_constraintTop_toBottomOf="@+id/tvTransactionId"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionAddress"
         tools:text="@sample/transaction_history_list.json/data/transaction_amount" />
 
 </android.support.constraint.ConstraintLayout>

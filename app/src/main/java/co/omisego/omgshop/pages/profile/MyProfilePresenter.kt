@@ -12,15 +12,11 @@ import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.pages.profile.caller.MyProfileCaller
 import co.omisego.omgshop.pages.profile.caller.MyProfileCallerContract
-import co.omisego.omisego.model.APIError
-import co.omisego.omisego.model.Balance
-import co.omisego.omisego.model.Logout
-import co.omisego.omisego.model.OMGResponse
-import co.omisego.omisego.model.WalletList
+import co.omisego.omisego.model.*
 
 class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCallerContract.Caller>(),
-    MyProfileContract.Presenter,
-    MyProfileCallerContract.Handler {
+        MyProfileContract.Presenter,
+        MyProfileCallerContract.Handler {
     override var caller: MyProfileCallerContract.Caller? = MyProfileCaller(this)
 
     override fun saveSelectedToken(balance: Balance) {
@@ -40,13 +36,14 @@ class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCa
         selectedToken = response.data.data[0].balances.firstOrNull { it.token.id == selectedToken?.token?.id } ?: response.data.data[0].balances[0]
         saveSelectedToken(selectedToken)
 
-        // set selected token id
-        mView?.setCurrentSelectedTokenId(selectedToken.token.id)
+        // Save current address
+        Preference.saveWalletAddress(response.data.data[0].address)
 
         // update UI
         val balances = response.data.data.flatMap { it.balances }
         mView?.showBalances(balances)
-        mView?.showUsername(response.data.data[0].user?.username?.split("|")?.get(0) ?: "Cannot found the user")
+        mView?.showUsername(response.data.data[0].user?.username?.split("|")?.get(0)
+                ?: "Cannot found the user")
     }
 
     override fun handleLoadWalletFailed(error: OMGResponse<APIError>) {

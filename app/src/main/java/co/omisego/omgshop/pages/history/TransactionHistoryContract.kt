@@ -1,8 +1,10 @@
 package co.omisego.omgshop.pages.history
 
 import co.omisego.omgshop.base.BaseContract
-import co.omisego.omgshop.models.TransactionRecord
 import co.omisego.omgshop.pages.checkout.caller.TransactionHistoryCallerContract
+import co.omisego.omisego.model.pagination.PaginationList
+import co.omisego.omisego.model.transaction.list.Transaction
+import co.omisego.omisego.model.transaction.list.TransactionListParams
 
 
 /*
@@ -13,11 +15,13 @@ import co.omisego.omgshop.pages.checkout.caller.TransactionHistoryCallerContract
  */
 interface TransactionHistoryContract {
     interface View : BaseContract.BaseView {
-        fun showTransactionList(transactionList: List<TransactionRecord>)
+        fun showTransactionList(transactionList: PaginationList<Transaction>)
         fun showLoadTransactionListFail()
+        fun showCurrentAddress(address: String)
     }
 
     interface Presenter : BaseContract.BasePresenter<View, TransactionHistoryCallerContract.Caller> {
-
+        fun loadCurrentAddress()
+        fun createTransactionListParams() : TransactionListParams
     }
 }
