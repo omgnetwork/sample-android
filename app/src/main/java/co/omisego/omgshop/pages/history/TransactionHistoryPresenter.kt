@@ -20,18 +20,22 @@ import co.omisego.omisego.model.transaction.list.TransactionListParams
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 class TransactionHistoryPresenter : BasePresenterImpl<TransactionHistoryContract.View, TransactionHistoryCallerContract.Caller>(),
-        TransactionHistoryContract.Presenter,
-        TransactionHistoryCallerContract.Handler {
+    TransactionHistoryContract.Presenter,
+    TransactionHistoryCallerContract.Handler {
 
-    override fun createTransactionListParams(): TransactionListParams {
+    private val perPage = 5
+
+    override fun createTransactionListParams(page: Int): TransactionListParams {
         return TransactionListParams.create(
-                page = 1,
-                perPage = 100,
-                sortBy = Paginable.Transaction.SortableFields.CREATED_AT,
-                sortDir = SortDirection.DESCENDING,
-                searchTerm = null
+            page = page,
+            perPage = perPage,
+            sortBy = Paginable.Transaction.SortableFields.CREATED_AT,
+            sortDir = SortDirection.DESCENDING,
+            searchTerm = null
         )
     }
+
+    override fun getPerPage() = perPage
 
     override fun loadCurrentAddress() {
         mView?.showCurrentAddress(Preference.loadWalletAddress())
@@ -40,7 +44,7 @@ class TransactionHistoryPresenter : BasePresenterImpl<TransactionHistoryContract
     override fun handleLoadTransactionListSuccess(response: OMGResponse<PaginationList<Transaction>>) {
         logi(response)
         mView?.hideLoading()
-        mView?.showTransactionList(response.data)
+        mView?.addTransactions(response.data.data, response.data.pagination.currentPage)
     }
 
     override fun handleLoadTransactionListFailed(response: OMGResponse<APIError>) {

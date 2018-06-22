@@ -26,11 +26,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="8dp"
+            android:paddingBottom="12dp"
             android:paddingStart="16dp"
-            android:paddingTop="8dp">
+            android:paddingTop="12dp">
 
             <TextView
+                style="@style/OMGTextNormal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/activity_transaction_history_my_address"
@@ -38,9 +39,11 @@
 
             <TextView
                 android:id="@+id/tvAddress"
+                style="@style/OMGTextBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
                 android:text="13bef5d2-4dd6-4f58-8729-da06419c918d"
                 android:textColor="@color/colorBlack" />
 
