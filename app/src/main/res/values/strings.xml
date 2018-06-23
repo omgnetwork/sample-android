@@ -84,6 +84,7 @@
 
   <!-- Permission -->
   <string name="permission_camera_rationale">Camera permission is needed to show the QR code scanner.</string>
-  <string name="permission_should_manually_granted">Enable camera permission in setting first to use QR code scanner.</string>
+  <string name="permission_should_manually_granted">Enable camera permission in setting first to use QR code scanner.
+  </string>
   <string name="ok">OK</string>
 </resources>
