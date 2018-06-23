@@ -8,4 +8,6 @@ package co.omisego.omgshop.pages.history.viewholder.listener
  */
 interface OnLoadListener {
     fun onFinished()
+    fun onReachedLastPage()
+    fun onReloaded()
 }

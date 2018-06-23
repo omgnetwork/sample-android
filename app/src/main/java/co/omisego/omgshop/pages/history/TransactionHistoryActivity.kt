@@ -50,7 +50,7 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
     }
 
     override fun onLoadMore() {
-        loadTransactions(currentPage)
+        loadTransactions(currentPage + 1)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -65,11 +65,16 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
         tvAddress.text = address
     }
 
-    override fun addTransactions(transactionList: List<Transaction>, page: Int) {
+    override fun addTransactions(transactionList: List<Transaction>, page: Int, isLastPage: Boolean) {
         swipeRefresh.isRefreshing = false
-        transactionListAdapter.getLoadingListener()?.onFinished()
         transactionListAdapter.addTransactions(transactionList)
         currentPage = page
+        transactionListAdapter.getLoadingListener()?.onFinished()
+
+        if (page == 1 && !isLastPage)
+            transactionListAdapter.getLoadingListener()?.onReloaded()
+        else if (isLastPage)
+            transactionListAdapter.getLoadingListener()?.onReachedLastPage()
     }
 
     override fun showLoadTransactionListFail() {

@@ -15,11 +15,12 @@ import kotlinx.android.synthetic.main.viewholder_load_more.view.*
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 class LoadMoreViewHolder(
-    itemView: View,
-    private val command: LoadMoreCommand
+        itemView: View,
+        private val command: LoadMoreCommand
 ) : RecyclerView.ViewHolder(itemView), OnLoadListener {
     fun bindClick() {
-        itemView.tvLoadMore.text = itemView.context.getString(R.string.load_more, PaginationConfig.PER_PAGE)
+        if (itemView.isEnabled)
+            itemView.tvLoadMore.text = itemView.context.getString(R.string.load_more, PaginationConfig.PER_PAGE)
         itemView.setOnClickListener {
             setViewLoading(true)
             command.onLoadMore()
@@ -28,6 +29,26 @@ class LoadMoreViewHolder(
 
     override fun onFinished() {
         setViewLoading(false)
+    }
+
+    override fun onReachedLastPage() {
+        setViewEnabled(false)
+    }
+
+    override fun onReloaded() {
+        setViewEnabled(true)
+    }
+
+    private fun setViewEnabled(enabled: Boolean) {
+        if (enabled) {
+            itemView.alpha = 1f
+            itemView.isEnabled = true
+            itemView.tvLoadMore.text = itemView.context.getString(R.string.load_more, PaginationConfig.PER_PAGE)
+        } else {
+            itemView.alpha = 0.5f
+            itemView.isEnabled = false
+            itemView.tvLoadMore.text = itemView.context.getString(R.string.load_more_disable)
+        }
     }
 
     private fun setViewLoading(loading: Boolean) {

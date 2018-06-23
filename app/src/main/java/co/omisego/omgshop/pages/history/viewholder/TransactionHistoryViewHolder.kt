@@ -15,7 +15,6 @@ import co.omisego.omisego.model.pagination.Paginable
 import co.omisego.omisego.model.transaction.list.Transaction
 import co.omisego.omisego.model.transaction.list.TransactionSource
 import kotlinx.android.synthetic.main.viewholder_transaction_record.view.*
-import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -34,7 +33,8 @@ class TransactionHistoryViewHolder(
             record.setTransactionAddress(isSameAddress)
             record.status.colorizedTransactionStatus()
             record.from.formatTransactionAmount(isSameAddress)
-            itemView.tvTransactionStatus.text = "- ${record.status.value.capitalize()}"
+
+            itemView.tvTransactionStatus.text = itemView.context.getString(R.string.transaction_status, record.status.value.capitalize())
             itemView.tvTransactionDate.text = dateFormat.format(record.createdAt)
         }
     }
@@ -68,13 +68,12 @@ class TransactionHistoryViewHolder(
     }
 
     private fun TransactionSource.formatTransactionAmount(sameAddress: Boolean) {
-        val amount = String.format("%.1f", this.amount.divide(this.token.subunitToUnit, RoundingMode.FLOOR))
-        val prefix = if (sameAddress) {
-            "-"
+        val amount = String.format("%.1f", this.amount.divide(this.token.subunitToUnit))
+        if (sameAddress) {
+            itemView.tvTransactionAmount.text = itemView.context.getString(R.string.transaction_amount_to, amount)
         } else {
-            "+"
+            itemView.tvTransactionAmount.text = itemView.context.getString(R.string.transaction_amount_from, amount)
         }
-        itemView.tvTransactionAmount.text = "$prefix $amount OMG"
     }
 
     private fun setTransactionDirection(sameAddress: Boolean) {

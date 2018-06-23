@@ -38,7 +38,8 @@ class TransactionHistoryPresenter : BasePresenterImpl<TransactionHistoryContract
     override fun handleLoadTransactionListSuccess(response: OMGResponse<PaginationList<Transaction>>) {
         logi(response)
         mView?.hideLoading()
-        mView?.addTransactions(response.data.data, response.data.pagination.currentPage)
+        val pagination = response.data.pagination
+        mView?.addTransactions(response.data.data, pagination.currentPage, pagination.isLastPage)
     }
 
     override fun handleLoadTransactionListFailed(response: OMGResponse<APIError>) {

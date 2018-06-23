@@ -14,7 +14,7 @@ import co.omisego.omisego.model.transaction.list.TransactionListParams
  */
 interface TransactionHistoryContract {
     interface View : BaseContract.BaseView {
-        fun addTransactions(transactionList: List<Transaction>, page: Int)
+        fun addTransactions(transactionList: List<Transaction>, page: Int, isLastPage: Boolean)
         fun showLoadTransactionListFail()
         fun showCurrentAddress(address: String)
     }
