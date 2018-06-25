@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="ToggleField">
+        <attr name="toggleTitle" format="string" />
+        <attr name="textOn" format="string" />
+        <attr name="textOff" format="string" />
+        <attr name="showText" format="boolean" />
+    </declare-styleable>
+</resources>

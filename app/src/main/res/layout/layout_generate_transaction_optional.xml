@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/parentGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_outline_lighten_shape"
+        android:paddingBottom="8dp">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guide_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="8dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guide_y"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <TextView
+            android:id="@+id/options"
+            style="@style/OMGTextBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Options"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/guide_y"
+            app:layout_constraintTop_toTopOf="@+id/guide_x" />
+
+        <ImageView
+            android:id="@+id/ivToggle"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="@+id/options"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guide_x"
+            app:layout_constraintVertical_bias="0.43"
+            app:srcCompat="@drawable/ic_arrow_down_24dp" />
+
+
+        <co.omisego.omgshop.view.SeekBarField
+            android:id="@+id/maxConsumption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guide_y"
+            app:layout_constraintTop_toBottomOf="@+id/options"
+            app:max="50"
+            app:multiplier="1"
+            app:seekTitle="Max consumption" />
+
+        <co.omisego.omgshop.view.SeekBarField
+            android:id="@+id/maxConsumptionPerUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guide_y"
+            app:layout_constraintTop_toBottomOf="@+id/maxConsumption"
+            app:max="10"
+            app:multiplier="1"
+            app:seekTitle="Max consumption per user" />
+
+        <co.omisego.omgshop.view.ToggleField
+            android:id="@+id/requiredConfirmation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guide_y"
+            app:layout_constraintTop_toBottomOf="@+id/maxConsumptionPerUser"
+            app:textOff="No"
+            app:textOn="Yes"
+            app:toggleTitle="Requires confirmation" />
+
+        <co.omisego.omgshop.view.ToggleField
+            android:id="@+id/allowAmountField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guide_y"
+            app:layout_constraintTop_toBottomOf="@+id/requiredConfirmation"
+            app:textOff="No"
+            app:textOn="Yes"
+            app:toggleTitle="Allow amount override" />
+
+        <co.omisego.omgshop.view.EditTextField
+            android:id="@+id/addressField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:inputType="text"
+            app:editTextCounterEnabled="true"
+            app:editTextCounterMaxLength="36"
+            app:editTextHint="Your wallet address"
+            app:editTextMask="########-####-####-####-############"
+            app:editTextTitle="Address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guide_y"
+            app:layout_constraintTop_toBottomOf="@+id/allowAmountField" />
+
+        <co.omisego.omgshop.view.EditTextField
+            android:id="@+id/consumptionTimeField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:inputType="number"
+            app:editTextCounterMaxLength="13"
+            app:editTextHint="∞"
+            app:editTextMask="#,###,###,###"
+            app:editTextTitle="Consumption time in ms"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guide_y"
+            app:layout_constraintTop_toBottomOf="@+id/addressField" />
+
+        <co.omisego.omgshop.view.EditTextField
+            android:id="@+id/expirationDateField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:inputType="date"
+            app:editTextHint="∞"
+            app:editTextTitle="Expiration Date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guide_y"
+            app:layout_constraintTop_toBottomOf="@+id/consumptionTimeField" />
+
+        <co.omisego.omgshop.view.EditTextField
+            android:id="@+id/correlationIdField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:inputType="text"
+            app:editTextHint="Empty"
+            app:editTextTitle="Correlation ID"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guide_y"
+            app:layout_constraintTop_toBottomOf="@+id/expirationDateField" />
+
+        <android.support.constraint.Group
+            android:id="@+id/fieldGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="requiredConfirmation,maxConsumptionPerUser,maxConsumption,allowAmountField,consumptionTimeField,expirationDateField,addressField,correlationIdField" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

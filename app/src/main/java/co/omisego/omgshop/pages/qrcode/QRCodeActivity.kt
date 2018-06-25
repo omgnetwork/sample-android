@@ -14,6 +14,7 @@ import android.view.View
 import co.omisego.omgshop.R
 import co.omisego.omgshop.extensions.requestPermission
 import co.omisego.omgshop.pages.scan.ScanActivity
+import co.omisego.omgshop.pages.transaction.generate.GenerateTransactionActivity
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import kotlinx.android.synthetic.main.activity_qrcode.*
 
@@ -34,6 +35,10 @@ class QRCodeActivity : AppCompatActivity() {
                 this::handleShowPermissionRationale,
                 this::handlePermissionGranted,
                 this::handlePermissionShouldManuallyGranted)
+        }
+
+        btnGenerate.setOnClickListener {
+            startActivity(Intent(this, GenerateTransactionActivity::class.java))
         }
     }
 
