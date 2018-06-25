@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="co.omisego.omgshop">
+    package="co.omisego.omgshop">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".OmiseShopApplication"
@@ -22,24 +22,23 @@
             android:name=".pages.login.LoginActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".pages.register.RegisterActivity"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".pages.products.ProductListActivity"/>
-        <activity android:name=".pages.checkout.CheckoutActivity"/>
-        <activity android:name=".pages.profile.MyProfileActivity"/>
-        <activity android:name=".pages.history.TransactionHistoryActivity"/>
-        <activity android:name=".pages.qrcode.QRCodeActivity"/>
-        <activity android:name=".pages.scan.ScanActivity"/>
-        <activity android:name=".pages.transaction.generate.GenerateTransactionActivity">
-        </activity>
-        <activity android:name=".pages.transaction.consume.ConsumeTransactionActivity">
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".pages.products.ProductListActivity" />
+        <activity android:name=".pages.checkout.CheckoutActivity" />
+        <activity android:name=".pages.profile.MyProfileActivity" />
+        <activity android:name=".pages.history.TransactionHistoryActivity" />
+        <activity android:name=".pages.qrcode.QRCodeActivity" />
+        <activity android:name=".pages.scan.ScanActivity" />
+        <activity android:name=".pages.transaction.generate.GenerateTransactionActivity"></activity>
+        <activity android:name=".pages.transaction.consume.ConsumeTransactionActivity"></activity>
+        <activity android:name=".pages.transaction.ShowQRActivity"></activity>
     </application>
 
 </manifest>

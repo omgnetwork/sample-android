@@ -19,7 +19,6 @@
     <string name="activity_register_register">Register</string>
     <string name="activity_register_toolbar_title">Register</string>
     <string name="activity_product_list_toolbar_title">Products</string>
-    <string name="activity_transaction_history_list_toolbar_title">Transaction history</string>
     <string name="activity_scan_qr_toolbar_title">Scan QR</string>
     <string name="activity_qr_code_toolbar_title">QR Code</string>
     <string name="activity_register_loading_dialog_title">Please wait</string>
@@ -57,6 +56,15 @@
     <!-- Product -->
     <string name="viewholder_product_content_description_tshirt">T-shirt</string>
 
+    <!-- Transaction History -->
+    <string name="activity_transaction_history_list_toolbar_title">Transaction history</string>
+
+    <!-- Generate Transaction -->
+    <string name="activity_generate_transaction_toolbar_title">Generate Transaction</string>
+
+    <!-- Show QR -->
+    <string name="activity_show_qr_transaction_toolbar_title">Scan My QR</string>
+
     <!-- Redeem dialog -->
     <string name="dialog_redeem_title">Redeem #symbol coins</string>
     <string name="dialog_redeem_description">You have #amount to redeem</string>
@@ -78,6 +86,9 @@
     <string name="transaction_amount_to">- %s %s</string>
     <string name="transaction_amount_from">+ %s %s</string>
 
+    <!-- Generate transaction -->
+    <string name="activity_transaction_action_create">Create</string>
+
     <!-- QR code -->
     <string name="activity_qrcode_scan">Scan QR Code</string>
     <string name="activity_qrcode_generate">Generate QR Code</string>
@@ -87,4 +98,5 @@
     <string name="permission_should_manually_granted">Enable camera permission in setting first to use QR code scanner.
   </string>
     <string name="ok">OK</string>
+    <string name="show_qr_waiting_for_scan">Waiting for scan…</string>
 </resources>

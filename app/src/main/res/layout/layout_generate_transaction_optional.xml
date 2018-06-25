@@ -131,18 +131,6 @@
             app:layout_constraintTop_toBottomOf="@+id/addressField" />
 
         <co.omisego.omgshop.view.EditTextField
-            android:id="@+id/expirationDateField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:inputType="date"
-            app:editTextHint="∞"
-            app:editTextTitle="Expiration Date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guide_y"
-            app:layout_constraintTop_toBottomOf="@+id/consumptionTimeField" />
-
-        <co.omisego.omgshop.view.EditTextField
             android:id="@+id/correlationIdField"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -152,14 +140,14 @@
             app:editTextTitle="Correlation ID"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guide_y"
-            app:layout_constraintTop_toBottomOf="@+id/expirationDateField" />
+            app:layout_constraintTop_toBottomOf="@+id/consumptionTimeField" />
 
         <android.support.constraint.Group
             android:id="@+id/fieldGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="requiredConfirmation,maxConsumptionPerUser,maxConsumption,allowAmountField,consumptionTimeField,expirationDateField,addressField,correlationIdField" />
+            app:constraint_referenced_ids="requiredConfirmation,maxConsumptionPerUser,maxConsumption,allowAmountField,consumptionTimeField,addressField,correlationIdField" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
