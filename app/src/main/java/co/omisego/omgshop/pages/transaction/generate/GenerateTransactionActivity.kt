@@ -7,8 +7,8 @@ import android.view.MenuItem
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.extensions.logi
-import co.omisego.omgshop.pages.transaction.ShowQRActivity
 import co.omisego.omgshop.pages.transaction.generate.caller.GenerateTransactionCallerContract.Caller
+import co.omisego.omgshop.pages.transaction.showqr.ShowQRActivity
 import co.omisego.omgshop.view.SpinnerField
 import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.Token
@@ -16,7 +16,8 @@ import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.model.transaction.request.TransactionRequestCreateParams
 import kotlinx.android.synthetic.main.activity_generate_transaction.*
 
-class GenerateTransactionActivity : BaseActivity<GenerateTransactionContract.View, Caller, GenerateTransactionContract.Presenter>(), GenerateTransactionContract.View {
+class GenerateTransactionActivity :
+    BaseActivity<GenerateTransactionContract.View, Caller, GenerateTransactionContract.Presenter>(), GenerateTransactionContract.View {
     override val mPresenter: GenerateTransactionContract.Presenter by lazy {
         GenerateTransactionPresenter()
     }

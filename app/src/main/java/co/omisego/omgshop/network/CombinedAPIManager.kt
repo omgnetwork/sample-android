@@ -11,10 +11,13 @@ import co.omisego.omisego.model.Logout
 import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.WalletList
 import co.omisego.omisego.model.pagination.PaginationList
+import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
 import co.omisego.omisego.model.transaction.list.Transaction
 import co.omisego.omisego.model.transaction.list.TransactionListParams
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.model.transaction.request.TransactionRequestCreateParams
+import co.omisego.omisego.operation.startListeningEvents
+import co.omisego.omisego.websocket.SocketCustomEventListener
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -107,6 +110,26 @@ object CombinedAPIManager {
                     success.invoke(response)
                 }
             })
+    }
+
+    inline fun joinChannel(
+        authToken: String,
+        request: TransactionRequest,
+        crossinline onRequest: (TransactionConsumption) -> Unit,
+        crossinline onFinalizedFail: (TransactionConsumption, APIError) -> Unit,
+        crossinline onFinalizedSuccess: (TransactionConsumption) -> Unit
+    ) {
+        val client = ClientProvider.provideSocketClient(authToken).client
+        request.startListeningEvents(client, listener = object : SocketCustomEventListener.TransactionRequestListener() {
+            override fun onTransactionConsumptionFinalizedFail(transactionConsumption: TransactionConsumption, apiError: APIError) =
+                onFinalizedFail.invoke(transactionConsumption, apiError)
+
+            override fun onTransactionConsumptionFinalizedSuccess(transactionConsumption: TransactionConsumption) =
+                onFinalizedSuccess(transactionConsumption)
+
+            override fun onTransactionConsumptionRequest(transactionConsumption: TransactionConsumption) =
+                onRequest(transactionConsumption)
+        })
     }
 
     fun getProductList(credential: Credential): Observable<Response<Product.Get.Response>> {

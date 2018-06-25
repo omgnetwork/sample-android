@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:id="@+id/rootLayout"
-    tools:context=".pages.transaction.ShowQRActivity">
+    tools:context=".pages.transaction.showqr.ShowQRActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

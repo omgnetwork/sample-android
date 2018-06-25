@@ -1,42 +1,55 @@
-package co.omisego.omgshop.pages.transaction
+package co.omisego.omgshop.pages.transaction.showqr
 
 import android.os.Bundle
-import android.support.transition.TransitionManager
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.View
 import co.omisego.omgshop.R
+import co.omisego.omgshop.base.BaseActivity
+import co.omisego.omgshop.extensions.logi
+import co.omisego.omgshop.pages.transaction.showqr.caller.ShowQRCallerContract
+import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.qrcode.generator.generateQRCode
 import kotlinx.android.synthetic.main.activity_show_qr.*
 
-class ShowQRActivity : AppCompatActivity() {
+class ShowQRActivity : BaseActivity<ShowQRContract.View, ShowQRCallerContract.Caller, ShowQRContract.Presenter>(), ShowQRContract.View {
+
+    override val mPresenter: ShowQRContract.Presenter by lazy {
+        ShowQRPresenter()
+    }
 
     companion object {
         const val INTENT_TRANSACTION_REQUEST = "transaction_request"
     }
 
+    private lateinit var transactionRequest: TransactionRequest
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_qr)
         setupToolbar()
-        val transactionRequest = intent.getParcelableExtra<TransactionRequest>(INTENT_TRANSACTION_REQUEST)
-
-        ivQRCode.visibility = View.INVISIBLE
-        TransitionManager.beginDelayedTransition(rootLayout)
+        transactionRequest = intent.getParcelableExtra(INTENT_TRANSACTION_REQUEST)
         showQR(transactionRequest)
+        mPresenter.caller?.joinChannel(request = transactionRequest)
     }
 
     private fun showQR(transactionRequest: TransactionRequest) {
         val bitmap = transactionRequest.generateQRCode(size = 1024)
         ivQRCode.setImageBitmap(bitmap)
-        ivQRCode.visibility = View.VISIBLE
     }
 
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_show_qr_transaction_toolbar_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun showTransactionConfirmation(response: TransactionConsumption) {
+        logi(response)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mPresenter.leaveChannel(transactionRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

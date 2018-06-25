@@ -38,7 +38,7 @@
         <activity android:name=".pages.scan.ScanActivity" />
         <activity android:name=".pages.transaction.generate.GenerateTransactionActivity"></activity>
         <activity android:name=".pages.transaction.consume.ConsumeTransactionActivity"></activity>
-        <activity android:name=".pages.transaction.ShowQRActivity"></activity>
+        <activity android:name=".pages.transaction.showqr.ShowQRActivity"></activity>
     </application>
 
 </manifest>

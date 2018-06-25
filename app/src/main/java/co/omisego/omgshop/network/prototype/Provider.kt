@@ -2,6 +2,7 @@ package co.omisego.omgshop.network.prototype
 
 import co.omisego.omgshop.network.OMGClient
 import co.omisego.omgshop.network.ShopClient
+import co.omisego.omgshop.network.SocketClient
 
 /*
  * OmiseGO
@@ -11,5 +12,6 @@ import co.omisego.omgshop.network.ShopClient
  */
 interface Provider {
     fun provideOMGClient(authToken: String): OMGClient
+    fun provideSocketClient(authToken: String): SocketClient
     fun provideShopClient(userId: String = "", authToken: String = ""): ShopClient
 }
