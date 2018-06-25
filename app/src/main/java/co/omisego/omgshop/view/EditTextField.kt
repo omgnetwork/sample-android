@@ -10,8 +10,13 @@ import co.omisego.omgshop.R
 import com.santalu.maskedittext.MaskEditText
 
 class EditTextField : ConstraintLayout {
-    private var editText: MaskEditText? = null
+    var editText: MaskEditText? = null
     private var tilEditText: TextInputLayout? = null
+    private var editTextEnabled: Boolean = true
+        set(value) {
+            field = value
+            editText?.isEnabled = value
+        }
     private var editTextCounterEnabled: Boolean = false
         set(value) {
             field = value
@@ -71,6 +76,18 @@ class EditTextField : ConstraintLayout {
             tilEditText = rootView.findViewById(R.id.tilEditText)
         }
         attrs?.apply()
+        adjustPaddingIfNeeded()
+    }
+
+    private fun adjustPaddingIfNeeded() {
+        if (tilEditText?.isCounterEnabled == true ||
+            tilEditText?.isErrorEnabled == true ||
+            tilEditText?.isHintEnabled == true) {
+            val paddingTop = tilEditText?.getChildAt(0)?.paddingTop ?: 0
+            val paddingLeft = tilEditText?.getChildAt(0)?.paddingLeft ?: 0
+            val paddingRight = tilEditText?.getChildAt(0)?.paddingRight ?: 0
+            tilEditText?.getChildAt(1)?.setPadding(paddingLeft, paddingTop, paddingRight, 0)
+        }
     }
 
     fun getText(): String = editText?.text.toString()
@@ -94,6 +111,7 @@ class EditTextField : ConstraintLayout {
             inputType = attrs.getInt(R.styleable.EditTextField_android_inputType, EditorInfo.TYPE_NUMBER_FLAG_DECIMAL)
             mask = attrs.getString(R.styleable.EditTextField_editTextMask) ?: mask
             editTextCounterEnabled = attrs.getBoolean(R.styleable.EditTextField_editTextCounterEnabled, false)
+            editTextEnabled = attrs.getBoolean(R.styleable.EditTextField_editTextEnabled, true)
             editTextCounterMaxLength = attrs.getInteger(R.styleable.EditTextField_editTextCounterMaxLength, 100)
         } finally {
             attrs.recycle()

@@ -32,8 +32,9 @@ class SpinnerField : ConstraintLayout, AdapterView.OnItemSelectedListener {
             field = value
             if (adapter.isEmpty)
                 adapter.addAll(value)
-        }
+        }bu
 
+    var selectedToken: Token? = null
     var selectionTokenListener: OnSelectionTokenListener? = null
 
     constructor(context: Context) : super(context) {
@@ -65,6 +66,10 @@ class SpinnerField : ConstraintLayout, AdapterView.OnItemSelectedListener {
             loadSpinnerWithTokens()
     }
 
+    fun selectToken(token: Token) {
+        selectedToken = token
+    }
+
     private fun loadSpinnerWithTokens() {
         val authToken = Preference.loadCredential().omisegoAuthenticationToken
         ClientProvider.provideOMGClient(authToken).client.getWallets().enqueue(object : OMGCallback<WalletList> {
@@ -74,6 +79,8 @@ class SpinnerField : ConstraintLayout, AdapterView.OnItemSelectedListener {
 
             override fun success(response: OMGResponse<WalletList>) {
                 tokens = response.data.data[0].balances.map { it.token }.toTypedArray()
+                val index = tokens.indexOf(selectedToken) ?: return
+                spinner?.setSelection(index)
             }
         })
     }
@@ -82,8 +89,10 @@ class SpinnerField : ConstraintLayout, AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (tokens.isNotEmpty())
+        if (tokens.isNotEmpty()) {
+            selectedToken = tokens[position]
             selectionTokenListener?.onItemSelected(tokens[position])
+        }
     }
 
     private fun AttributeSet?.apply() {

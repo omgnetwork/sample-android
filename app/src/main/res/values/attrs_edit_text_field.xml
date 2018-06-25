@@ -5,6 +5,7 @@
         <attr name="android:inputType" />
         <attr name="editTextMask" format="string" />
         <attr name="editTextCounterEnabled" format="boolean" />
+        <attr name="editTextEnabled" format="boolean" />
         <attr name="editTextCounterMaxLength" format="integer" />
     </declare-styleable>
 </resources>

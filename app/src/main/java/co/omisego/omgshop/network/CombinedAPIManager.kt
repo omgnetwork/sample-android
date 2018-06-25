@@ -12,6 +12,7 @@ import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.WalletList
 import co.omisego.omisego.model.pagination.PaginationList
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
+import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionParams
 import co.omisego.omisego.model.transaction.list.Transaction
 import co.omisego.omisego.model.transaction.list.TransactionListParams
 import co.omisego.omisego.model.transaction.request.TransactionRequest
@@ -107,6 +108,24 @@ object CombinedAPIManager {
                 }
 
                 override fun success(response: OMGResponse<TransactionRequest>) {
+                    success.invoke(response)
+                }
+            })
+    }
+
+    inline fun consumeTransactionRequest(
+        authToken: String,
+        request: TransactionConsumptionParams,
+        crossinline fail: (OMGResponse<APIError>) -> Unit,
+        crossinline success: (OMGResponse<TransactionConsumption>) -> Unit
+    ) {
+        ClientProvider.provideOMGClient(authToken).client.consumeTransactionRequest(request)
+            .enqueue(object : OMGCallback<TransactionConsumption> {
+                override fun fail(response: OMGResponse<APIError>) {
+                    fail.invoke(response)
+                }
+
+                override fun success(response: OMGResponse<TransactionConsumption>) {
                     success.invoke(response)
                 }
             })

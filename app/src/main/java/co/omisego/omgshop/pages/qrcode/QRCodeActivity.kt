@@ -8,12 +8,12 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import co.omisego.omgshop.R
 import co.omisego.omgshop.extensions.requestPermission
 import co.omisego.omgshop.pages.scan.ScanActivity
+import co.omisego.omgshop.pages.transaction.consume.ConsumeTransactionActivity
 import co.omisego.omgshop.pages.transaction.generate.GenerateTransactionActivity
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import kotlinx.android.synthetic.main.activity_qrcode.*
@@ -104,8 +104,9 @@ class QRCodeActivity : AppCompatActivity() {
             when (requestCode) {
                 REQUEST_CODE_SCAN -> {
                     val transactionRequest = data?.getParcelableExtra<TransactionRequest>(ScanActivity.ACTIVITY_RESULT_TRANSACTION_REQUEST)
-                    Log.d("test", transactionRequest?.toString())
-                    // TODO: Go to consume transaction
+                    startActivity(Intent(this, ConsumeTransactionActivity::class.java).apply {
+                        putExtra(ConsumeTransactionActivity.INTENT_EXTRA_TRANSACTION_REQUEST, transactionRequest)
+                    })
                 }
             }
         }
