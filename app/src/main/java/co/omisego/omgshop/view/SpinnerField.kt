@@ -32,7 +32,7 @@ class SpinnerField : ConstraintLayout, AdapterView.OnItemSelectedListener {
             field = value
             if (adapter.isEmpty)
                 adapter.addAll(value)
-        }bu
+        }
 
     var selectedToken: Token? = null
     var selectionTokenListener: OnSelectionTokenListener? = null

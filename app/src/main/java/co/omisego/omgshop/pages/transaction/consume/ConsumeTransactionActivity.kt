@@ -6,11 +6,12 @@ import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.extensions.logi
+import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.pages.transaction.consume.caller.ConsumeTransactionCallerContract
 import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
+import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionParams
 import co.omisego.omisego.model.transaction.request.TransactionRequest
-import co.omisego.omisego.model.transaction.request.toTransactionConsumptionParams
 import kotlinx.android.synthetic.main.activity_consume_transaction.*
 
 class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View, ConsumeTransactionCallerContract.Caller, ConsumeTransactionContract.Presenter>(),
@@ -30,16 +31,19 @@ class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View,
         setupToolbar()
         setupUIData()
         btnConsume.setOnClickListener {
-            val address = if (addressField.getText().isEmpty()) null else addressField.getText()
-            val amount = if (amountField.getText().isEmpty()) null else amountField.getText().toBigDecimal()
-            val request = transactionRequest.toTransactionConsumptionParams(
-                amount = amount?.multiply(tokenField?.selectedToken?.subunitToUnit),
-                tokenId = tokenField.selectedToken?.id,
-                address = address,
-                correlationId = correlationField.getText()
-            ) ?: return@setOnClickListener
-            mPresenter.caller?.consume(request = request)
+            val params = retrieveDataFromFields()
+            mPresenter.caller?.consume(request = params)
         }
+    }
+
+    private fun retrieveDataFromFields(): TransactionConsumptionParams {
+        return mPresenter.sanitizeRequestParams(
+            transactionRequest,
+            amountField.getText(),
+            tokenField.selectedToken ?: Preference.loadSelectedTokenBalance()?.token ?: null,
+            addressField.getText(),
+            correlationField.getText()
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

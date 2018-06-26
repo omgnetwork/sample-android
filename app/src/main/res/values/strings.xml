@@ -69,10 +69,10 @@
     <string name="activity_consume_transaction_toolbar_title">Consume Transaction</string>
 
     <!-- Redeem dialog -->
-    <string name="dialog_redeem_title">Redeem #symbol coins</string>
-    <string name="dialog_redeem_description">You have #amount to redeem</string>
-    <string name="dialog_redeem_redeem_amount">Redeem #amount</string>
-    <string name="dialog_redeem_total_discount">Get discount #amount</string>
+    <string name="dialog_redeem_title">Redeem %s coins</string>
+    <string name="dialog_redeem_description">You have %s to redeem</string>
+    <string name="dialog_redeem_redeem_amount">Redeem %s</string>
+    <string name="dialog_redeem_total_discount">Get discount %s</string>
     <string name="dialog_redeem_button_cancel">Cancel</string>
     <string name="dialog_redeem_button_redeem">Redeem</string>
 

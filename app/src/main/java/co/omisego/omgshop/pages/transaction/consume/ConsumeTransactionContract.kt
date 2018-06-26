@@ -10,7 +10,10 @@ package co.omisego.omgshop.pages.transaction.consume
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.pages.transaction.consume.caller.ConsumeTransactionCallerContract
 import co.omisego.omisego.model.APIError
+import co.omisego.omisego.model.Token
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
+import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionParams
+import co.omisego.omisego.model.transaction.request.TransactionRequest
 
 interface ConsumeTransactionContract {
     interface View : BaseContract.BaseView {
@@ -19,6 +22,12 @@ interface ConsumeTransactionContract {
     }
 
     interface Presenter : BaseContract.BasePresenter<View, ConsumeTransactionCallerContract.Caller> {
-
+        fun sanitizeRequestParams(
+            transactionRequest: TransactionRequest,
+            amount: String,
+            token: Token?,
+            address: String,
+            correlationId: String?
+        ): TransactionConsumptionParams
     }
 }
