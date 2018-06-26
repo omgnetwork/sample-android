@@ -13,6 +13,7 @@
 
     <TextView
         android:id="@+id/tvToken"
+        style="@style/OMGTextMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
@@ -20,6 +21,7 @@
 
     <TextView
         android:id="@+id/tvAmount"
+        style="@style/OMGTextNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

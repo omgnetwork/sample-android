@@ -90,7 +90,7 @@
 
     <Button
         android:id="@+id/btnConsume"
-        style="@style/AppTheme.OmiseGOButton"
+        style="@style/BlueButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

@@ -21,7 +21,7 @@
 
     <Button
         android:id="@+id/btnGenerate"
-        style="@style/AppTheme.OmiseGOBorderlessButton"
+        style="@style/BorderlessButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -54,7 +54,7 @@
 
     <Button
         android:id="@+id/btnScan"
-        style="@style/AppTheme.OmiseGOBorderlessButton"
+        style="@style/BorderlessButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/tvSection1Title"
-        style="@style/AppTheme.OmiseGOSectionHeader"
+        style="@style/AppTheme.SectionHeader"
         android:text="@string/activity_checkout_section_1_header" />
 
     <LinearLayout
@@ -41,8 +41,11 @@
 
             <TextView
                 android:id="@+id/tvProductTitle"
+                style="@style/OMGTextMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
                 tools:text="OmiseGO T-Shirt" />
 
             <android.support.v4.widget.Space
@@ -52,6 +55,7 @@
 
             <TextView
                 android:id="@+id/tvPrice"
+                style="@style/OMGTextMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
@@ -64,21 +68,23 @@
 
     <TextView
         android:id="@+id/tvSection2Title"
-        style="@style/AppTheme.OmiseGOSectionHeader"
+        style="@style/AppTheme.SectionHeader"
         android:text="@string/activity_checkout_section_2_header" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/OMGTextBold"
+            android:textColor="@color/colorBlack"
             android:text="@string/activity_checkout_sub_total" />
 
         <android.support.v4.widget.Space
@@ -90,6 +96,7 @@
             android:id="@+id/tvSubtotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/OMGTextMedium"
             android:text="฿985.00"
             android:textColor="@color/colorPrimary" />
 
@@ -99,14 +106,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/OMGTextBold"
+            android:textColor="@color/colorBlack"
             android:text="@string/activity_checkout_discount" />
 
         <android.support.v4.widget.Space
@@ -119,6 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="฿0.00"
+            style="@style/OMGTextMedium"
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
@@ -127,14 +137,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/OMGTextBold"
+            android:textColor="@color/colorBlack"
             android:text="@string/activity_checkout_total" />
 
         <android.support.v4.widget.Space
@@ -147,6 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="฿985.00"
+            style="@style/OMGTextMedium"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
@@ -165,7 +178,7 @@
 
         <Button
             android:id="@+id/btnRedeem"
-            style="@style/AppTheme.OmiseGOOutlineButton"
+            style="@style/OutlineButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -173,7 +186,7 @@
 
         <Button
             android:id="@+id/btnPay"
-            style="@style/AppTheme.OmiseGOButton"
+            style="@style/BlueButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"

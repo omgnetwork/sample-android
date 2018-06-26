@@ -18,7 +18,6 @@
     <string name="activity_register_password">Password</string>
     <string name="activity_register_register">Register</string>
     <string name="activity_register_toolbar_title">Register</string>
-    <string name="activity_product_list_toolbar_title">Products</string>
     <string name="activity_scan_qr_toolbar_title">Scan QR</string>
     <string name="activity_qr_code_toolbar_title">QR Code</string>
     <string name="activity_register_loading_dialog_title">Please wait</string>
@@ -28,7 +27,7 @@
     <string name="activity_register_last_name_error_validation">Last name must not be empty</string>
 
     <!-- Checkout -->
-    <string name="activity_checkout_toolbar_title">Products</string>
+    <string name="activity_checkout_toolbar_title">Check out</string>
     <string name="activity_checkout_section_1_header">Your Product</string>
     <string name="activity_checkout_section_2_header">Summary</string>
     <string name="activity_checkout_sub_total">Sub total</string>
@@ -44,16 +43,17 @@
     <string name="activity_checkout_pay_error_token_not_set">The default token has not been selected/</string>
 
     <!-- My Profile -->
-    <string name="activity_my_profile_token">Token</string>
-    <string name="activity_my_profile_amount">Amount</string>
-    <string name="activity_my_profile_selected">Selected</string>
-    <string name="activity_my_profile_toolbar">My profile</string>
+    <string name="activity_my_profile_token">TOKEN</string>
+    <string name="activity_my_profile_amount">AMOUNT</string>
+    <string name="activity_my_profile_selected">SELECTED</string>
+    <string name="activity_my_profile_toolbar">My Profile</string>
     <string name="activity_my_profile_loading">Loading...</string>
     <string name="activity_my_profile_dialog_title">Please wait</string>
     <string name="activity_my_profile_dialog_message">Logging out...</string>
     <string name="activity_my_profile_log_out">LOG OUT</string>
 
     <!-- Product -->
+    <string name="activity_product_list_toolbar_title">Products</string>
     <string name="viewholder_product_content_description_tshirt">T-shirt</string>
 
     <!-- Transaction History -->

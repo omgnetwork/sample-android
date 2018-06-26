@@ -9,15 +9,18 @@
 
     <TextView
         android:id="@+id/tvDialogTitle"
-        style="@style/Base.DialogWindowTitle.AppCompat"
+        style="@style/OMGTextBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/dialog_redeem_title"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
         tools:text="@string/dialog_redeem_title" />
 
     <TextView
         android:id="@+id/tvDescription"
+        style="@style/OMGTextNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -27,40 +30,40 @@
         android:id="@+id/seekbarAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:thumbTint="@color/colorPrimary"
         tools:max="10" />
 
     <TextView
         android:id="@+id/tvRedeemAmount"
+        style="@style/OMGTextNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        style="@style/Base.TextAppearance.AppCompat.Caption"
         android:text="@string/dialog_redeem_redeem_amount" />
 
     <TextView
         android:id="@+id/tvTotalDiscount"
+        style="@style/OMGTextNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        style="@style/Base.TextAppearance.AppCompat.Body2"
         android:text="@string/dialog_redeem_total_discount" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnCancel"
-            style="@style/AppTheme.OmiseGOOutlineButton"
+            style="@style/OutlineButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -68,7 +71,7 @@
 
         <Button
             android:id="@+id/btnRedeem"
-            style="@style/AppTheme.OmiseGOButton"
+            style="@style/BlueButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"

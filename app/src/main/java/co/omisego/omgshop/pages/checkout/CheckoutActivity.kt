@@ -40,7 +40,7 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
 
     private fun initInstance() {
         setSupportActionBar(toolbar)
-        supportActionBar?.title = getString(R.string.activity_product_list_toolbar_title)
+        supportActionBar?.title = getString(R.string.activity_checkout_toolbar_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mProductItem = intent.getParcelableExtra(INTENT_EXTRA_PRODUCT_ITEM)
         mDiscount = mProductItem.price

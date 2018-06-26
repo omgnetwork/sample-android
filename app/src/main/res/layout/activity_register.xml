@@ -102,7 +102,7 @@
 
             <Button
                 android:id="@+id/btnRegister"
-                style="@style/AppTheme.OmiseGOButton"
+                style="@style/BlueButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

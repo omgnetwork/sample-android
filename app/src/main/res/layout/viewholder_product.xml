@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -16,21 +16,24 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvTitle"
+            style="@style/OMGTextBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
             tools:text="OmiseGO T-Shirt" />
 
         <TextView
             android:id="@+id/tvDescription"
+            style="@style/OMGTextNormal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorGrayDarkerDarker"
             android:textSize="12sp"
             tools:text="An amazing t-shirt!" />
 
@@ -43,7 +46,7 @@
 
     <Button
         android:id="@+id/btnPrice"
-        style="@style/AppTheme.OmiseGOOutlineButton"
+        style="@style/OutlineButton"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_gravity="center"
