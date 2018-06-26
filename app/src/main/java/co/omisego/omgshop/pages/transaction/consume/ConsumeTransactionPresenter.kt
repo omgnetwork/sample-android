@@ -62,10 +62,10 @@ class ConsumeTransactionPresenter : BasePresenterImpl<ConsumeTransactionContract
             }
             TransactionConsumptionStatus.APPROVED, TransactionConsumptionStatus.CONFIRMED -> {
                 val isSent = response.transactionRequest.type == TransactionRequestType.SEND
-                val direction = if (isSent) "sent" else "received"
+                val direction = if (isSent) "receive" else "sent"
                 val amount = response.amount.divide(response.token.subunitToUnit)
                 val tokenSymbol = response.token.symbol
-                val status = if (response.status == TransactionConsumptionStatus.CONFIRMED) "confirmed" else "approved"
+                val status = if (response.approvedAt == null) "confirmed" else "approved"
                 val msg = String.format(
                     "The transaction consumption has been %s. You have %s %s %s successfully.",
                     status,

@@ -39,7 +39,7 @@ class ShowQRPresenter : BasePresenterImpl<ShowQRContract.View, ShowQRCallerContr
                 val direction = if (isSent) "sent" else "received"
                 val amount = transactionConsumption.amount.divide(transactionConsumption.token.subunitToUnit)
                 val tokenSymbol = transactionConsumption.token.symbol
-                val status = if (transactionConsumption.status == TransactionConsumptionStatus.CONFIRMED) "confirmed" else "approved"
+                val status = if (transactionConsumption.approvedAt == null) "confirmed" else "approved"
                 val msg = String.format(
                     "The transaction consumption from %s has been %s. You have %s %s %s successfully.",
                     consumerName,
