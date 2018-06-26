@@ -12,7 +12,7 @@ import com.santalu.maskedittext.MaskEditText
 class EditTextField : ConstraintLayout {
     var editText: MaskEditText? = null
     private var tilEditText: TextInputLayout? = null
-    private var editTextEnabled: Boolean = true
+    var editTextEnabled: Boolean = true
         set(value) {
             field = value
             editText?.isEnabled = value
@@ -46,7 +46,6 @@ class EditTextField : ConstraintLayout {
             field = value
             tvTitle?.text = value
         }
-
     var hint: String = ""
         set(value) {
             field = value
@@ -94,6 +93,10 @@ class EditTextField : ConstraintLayout {
 
     fun setError(error: Boolean) {
         tilEditText?.isErrorEnabled = error
+    }
+
+    fun getError(): Boolean {
+        return tilEditText?.isErrorEnabled ?: false
     }
 
     fun setErrorText(text: String) {

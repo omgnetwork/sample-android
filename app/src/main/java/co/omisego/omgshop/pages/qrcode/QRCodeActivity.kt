@@ -95,7 +95,7 @@ class QRCodeActivity : AppCompatActivity() {
             progressBar.visibility = View.GONE
             btnScan.isEnabled = true
             btnGenerate.isEnabled = true
-            divider.alpha = 1f
+            divider.alpha = 0.54f
         }
     }
 

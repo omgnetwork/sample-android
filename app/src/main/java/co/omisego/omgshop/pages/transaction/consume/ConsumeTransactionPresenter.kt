@@ -32,8 +32,14 @@ class ConsumeTransactionPresenter : BasePresenterImpl<ConsumeTransactionContract
         address: String,
         correlationId: String?
     ): TransactionConsumptionParams {
+        val sendAmount = if (amount.isEmpty()) {
+            null
+        } else {
+            amount.toBigDecimal().multiply(token?.subunitToUnit ?: 1.bd)
+        }
+
         return transactionRequest.toTransactionConsumptionParams(
-            amount = if (amount.isEmpty()) 0.bd else amount.toBigDecimal().multiply(token?.subunitToUnit ?: 1.bd),
+            amount = sendAmount,
             address = if (address.isEmpty()) null else address,
             tokenId = token?.id ?: null,
             correlationId = if (correlationId == null || correlationId.isEmpty()) null else correlationId
@@ -55,10 +61,9 @@ class ConsumeTransactionPresenter : BasePresenterImpl<ConsumeTransactionContract
     }
 
     override fun handleTransactionConsumptionFinalizedSuccess(response: TransactionConsumption) {
-        val consumerName = response.user?.username
         when (response.status) {
             TransactionConsumptionStatus.REJECTED -> {
-                mView?.showTransactionFinalizedFailed("The transaction consumption from $consumerName has been rejected")
+                mView?.showTransactionFinalizedFailed("The transaction ${response.id} has been rejected")
             }
             TransactionConsumptionStatus.APPROVED, TransactionConsumptionStatus.CONFIRMED -> {
                 val isSent = response.transactionRequest.type == TransactionRequestType.SEND

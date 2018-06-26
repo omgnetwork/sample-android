@@ -41,6 +41,7 @@ class ToggleField : ConstraintLayout {
     var value: Boolean = false
         set(value) {
             field = value
+            toggleView?.isChecked = value
             if (value) {
                 tvValue?.text = textOn
             } else {

@@ -4,7 +4,7 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        style="@style/OMGTextBold"
+        style="@style/OMGTextMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:text="Off"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:visibility="invisible"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvTitle"

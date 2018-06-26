@@ -12,6 +12,7 @@ import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionParams
 import co.omisego.omisego.model.transaction.request.TransactionRequest
+import co.omisego.omisego.model.transaction.request.TransactionRequestType
 import kotlinx.android.synthetic.main.activity_consume_transaction.*
 
 class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View, ConsumeTransactionCallerContract.Caller, ConsumeTransactionContract.Presenter>(),
@@ -73,9 +74,17 @@ class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View,
     }
 
     private fun setupUIData() {
+        if (!transactionRequest.allowAmountOverride) {
+            amountField.editTextEnabled = false
+            val tokenAmount = transactionRequest.amount?.divide(transactionRequest.token.subunitToUnit)?.toPlainString()
+            amountField.editText?.setText(tokenAmount)
+        }
         tokenField.selectToken(transactionRequest.token)
         tokenField.isEnabled = false
         addressFromField.editText?.setText(transactionRequest.address ?: "")
+        addressField.hint = Preference.loadWalletAddress()
+        if (transactionRequest.type == TransactionRequestType.RECEIVE)
+            addressFromField.title = "Send to"
     }
 
     override fun showConsumeTransactionFailed(response: APIError) {

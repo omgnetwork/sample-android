@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        style="@style/OMGTextBold"
+        style="@style/OMGTextMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

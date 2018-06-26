@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context=".pages.transaction.generate.GenerateTransactionActivity">
 
@@ -63,8 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
-                app:layout_constraintStart_toStartOf="@+id/guide_y"
                 app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guide_y"
                 app:layout_constraintTop_toBottomOf="@+id/tokenField"
                 app:showText="true"
                 app:textOff="Receive"
@@ -116,9 +118,19 @@
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
                 app:layout_constraintStart_toStartOf="@+id/guide_y"
                 app:layout_constraintTop_toBottomOf="@+id/maxConsumption"
-                app:max="10"
+                app:max="50"
                 app:multiplier="1"
                 app:seekTitle="Max consumption per user" />
+
+            <co.omisego.omgshop.view.EditTextField
+                android:id="@+id/amountField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                app:editTextTitle="Amount (optional)"
+                app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
+                app:layout_constraintStart_toStartOf="@+id/guide_y"
+                app:layout_constraintTop_toBottomOf="@+id/maxConsumptionPerUser" />
 
             <co.omisego.omgshop.view.EditTextField
                 android:id="@+id/addressField"
@@ -130,22 +142,20 @@
                 app:editTextCounterMaxLength="36"
                 app:editTextHint="Your wallet address"
                 app:editTextMask="########-####-####-####-############"
-                app:editTextTitle="Address"
+                app:editTextTitle="Address (optional)"
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
                 app:layout_constraintStart_toStartOf="@+id/guide_y"
-                app:layout_constraintTop_toBottomOf="@+id/maxConsumptionPerUser" />
+                app:layout_constraintTop_toBottomOf="@+id/amountField" />
 
             <co.omisego.omgshop.view.EditTextField
                 android:id="@+id/consumptionTimeField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:inputType="number"
-                app:editTextCounterMaxLength="13"
                 app:editTextHint="∞"
-                app:editTextMask="#,###,###,###"
-                app:editTextTitle="Consumption time in ms"
+                app:editTextTitle="Consumption time in ms (optional)"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
                 app:layout_constraintStart_toStartOf="@+id/guide_y"
                 app:layout_constraintTop_toBottomOf="@+id/addressField" />
 
@@ -155,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 app:editTextHint="Empty"
-                app:editTextTitle="Correlation ID"
+                app:editTextTitle="Correlation ID (optional)"
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
                 app:layout_constraintStart_toStartOf="@+id/guide_y"
                 app:layout_constraintTop_toBottomOf="@+id/consumptionTimeField" />
