@@ -76,6 +76,12 @@
     <string name="dialog_redeem_button_cancel">Cancel</string>
     <string name="dialog_redeem_button_redeem">Redeem</string>
 
+    <!-- Transaction confirmation dialog -->
+    <string name="dialog_confirmation_title">Consumption Request</string>
+    <string name="dialog_confirmation_description">%s wants to %s you %s %s.</string>
+    <string name="dialog_confirmation_button_reject">Reject</string>
+    <string name="dialog_confirmation_button_approve">Approve</string>
+
     <!-- Menus -->
     <string name="menu_profile">Profile</string>
     <string name="menu_profile_history">History</string>

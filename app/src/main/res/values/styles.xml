@@ -13,6 +13,11 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
+    <style name="AppTheme.OmiseGORedButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/ripple_round_shape_red</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
     <style name="AppTheme.OmiseGOBorderlessButton" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:background">@drawable/ripple_borderless_blue</item>
         <item name="android:textColor">@color/colorWhite</item>

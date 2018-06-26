@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_consume_transaction.*
 class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View, ConsumeTransactionCallerContract.Caller, ConsumeTransactionContract.Presenter>(),
     ConsumeTransactionContract.View {
     override val mPresenter: ConsumeTransactionContract.Presenter by lazy { ConsumeTransactionPresenter() }
+    private var transactionConsumption: TransactionConsumption? = null
 
     companion object {
         const val INTENT_EXTRA_TRANSACTION_REQUEST = "transaction_request"
@@ -53,6 +54,18 @@ class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View,
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onStart() {
+        super.onStart()
+        val txConsumption = transactionConsumption ?: return
+        mPresenter.caller?.listenTransactionConsumption(transactionConsumption = txConsumption)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val txConsumption = transactionConsumption ?: return
+        mPresenter.caller?.stopListeningTransactionConsumption(transactionConsumption = txConsumption)
+    }
+
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_consume_transaction_toolbar_title)
@@ -71,7 +84,16 @@ class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View,
     }
 
     override fun showConsumeTransactionSuccess(response: TransactionConsumption) {
+        transactionConsumption = response
         Toast.makeText(this, "Consumed transaction id ${response.id} successful", Toast.LENGTH_LONG).show()
         logi(response)
+    }
+
+    override fun showTransactionFinalizedFailed(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showTransactionFinalizedSuccess(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 }

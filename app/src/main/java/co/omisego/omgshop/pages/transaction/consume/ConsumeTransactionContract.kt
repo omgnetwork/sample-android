@@ -19,6 +19,8 @@ interface ConsumeTransactionContract {
     interface View : BaseContract.BaseView {
         fun showConsumeTransactionSuccess(response: TransactionConsumption)
         fun showConsumeTransactionFailed(response: APIError)
+        fun showTransactionFinalizedFailed(msg: String)
+        fun showTransactionFinalizedSuccess(msg: String)
     }
 
     interface Presenter : BaseContract.BasePresenter<View, ConsumeTransactionCallerContract.Caller> {

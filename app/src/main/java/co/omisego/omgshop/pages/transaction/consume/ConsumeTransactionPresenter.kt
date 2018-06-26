@@ -9,7 +9,9 @@ import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.Token
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionParams
+import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionStatus
 import co.omisego.omisego.model.transaction.request.TransactionRequest
+import co.omisego.omisego.model.transaction.request.TransactionRequestType
 import co.omisego.omisego.model.transaction.request.toTransactionConsumptionParams
 
 /*
@@ -31,7 +33,7 @@ class ConsumeTransactionPresenter : BasePresenterImpl<ConsumeTransactionContract
         correlationId: String?
     ): TransactionConsumptionParams {
         return transactionRequest.toTransactionConsumptionParams(
-            amount = if (amount.isEmpty()) 0.bd else amount.toBigDecimal(),
+            amount = if (amount.isEmpty()) 0.bd else amount.toBigDecimal().multiply(token?.subunitToUnit ?: 1.bd),
             address = if (address.isEmpty()) null else address,
             tokenId = token?.id ?: null,
             correlationId = if (correlationId == null || correlationId.isEmpty()) null else correlationId
@@ -46,6 +48,34 @@ class ConsumeTransactionPresenter : BasePresenterImpl<ConsumeTransactionContract
     override fun handleConsumeTransactionSuccess(response: OMGResponse<TransactionConsumption>) {
         mView?.hideLoading()
         mView?.showConsumeTransactionSuccess(response.data)
+        caller?.listenTransactionConsumption(transactionConsumption = response.data)
+    }
+
+    override fun handleTransactionConsumptionFinalizedFail(response: TransactionConsumption, error: APIError) {
+    }
+
+    override fun handleTransactionConsumptionFinalizedSuccess(response: TransactionConsumption) {
+        val consumerName = response.user?.username
+        when (response.status) {
+            TransactionConsumptionStatus.REJECTED -> {
+                mView?.showTransactionFinalizedFailed("The transaction consumption from $consumerName has been rejected")
+            }
+            TransactionConsumptionStatus.APPROVED, TransactionConsumptionStatus.CONFIRMED -> {
+                val isSent = response.transactionRequest.type == TransactionRequestType.SEND
+                val direction = if (isSent) "sent" else "received"
+                val amount = response.amount.divide(response.token.subunitToUnit)
+                val tokenSymbol = response.token.symbol
+                val status = if (response.status == TransactionConsumptionStatus.CONFIRMED) "confirmed" else "approved"
+                val msg = String.format(
+                    "The transaction consumption has been %s. You have %s %s %s successfully.",
+                    status,
+                    direction,
+                    amount,
+                    tokenSymbol
+                )
+                mView?.showTransactionFinalizedSuccess(msg)
+            }
+        }
     }
 
     override fun showLoading() {

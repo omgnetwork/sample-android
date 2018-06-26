@@ -17,11 +17,15 @@ interface ConsumeTransactionCallerContract {
     interface Caller : BaseContract.BaseCaller {
         val credential: Credential
         fun consume(authToken: String = credential.omisegoAuthenticationToken, request: TransactionConsumptionParams)
+        fun listenTransactionConsumption(authToken: String = credential.omisegoAuthenticationToken, transactionConsumption: TransactionConsumption)
+        fun stopListeningTransactionConsumption(authToken: String = credential.omisegoAuthenticationToken, transactionConsumption: TransactionConsumption)
     }
 
     interface Handler {
         fun handleConsumeTransactionSuccess(response: OMGResponse<TransactionConsumption>)
         fun handleConsumeTransactionFailed(error: OMGResponse<APIError>)
+        fun handleTransactionConsumptionFinalizedFail(response: TransactionConsumption, error: APIError)
+        fun handleTransactionConsumptionFinalizedSuccess(response: TransactionConsumption)
         fun showLoading()
     }
 }

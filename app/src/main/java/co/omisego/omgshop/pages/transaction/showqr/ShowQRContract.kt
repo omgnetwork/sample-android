@@ -14,7 +14,9 @@ import co.omisego.omisego.model.transaction.request.TransactionRequest
 
 interface ShowQRContract {
     interface View : BaseContract.BaseView {
-        fun showTransactionConfirmation(response: TransactionConsumption)
+        fun showTransactionFinalizedFailed(msg: String)
+        fun showTransactionFinalizedSuccess(msg: String)
+        fun showIncomingTransactionConsumptionDialog(transactionConsumption: TransactionConsumption)
     }
 
     interface Presenter : BaseContract.BasePresenter<View, ShowQRCallerContract.Caller> {

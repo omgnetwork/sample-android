@@ -3,7 +3,9 @@ package co.omisego.omgshop.pages.transaction.consume.caller
 import co.omisego.omgshop.base.BaseCaller
 import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Credential
+import co.omisego.omgshop.network.ClientProvider
 import co.omisego.omgshop.network.CombinedAPIManager
+import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionParams
 
 /*
@@ -25,5 +27,18 @@ class ConsumeTransactionCaller(
             handler::handleConsumeTransactionFailed,
             handler::handleConsumeTransactionSuccess
         )
+    }
+
+    override fun listenTransactionConsumption(authToken: String, transactionConsumption: TransactionConsumption) {
+        CombinedAPIManager.listenTransactionConsumption(
+            authToken,
+            transactionConsumption,
+            handler::handleTransactionConsumptionFinalizedFail,
+            handler::handleTransactionConsumptionFinalizedSuccess
+        )
+    }
+
+    override fun stopListeningTransactionConsumption(authToken: String, transactionConsumption: TransactionConsumption) {
+        transactionConsumption.stopListening(ClientProvider.provideSocketClient(authToken).client)
     }
 }

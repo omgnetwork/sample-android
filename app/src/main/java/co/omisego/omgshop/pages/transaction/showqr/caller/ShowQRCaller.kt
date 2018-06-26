@@ -19,7 +19,7 @@ class ShowQRCaller(
 ) : BaseCaller(), ShowQRCallerContract.Caller {
 
     override fun joinChannel(authToken: String, request: TransactionRequest) {
-        CombinedAPIManager.joinChannel(
+        CombinedAPIManager.listenTransactionRequest(
             authToken,
             request,
             handler::handleTransactionConsumptionRequest,
