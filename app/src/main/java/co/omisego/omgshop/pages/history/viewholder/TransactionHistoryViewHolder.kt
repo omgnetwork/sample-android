@@ -69,10 +69,11 @@ class TransactionHistoryViewHolder(
 
     private fun TransactionSource.formatTransactionAmount(sameAddress: Boolean) {
         val amount = String.format("%.1f", this.amount.divide(this.token.subunitToUnit))
+        val symbol = token.symbol
         if (sameAddress) {
-            itemView.tvTransactionAmount.text = itemView.context.getString(R.string.transaction_amount_to, amount)
+            itemView.tvTransactionAmount.text = itemView.context.getString(R.string.transaction_amount_to, amount, symbol)
         } else {
-            itemView.tvTransactionAmount.text = itemView.context.getString(R.string.transaction_amount_from, amount)
+            itemView.tvTransactionAmount.text = itemView.context.getString(R.string.transaction_amount_from, amount, symbol)
         }
     }
 

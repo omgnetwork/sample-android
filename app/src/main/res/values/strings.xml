@@ -67,6 +67,6 @@
     <string name="load_more">Load next %d items</string>
     <string name="load_more_disable">No more transactions left</string>
     <string name="transaction_status">- %s</string>
-    <string name="transaction_amount_to">- %s OMG</string>
-    <string name="transaction_amount_from">+ %s OMG</string>
+    <string name="transaction_amount_to">- %s %s</string>
+    <string name="transaction_amount_from">+ %s %s</string>
 </resources>
