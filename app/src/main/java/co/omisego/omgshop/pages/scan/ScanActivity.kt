@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.network.ClientProvider
@@ -26,7 +27,6 @@ class ScanActivity : AppCompatActivity(), OMGQRScannerContract.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan)
-
         setupToolbar()
     }
 
@@ -36,9 +36,7 @@ class ScanActivity : AppCompatActivity(), OMGQRScannerContract.Callback {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun scannerDidCancel(view: OMGQRScannerContract.View) {
-        // Do something
-    }
+    override fun scannerDidCancel(view: OMGQRScannerContract.View) {}
 
     override fun scannerDidDecode(view: OMGQRScannerContract.View, transactionRequest: OMGResponse<TransactionRequest>) {
         val result = Intent().apply {
@@ -48,8 +46,8 @@ class ScanActivity : AppCompatActivity(), OMGQRScannerContract.Callback {
         finish()
     }
 
-    override fun scannerDidFailToDecode(view: OMGQRScannerContract.View, exception: OMGResponse<APIError>) {
-        // Do something
+    override fun scannerDidFailToDecode(view: OMGQRScannerContract.View, error: OMGResponse<APIError>) {
+        Toast.makeText(this, error.data.description, Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -69,5 +67,4 @@ class ScanActivity : AppCompatActivity(), OMGQRScannerContract.Callback {
         scannerView.stopCamera()
         scannerView.startCamera(omgAPIClient, this)
     }
-
 }
