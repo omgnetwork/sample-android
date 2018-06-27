@@ -27,7 +27,6 @@ class ScanActivity : AppCompatActivity(), OMGQRScannerContract.Callback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan)
 
-        scannerView.startCamera(omgAPIClient, this)
         setupToolbar()
     }
 
@@ -67,6 +66,7 @@ class ScanActivity : AppCompatActivity(), OMGQRScannerContract.Callback {
 
     override fun onResume() {
         super.onResume()
+        scannerView.stopCamera()
         scannerView.startCamera(omgAPIClient, this)
     }
 

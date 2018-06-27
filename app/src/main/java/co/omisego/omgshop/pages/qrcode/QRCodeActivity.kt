@@ -3,6 +3,7 @@ package co.omisego.omgshop.pages.qrcode
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -53,7 +54,8 @@ class QRCodeActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             CameraPermission.REQUEST_PERMISSION_CAMERA_ID -> {
-                handlePermissionGranted()
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    handlePermissionGranted()
             }
         }
     }
