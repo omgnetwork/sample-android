@@ -127,6 +127,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
+                app:editTextHint="∞"
                 app:editTextTitle="Amount (optional)"
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
                 app:layout_constraintStart_toStartOf="@+id/guide_y"

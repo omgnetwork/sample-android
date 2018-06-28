@@ -6,7 +6,6 @@ import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.custom.MinimalTextChangeListener
-import co.omisego.omgshop.extensions.logi
 import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.pages.transaction.consume.caller.ConsumeTransactionCallerContract
 import co.omisego.omisego.model.APIError
@@ -102,13 +101,11 @@ class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View,
 
     override fun showConsumeTransactionFailed(response: APIError) {
         Toast.makeText(this, response.description, Toast.LENGTH_LONG).show()
-        logi(response)
     }
 
     override fun showConsumeTransactionSuccess(response: TransactionConsumption) {
         transactionConsumption = response
         Toast.makeText(this, "Consumed transaction id ${response.id} successful", Toast.LENGTH_LONG).show()
-        logi(response)
     }
 
     override fun showTransactionFinalizedFailed(msg: String) {

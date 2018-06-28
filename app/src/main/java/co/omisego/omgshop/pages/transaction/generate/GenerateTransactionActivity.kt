@@ -12,6 +12,7 @@ import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.pages.transaction.generate.caller.GenerateTransactionCallerContract.Caller
 import co.omisego.omgshop.pages.transaction.showqr.ShowQRActivity
 import co.omisego.omgshop.view.SpinnerField
+import co.omisego.omisego.extension.bd
 import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.Token
 import co.omisego.omisego.model.transaction.request.TransactionRequest
@@ -55,6 +56,8 @@ class GenerateTransactionActivity :
             R.id.generate -> {
                 try {
                     val params = createTransactionRequestCreateParams()
+                    if (params?.amount == 0.bd)
+                        throw IllegalArgumentException("amount cannot be zero")
                     if (params != null)
                         mPresenter.caller?.generate(request = params)
                 } catch (e: IllegalArgumentException) {
@@ -96,10 +99,13 @@ class GenerateTransactionActivity :
     private fun initDefaultValue() {
         addressField.editText?.hint = Preference.loadWalletAddress()
         allowAmountField.value = true
+        requiredConfirmation.value = true
         amountField.editText?.addTextChangedListener(MinimalTextChangeListener {
-            if (it.isEmpty() && amountErrorText != null) {
-                amountField?.setError(true)
-                amountField?.setErrorText(amountErrorText!!)
+            if (!it.isEmpty() && it.toString().toBigDecimal() == 0.bd || it.isEmpty() && !allowAmountField.value) {
+                amountErrorText?.let {
+                    amountField?.setError(true)
+                    amountField?.setErrorText(it)
+                }
             } else {
                 amountField?.setError(false)
             }
