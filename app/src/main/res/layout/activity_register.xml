@@ -88,7 +88,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textEmailAddress|textNoSuggestions"
                     android:maxLines="1"
-                    app:backgroundTint="@color/colorGrayDarker" />
+                    app:backgroundTint="@color/colorGray" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -107,7 +107,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPassword|textNoSuggestions"
                     android:maxLines="1"
-                    app:backgroundTint="@color/colorGrayDarker" />
+                    app:backgroundTint="@color/colorGray" />
 
             </android.support.design.widget.TextInputLayout>
 
