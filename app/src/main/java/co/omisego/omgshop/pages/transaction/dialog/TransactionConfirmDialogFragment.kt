@@ -14,9 +14,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseDialogFragment
-import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.pages.transaction.dialog.caller.TransactionConfirmCallerContract
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
+import co.omisego.omisego.model.transaction.request.TransactionRequestType
 import kotlinx.android.synthetic.main.dialog_transaction_confirm.*
 import kotlinx.android.synthetic.main.dialog_transaction_confirm.view.*
 
@@ -49,7 +49,7 @@ class TransactionConfirmDialogFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val username = transactionConsumption.user?.username?.split("|") ?: listOf("unknown", "unknown")
-        val direction = if (transactionConsumption.transaction?.from?.address == Preference.loadWalletAddress()) {
+        val direction = if (transactionConsumption.transactionRequest.type == TransactionRequestType.SEND) {
             "take"
         } else {
             "send"
