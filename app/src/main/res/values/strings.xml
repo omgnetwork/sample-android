@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">OMGShop</string>
 
     <!-- Login -->
@@ -41,6 +41,7 @@
     <string name="activity_checkout_price_format">฿%1$s</string>
     <string name="activity_checkout_redeem_button">Redeem %1$s</string>
     <string name="activity_checkout_pay_error_token_not_set">The default token has not been selected/</string>
+    <string name="activity_checkout_no_balance_available">No balance available</string>
 
     <!-- My Profile -->
     <string name="activity_my_profile_token">TOKEN</string>
