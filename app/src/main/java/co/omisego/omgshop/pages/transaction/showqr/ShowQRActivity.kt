@@ -11,6 +11,7 @@ import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.qrcode.generator.generateQRCode
 import kotlinx.android.synthetic.main.activity_show_qr.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class ShowQRActivity : BaseActivity<ShowQRContract.View, ShowQRCallerContract.Caller, ShowQRContract.Presenter>(), ShowQRContract.View {
     override val mPresenter: ShowQRContract.Presenter by lazy {

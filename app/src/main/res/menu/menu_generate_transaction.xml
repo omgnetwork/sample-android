@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/generate"
+        android:icon="@drawable/ic_forward"
         android:title="@string/activity_transaction_action_create"
         app:showAsAction="always" />
 </menu>

@@ -18,6 +18,7 @@ import co.omisego.omgshop.pages.transaction.consume.ConsumeTransactionActivity
 import co.omisego.omgshop.pages.transaction.generate.GenerateTransactionActivity
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import kotlinx.android.synthetic.main.activity_qrcode.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class QRCodeActivity : AppCompatActivity() {
 

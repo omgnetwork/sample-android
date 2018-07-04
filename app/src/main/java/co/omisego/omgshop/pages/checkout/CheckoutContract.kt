@@ -18,18 +18,18 @@ interface CheckoutContract {
         fun showProductDetail(imageUrl: String, productTitle: String, productPrice: String)
         fun showRedeemDialog()
         fun showSummary(subTotal: String, discount: String, total: String)
-        fun showRedeemButton(tokenSymbol: String)
+        fun showTokenRedeemButtonNotAvailable()
+        fun showTokenRedeemButtonText(tokenSymbol: String)
         fun showBuySuccess()
         fun showBuyFailed(msg: String = "")
         fun setDiscount(discount: Int)
-        fun showBalanceNotAvailable()
     }
 
     interface Presenter : BaseContract.BasePresenter<View, CheckoutCallerContract.Caller> {
         fun redeem()
         fun createBuyRequestParams(discount: BigDecimal, productId: String): Product.Buy.Request
-        fun calculateTotal(subTotal: Double, discount: Double)
-        fun handleProductDetail(productItem: Product.Get.Item)
+        fun calculateTotalAmountToPay(subTotal: Double, discount: Double)
+        fun prepareProductToShow(productItem: Product.Get.Item)
         fun resolveRedeemButtonName()
         fun getCurrentTokenBalance(): Balance
         fun checkIfBalanceAvailable()

@@ -61,7 +61,7 @@
     <string name="activity_transaction_history_list_toolbar_title">Transaction history</string>
 
     <!-- Generate Transaction -->
-    <string name="activity_generate_transaction_toolbar_title">Generate Transaction</string>
+    <string name="activity_generate_transaction_toolbar_title">Create Transaction Request</string>
 
     <!-- Show QR -->
     <string name="activity_show_qr_transaction_toolbar_title">Scan My QR</string>
@@ -100,8 +100,8 @@
     <string name="activity_transaction_action_create">Create</string>
 
     <!-- QR code -->
-    <string name="activity_qrcode_scan">Scan QR Code</string>
-    <string name="activity_qrcode_generate">Generate QR Code</string>
+    <string name="activity_qrcode_scan">Send Or Receive</string>
+    <string name="activity_qrcode_generate">Create Transaction Request</string>
 
     <!-- Permission -->
     <string name="permission_camera_rationale">Camera permission is needed to show the QR code scanner.</string>

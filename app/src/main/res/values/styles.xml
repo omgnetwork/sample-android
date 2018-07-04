@@ -34,8 +34,8 @@
     </style>
 
     <style name="OutlineButton" parent="AppTheme.BaseButton">
-        <item name="android:background">@drawable/ripple_round_outline_shape</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:background">@drawable/round_outline_selector</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">

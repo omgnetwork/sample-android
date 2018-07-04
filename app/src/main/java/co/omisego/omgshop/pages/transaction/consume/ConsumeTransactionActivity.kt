@@ -13,6 +13,7 @@ import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.model.transaction.request.TransactionRequestType
 import kotlinx.android.synthetic.main.activity_consume_transaction.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View, ConsumeTransactionCallerContract.Caller, ConsumeTransactionContract.Presenter>(),
     ConsumeTransactionContract.View {

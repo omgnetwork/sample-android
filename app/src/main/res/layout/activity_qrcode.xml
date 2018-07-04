@@ -7,18 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".pages.qrcode.QRCodeActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
+    <include
+        layout="@layout/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:titleTextColor="@android:color/white" />
-
+        app:layout_constraintTop_toTopOf="parent" />
+    
     <Button
         android:id="@+id/btnGenerate"
         style="@style/BorderlessButton"
@@ -28,7 +22,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:fontFamily="sans-serif-medium"
         android:text="@string/activity_qrcode_generate"
         android:textColor="@color/colorPrimary"
@@ -41,13 +34,12 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="3dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:alpha="0.54"
-        android:background="@color/colorAccent"
+        android:background="@drawable/line_dash"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +54,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:fontFamily="sans-serif-medium"
         android:text="@string/activity_qrcode_scan"
         android:textColor="@color/colorPrimary"

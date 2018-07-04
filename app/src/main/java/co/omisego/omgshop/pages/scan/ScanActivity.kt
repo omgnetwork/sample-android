@@ -14,6 +14,7 @@ import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.qrcode.scanner.OMGQRScannerContract
 import kotlinx.android.synthetic.main.activity_scan.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class ScanActivity : AppCompatActivity(), OMGQRScannerContract.Callback {
     private val omgAPIClient by lazy {

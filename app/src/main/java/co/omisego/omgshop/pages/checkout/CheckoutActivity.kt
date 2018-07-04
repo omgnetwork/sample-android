@@ -9,6 +9,7 @@ package co.omisego.omgshop.pages.checkout
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.MenuItem
 import android.widget.Toast
 import co.omisego.omgshop.R
@@ -21,6 +22,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_checkout.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContract.Caller, CheckoutContract.Presenter>(), CheckoutContract.View {
     override val mPresenter: CheckoutContract.Presenter by lazy { CheckoutPresenter() }
@@ -40,23 +42,17 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
 
     private fun initInstance() {
         productItem = intent.getParcelableExtra(INTENT_EXTRA_PRODUCT_ITEM)
-
         setupToolbar()
         initLoadingDialog()
-
-        btnRedeem.setOnClickListener {
-            mPresenter.redeem()
-        }
-
+        btnRedeem.setOnClickListener { mPresenter.redeem() }
         btnPay.setOnClickListener {
             val params = mPresenter.createBuyRequestParams(discount.bd, productItem.id)
             mPresenter.caller?.buy(params)
         }
 
-        mPresenter.handleProductDetail(productItem)
-        mPresenter.calculateTotal(productItem.price.toDouble(), 0.0)
+        mPresenter.prepareProductToShow(productItem)
+        mPresenter.calculateTotalAmountToPay(productItem.price.toDouble(), 0.0)
         mPresenter.resolveRedeemButtonName()
-
         mPresenter.checkIfBalanceAvailable()
     }
 
@@ -102,9 +98,8 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
             balance.token.symbol
         )
         dialog.setRedeemDialogListener(object : RedeemDialogFragment.RedeemDialogListener {
-            override fun onSetRedeem(amount: Int) {
-                log(amount.toString())
-                mPresenter.calculateTotal(productItem.price.toDouble(), amount.toDouble())
+            override fun onConfirm(amount: Int) {
+                mPresenter.calculateTotalAmountToPay(productItem.price.toDouble(), amount.toDouble())
             }
         })
         dialog.show(supportFragmentManager, "")
@@ -116,8 +111,14 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
         tvTotal.text = getString(R.string.activity_checkout_price_format, total)
     }
 
-    override fun showRedeemButton(tokenSymbol: String) {
+    override fun showTokenRedeemButtonText(tokenSymbol: String) {
         btnRedeem.text = getString(R.string.activity_checkout_redeem_button, tokenSymbol)
+    }
+
+    override fun showTokenRedeemButtonNotAvailable() {
+        btnRedeem.text = getString(R.string.activity_checkout_no_balance_available)
+        btnRedeem.isEnabled = false
+        btnRedeem.setTextColor(ContextCompat.getColor(this, R.color.colorGrayDarkerDarker))
     }
 
     override fun showBuyFailed(msg: String) {
@@ -129,11 +130,6 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
         val message = getString(R.string.activity_checkout_pay_success)
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         finish()
-    }
-
-    override fun showBalanceNotAvailable() {
-        btnRedeem.text = getString(R.string.activity_checkout_no_balance_available)
-        btnRedeem.isEnabled = false
     }
 
     override fun showLoading() {

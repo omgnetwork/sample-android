@@ -18,6 +18,7 @@ import co.omisego.omisego.model.Token
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.model.transaction.request.TransactionRequestCreateParams
 import kotlinx.android.synthetic.main.activity_generate_transaction.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class GenerateTransactionActivity :
     BaseActivity<GenerateTransactionContract.View, Caller, GenerateTransactionContract.Presenter>(), GenerateTransactionContract.View {

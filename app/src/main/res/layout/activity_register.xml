@@ -7,14 +7,7 @@
     android:orientation="vertical"
     tools:context="co.omisego.omgshop.pages.register.RegisterActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:titleTextColor="@android:color/white" />
+    <include layout="@layout/toolbar" />
 
     <ScrollView
         android:id="@+id/scrollView"

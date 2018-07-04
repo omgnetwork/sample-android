@@ -7,14 +7,7 @@
     android:orientation="vertical"
     tools:context=".pages.scan.ScanActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:titleTextColor="@android:color/white" />
+    <include layout="@layout/toolbar" />
 
     <co.omisego.omisego.qrcode.scanner.OMGQRScannerView
         android:id="@+id/scannerView"

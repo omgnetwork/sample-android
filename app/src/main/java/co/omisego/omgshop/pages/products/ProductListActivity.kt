@@ -33,6 +33,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_product_list.*
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_loading.*
 import kotlinx.android.synthetic.main.viewholder_product.view.*
 
@@ -50,6 +51,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCa
     }
 
     private fun initInstance() {
+        toolbar.navigationIcon = null
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_product_list_toolbar_title)
         setViewLoading(viewLoading)

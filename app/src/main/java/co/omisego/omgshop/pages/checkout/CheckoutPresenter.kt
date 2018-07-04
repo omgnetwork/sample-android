@@ -56,7 +56,7 @@ class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCalle
 
     override fun checkIfBalanceAvailable() {
         if (getCurrentTokenBalance().amount <= 0.bd) {
-            mView?.showBalanceNotAvailable()
+            mView?.showTokenRedeemButtonNotAvailable()
         }
     }
 
@@ -74,19 +74,19 @@ class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCalle
         mView?.showRedeemDialog()
     }
 
-    override fun calculateTotal(subTotal: Double, discount: Double) {
+    override fun calculateTotalAmountToPay(subTotal: Double, discount: Double) {
         val total = (subTotal - discount).thousandSeparator()
         mView?.showSummary(subTotal.thousandSeparator(), discount.thousandSeparator(), total)
         mView?.setDiscount(discount.toInt())
     }
 
-    override fun handleProductDetail(productItem: Product.Get.Item) {
+    override fun prepareProductToShow(productItem: Product.Get.Item) {
         mView?.showProductDetail(productItem.imageUrl, productItem.name, "฿${productItem.price.toDouble().thousandSeparator()}")
     }
 
     override fun resolveRedeemButtonName() {
         val symbol = Preference.loadSelectedTokenBalance()?.token?.symbol ?: ""
-        mView?.showRedeemButton(symbol)
+        mView?.showTokenRedeemButtonText(symbol)
     }
 
     override fun getCurrentTokenBalance(): Balance {

@@ -107,11 +107,11 @@ class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseC
     }
 
     override fun sendDiscountToCheckoutPage(discount: Int) {
-        mRedeemDialogListener?.onSetRedeem(discount)
+        mRedeemDialogListener?.onConfirm(discount)
         dismiss()
     }
 
     interface RedeemDialogListener {
-        fun onSetRedeem(amount: Int)
+        fun onConfirm(amount: Int)
     }
 }
