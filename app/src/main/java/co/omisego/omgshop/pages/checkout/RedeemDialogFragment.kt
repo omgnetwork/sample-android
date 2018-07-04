@@ -15,24 +15,27 @@ import android.widget.SeekBar
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.base.BaseDialogFragment
+import co.omisego.omisego.extension.bd
 import kotlinx.android.synthetic.main.dialog_redeem.*
 import kotlinx.android.synthetic.main.dialog_redeem.view.*
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseContract.BaseCaller, RedeemDialogContract.Presenter>(), RedeemDialogContract.View {
 
     override val mPresenter: RedeemDialogContract.Presenter by lazy { RedeemDialogPresenter() }
     private var mRedeemDialogListener: RedeemDialogListener? = null
-    private val stepSize = 50.0 // default SeekBar step size
-    private var mAmount: Int = 0
-    private var mItemPrice: Int = 0
+    private val stepSize = 50.bd // default SeekBar step size
+    private var totalTokenAmount: BigDecimal = 0.bd
+    private var itemPrice: BigDecimal = 0.bd
     private lateinit var mCurrency: String
 
     companion object {
-        fun newInstance(itemPrice: Int = 1000, amount: Int = 10, currency: String = "OMG"): RedeemDialogFragment {
+        fun newInstance(itemPrice: String, amount: String, currency: String = "OMG"): RedeemDialogFragment {
             val fragment = RedeemDialogFragment()
             val args = Bundle()
-            args.putInt("itemPrice", itemPrice)
-            args.putInt("amount", amount)
+            args.putString("itemPrice", itemPrice)
+            args.putString("amount", amount)
             args.putString("currency", currency)
             fragment.arguments = args
             return fragment
@@ -43,8 +46,8 @@ class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseC
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            mItemPrice = it.getInt("itemPrice", 0)
-            mAmount = it.getInt("amount", 0)
+            itemPrice = it.getString("itemPrice").toBigDecimal()
+            totalTokenAmount = it.getString("amount").toBigDecimal()
             mCurrency = it.getString("currency", "OMG")
         }
     }
@@ -59,24 +62,30 @@ class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseC
         view.btnCancel.setOnClickListener { dismiss() }
 
         view.tvDialogTitle.text = getString(R.string.dialog_redeem_title, mCurrency)
-        view.tvDescription.text = getString(R.string.dialog_redeem_description, "$mAmount $mCurrency")
+        view.tvDescription.text = getString(R.string.dialog_redeem_description, "$totalTokenAmount $mCurrency")
         view.tvRedeemAmount.text = getString(R.string.dialog_redeem_redeem_amount, "0 $mCurrency")
         view.tvTotalDiscount.text = getString(R.string.dialog_redeem_total_discount, "฿0")
 
-        val maxSeekBar = if (mAmount < mItemPrice) mAmount / stepSize else mItemPrice / stepSize
-        seekbarAmount.max = Math.ceil(maxSeekBar).toInt()
+        // Set max seekbar to item amount or token value
+        val maxSeekBar = if (totalTokenAmount < itemPrice) {
+            totalTokenAmount.divide(stepSize, RoundingMode.CEILING)
+        } else {
+            itemPrice.divide(stepSize, RoundingMode.CEILING)
+        }
+
+        seekbarAmount.max = maxSeekBar.toInt()
 
         seekbarAmount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(sb: SeekBar?, v: Int, b: Boolean) {
                 when (v) {
                     seekbarAmount.max -> {
-                        if (mItemPrice < mAmount) {
-                            mPresenter.redeemChanged(mItemPrice, mCurrency)
+                        if (itemPrice < totalTokenAmount) {
+                            mPresenter.redeemChanged(itemPrice, mCurrency)
                         } else {
-                            mPresenter.redeemChanged(mAmount, mCurrency)
+                            mPresenter.redeemChanged(totalTokenAmount, mCurrency)
                         }
                     }
-                    else -> mPresenter.redeemChanged(v * stepSize.toInt(), mCurrency)
+                    else -> mPresenter.redeemChanged(v.bd.multiply(stepSize), mCurrency)
                 }
             }
 

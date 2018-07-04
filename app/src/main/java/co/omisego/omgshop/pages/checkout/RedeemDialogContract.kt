@@ -8,6 +8,7 @@ package co.omisego.omgshop.pages.checkout
  */
 
 import co.omisego.omgshop.base.BaseContract
+import java.math.BigDecimal
 
 interface RedeemDialogContract {
     interface View : BaseContract.BaseView {
@@ -17,7 +18,7 @@ interface RedeemDialogContract {
     }
 
     interface Presenter : BaseContract.BasePresenter<View, BaseContract.BaseCaller> {
-        fun redeemChanged(value: Int, symbol: String)
+        fun redeemChanged(value: BigDecimal, symbol: String)
         fun handleClickRedeem()
     }
 }

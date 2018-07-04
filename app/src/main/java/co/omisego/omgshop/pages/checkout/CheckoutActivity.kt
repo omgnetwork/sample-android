@@ -13,7 +13,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
-import co.omisego.omgshop.extensions.fromSubunitToUnit
+import co.omisego.omgshop.extensions.fromUnitToSubunit
 import co.omisego.omgshop.extensions.readableAmount
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.caller.CheckoutCallerContract
@@ -57,7 +57,7 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
 
         btnPay.setOnClickListener {
             val token = mPresenter.getCurrentTokenBalance().token
-            val tokenValue = token.fromSubunitToUnit(mDiscount.bd)
+            val tokenValue = token.fromUnitToSubunit(mDiscount.bd)
             val productId = mProductItem.id
             mPresenter.caller?.buy(Product.Buy.Request(token.id, tokenValue, productId))
         }
@@ -93,8 +93,8 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
         val currentBalance = mPresenter.getCurrentTokenBalance()
         val balanceAmount = currentBalance.readableAmount()
         val dialog = RedeemDialogFragment.newInstance(
-            mProductItem.price,
-            balanceAmount?.toInt() ?: 0,
+            mProductItem.price.toString(),
+            balanceAmount ?: "0",
             currentBalance.token.symbol
         )
         dialog.setRedeemDialogListener(object : RedeemDialogFragment.RedeemDialogListener {

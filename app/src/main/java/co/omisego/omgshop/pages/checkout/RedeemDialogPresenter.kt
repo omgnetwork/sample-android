@@ -2,6 +2,8 @@ package co.omisego.omgshop.pages.checkout
 
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.base.BasePresenterImpl
+import co.omisego.omisego.extension.bd
+import java.math.BigDecimal
 
 /**
  * OmiseGO
@@ -12,15 +14,15 @@ import co.omisego.omgshop.base.BasePresenterImpl
 
 class RedeemDialogPresenter : BasePresenterImpl<RedeemDialogContract.View, BaseContract.BaseCaller>(), RedeemDialogContract.Presenter {
     override var caller: BaseContract.BaseCaller? = null
-    private var mRedeemValue: Int = 0
+    private var mRedeemValue: BigDecimal = 0.bd
 
     override fun handleClickRedeem() {
-        mView?.sendDiscountToCheckoutPage(mRedeemValue)
+        mView?.sendDiscountToCheckoutPage(mRedeemValue.intValueExact())
     }
 
-    override fun redeemChanged(value: Int, symbol: String) {
+    override fun redeemChanged(value: BigDecimal, symbol: String) {
         mRedeemValue = value
-        mView?.setTextDiscount("$value")
-        mView?.setTextRedeemAmount("$value")
+        mView?.setTextDiscount(value.toPlainString())
+        mView?.setTextRedeemAmount(value.toPlainString())
     }
 }
