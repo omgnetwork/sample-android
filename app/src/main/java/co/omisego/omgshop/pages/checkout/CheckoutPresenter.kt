@@ -2,6 +2,7 @@ package co.omisego.omgshop.pages.checkout
 
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
+import co.omisego.omgshop.extensions.fromUnitToSubunit
 import co.omisego.omgshop.extensions.thousandSeparator
 import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Credential
@@ -14,6 +15,7 @@ import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.Balance
 import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.WalletList
+import java.math.BigDecimal
 
 /**
  * OmiseGO
@@ -23,8 +25,8 @@ import co.omisego.omisego.model.WalletList
  */
 
 class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCallerContract.Caller>(),
-        CheckoutContract.Presenter,
-        CheckoutCallerContract.Handler {
+    CheckoutContract.Presenter,
+    CheckoutCallerContract.Handler {
     override var caller: CheckoutCallerContract.Caller? = CheckoutCaller(this)
 
     override fun handleBuySuccess(response: Response<Credential>) {
@@ -56,6 +58,12 @@ class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCalle
         if (getCurrentTokenBalance().amount <= 0.bd) {
             mView?.showBalanceNotAvailable()
         }
+    }
+
+    override fun createBuyRequestParams(discount: BigDecimal, productId: String): Product.Buy.Request {
+        val token = getCurrentTokenBalance().token
+        val subunitDiscount = token.fromUnitToSubunit(discount)
+        return Product.Buy.Request(token.id, subunitDiscount, productId)
     }
 
     override fun showLoading() {

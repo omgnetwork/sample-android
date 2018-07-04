@@ -13,7 +13,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
-import co.omisego.omgshop.extensions.fromUnitToSubunit
 import co.omisego.omgshop.extensions.readableAmount
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.caller.CheckoutCallerContract
@@ -27,8 +26,7 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
     override val mPresenter: CheckoutContract.Presenter by lazy { CheckoutPresenter() }
     private lateinit var productItem: Product.Get.Item
     private lateinit var loadingDialog: ProgressDialog
-    private var discountFromToken: Int = 0
-        get() = productItem.price
+    private var discount: Int = 0
 
     companion object {
         const val INTENT_EXTRA_PRODUCT_ITEM = "product_item"
@@ -42,7 +40,6 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
 
     private fun initInstance() {
         productItem = intent.getParcelableExtra(INTENT_EXTRA_PRODUCT_ITEM)
-        discountFromToken = productItem.price
 
         setupToolbar()
         initLoadingDialog()
@@ -52,10 +49,8 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
         }
 
         btnPay.setOnClickListener {
-            val token = mPresenter.getCurrentTokenBalance().token
-            val subunitTokenAmount = token.fromUnitToSubunit(discountFromToken.bd)
-            val productId = productItem.id
-            mPresenter.caller?.buy(Product.Buy.Request(token.id, subunitTokenAmount, productId))
+            val params = mPresenter.createBuyRequestParams(discount.bd, productItem.id)
+            mPresenter.caller?.buy(params)
         }
 
         mPresenter.handleProductDetail(productItem)
@@ -95,7 +90,7 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
     }
 
     override fun setDiscount(discount: Int) {
-        discountFromToken = discount
+        this.discount = discount
     }
 
     override fun showRedeemDialog() {

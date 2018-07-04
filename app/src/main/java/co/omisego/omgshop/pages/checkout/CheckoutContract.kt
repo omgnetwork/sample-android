@@ -11,6 +11,7 @@ import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.caller.CheckoutCallerContract
 import co.omisego.omisego.model.Balance
+import java.math.BigDecimal
 
 interface CheckoutContract {
     interface View : BaseContract.BaseView {
@@ -26,6 +27,7 @@ interface CheckoutContract {
 
     interface Presenter : BaseContract.BasePresenter<View, CheckoutCallerContract.Caller> {
         fun redeem()
+        fun createBuyRequestParams(discount: BigDecimal, productId: String): Product.Buy.Request
         fun calculateTotal(subTotal: Double, discount: Double)
         fun handleProductDetail(productItem: Product.Get.Item)
         fun resolveRedeemButtonName()
