@@ -1,6 +1,7 @@
 package co.omisego.omgshop.pages.transaction.consume
 
 import co.omisego.omgshop.base.BasePresenterImpl
+import co.omisego.omgshop.extensions.readableAmount
 import co.omisego.omgshop.pages.transaction.consume.caller.ConsumeTransactionCaller
 import co.omisego.omgshop.pages.transaction.consume.caller.ConsumeTransactionCallerContract
 import co.omisego.omisego.extension.bd
@@ -68,7 +69,7 @@ class ConsumeTransactionPresenter : BasePresenterImpl<ConsumeTransactionContract
             TransactionConsumptionStatus.APPROVED, TransactionConsumptionStatus.CONFIRMED -> {
                 val isSent = response.transactionRequest.type == TransactionRequestType.SEND
                 val direction = if (isSent) "receive" else "sent"
-                val amount = response.amount.divide(response.token.subunitToUnit)
+                val amount = response.readableAmount()
                 val tokenSymbol = response.token.symbol
                 val status = if (response.approvedAt == null) "confirmed" else "approved"
                 val msg = String.format(

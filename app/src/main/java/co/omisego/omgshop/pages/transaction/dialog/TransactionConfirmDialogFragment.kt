@@ -54,12 +54,14 @@ class TransactionConfirmDialogFragment :
         } else {
             "send"
         }
-        val amount = transactionConsumption.amount.divide(transactionConsumption.token.subunitToUnit).toPlainString()
+        val consumeAmount = transactionConsumption.amount
+        val requestAmount = transactionConsumption.transactionRequest.amount
+        val amount = (consumeAmount ?: requestAmount)?.divide(transactionConsumption.token.subunitToUnit)?.toPlainString()
         val tokenSymbol = transactionConsumption.token.symbol.toUpperCase()
 
         view.tvDescription.text = getString(
             R.string.dialog_confirmation_description,
-            "${username[0]}",
+            username[0],
             direction,
             amount,
             tokenSymbol

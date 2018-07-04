@@ -1,7 +1,7 @@
 package co.omisego.omgshop.pages.history
 
 import android.support.v7.util.DiffUtil
-import co.omisego.omisego.model.transaction.list.Transaction
+import co.omisego.omisego.model.transaction.Transaction
 
 /*
  * OmiseGO

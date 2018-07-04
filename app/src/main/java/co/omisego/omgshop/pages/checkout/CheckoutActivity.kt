@@ -13,14 +13,15 @@ import android.view.MenuItem
 import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
-import co.omisego.omgshop.helpers.Preference
+import co.omisego.omgshop.extensions.fromSubunitToUnit
+import co.omisego.omgshop.extensions.readableAmount
 import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.caller.CheckoutCallerContract
+import co.omisego.omisego.extension.bd
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_checkout.*
-import java.math.BigDecimal
 
 class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContract.Caller, CheckoutContract.Presenter>(), CheckoutContract.View {
     override val mPresenter: CheckoutContract.Presenter by lazy { CheckoutPresenter() }
@@ -55,14 +56,12 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
         }
 
         btnPay.setOnClickListener {
-            val subUnitToUnit = mPresenter.getCurrentTokenBalance().token.subunitToUnit
-            val tokenId = Preference.loadSelectedTokenBalance()?.token?.id ?: ""
-            val tokenValue = subUnitToUnit.multiply(BigDecimal.valueOf(mDiscount.toDouble()))
+            val token = mPresenter.getCurrentTokenBalance().token
+            val tokenValue = token.fromSubunitToUnit(mDiscount.bd)
             val productId = mProductItem.id
-            mPresenter.caller?.buy(Product.Buy.Request(tokenId, tokenValue, productId))
+            mPresenter.caller?.buy(Product.Buy.Request(token.id, tokenValue, productId))
         }
 
-        log(mProductItem.toString())
         mPresenter.handleProductDetail(mProductItem)
         mPresenter.calculateTotal(mProductItem.price.toDouble(), 0.0)
         mPresenter.resolveRedeemButtonName()
@@ -92,8 +91,12 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
 
     override fun showRedeemDialog() {
         val currentBalance = mPresenter.getCurrentTokenBalance()
-        val balanceAmount = currentBalance.amount.divide(currentBalance.token.subunitToUnit)
-        val dialog = RedeemDialogFragment.newInstance(mProductItem.price, balanceAmount.toBigInteger().toInt(), currentBalance.token.symbol)
+        val balanceAmount = currentBalance.readableAmount()
+        val dialog = RedeemDialogFragment.newInstance(
+            mProductItem.price,
+            balanceAmount?.toInt() ?: 0,
+            currentBalance.token.symbol
+        )
         dialog.setRedeemDialogListener(object : RedeemDialogFragment.RedeemDialogListener {
             override fun onSetRedeem(amount: Int) {
                 log(amount.toString())

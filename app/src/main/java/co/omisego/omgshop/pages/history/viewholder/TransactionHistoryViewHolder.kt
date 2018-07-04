@@ -12,8 +12,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import co.omisego.omgshop.R
 import co.omisego.omisego.model.pagination.Paginable
-import co.omisego.omisego.model.transaction.list.Transaction
-import co.omisego.omisego.model.transaction.list.TransactionSource
+import co.omisego.omisego.model.transaction.Transaction
+import co.omisego.omisego.model.transaction.TransactionSource
 import kotlinx.android.synthetic.main.viewholder_transaction_record.view.*
 import java.text.SimpleDateFormat
 import java.util.Locale

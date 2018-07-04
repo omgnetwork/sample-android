@@ -53,7 +53,7 @@ class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View,
         val params = mPresenter.sanitizeRequestParams(
             transactionRequest,
             amountField.getText(),
-            tokenField.selectedToken ?: Preference.loadSelectedTokenBalance()?.token ?: null,
+            transactionRequest.token,
             addressField.getText(),
             correlationField.getText()
         )
@@ -91,8 +91,7 @@ class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View,
             val tokenAmount = transactionRequest.amount?.divide(transactionRequest.token.subunitToUnit)?.toPlainString()
             amountField.editText?.setText(tokenAmount)
         }
-        tokenField.selectToken(transactionRequest.token)
-        tokenField.isEnabled = false
+        tvToken.text = transactionRequest.token.symbol
         addressFromField.editText?.setText(transactionRequest.address ?: "")
         addressField.hint = Preference.loadWalletAddress()
         if (transactionRequest.type == TransactionRequestType.RECEIVE)

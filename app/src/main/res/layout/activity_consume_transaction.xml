@@ -18,22 +18,39 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:titleTextColor="@android:color/white" />
 
-    <co.omisego.omgshop.view.SpinnerField
-        android:id="@+id/tokenField"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/OMGTextMedium"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:alpha="0.78"
+        android:text="Token"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/tvToken"
+        style="@style/OMGTextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <co.omisego.omgshop.view.EditTextField
         android:id="@+id/addressFromField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:inputType="text"
         app:editTextEnabled="false"
@@ -42,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tokenField" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <co.omisego.omgshop.view.EditTextField
         android:id="@+id/amountField"
@@ -108,4 +125,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
+
+
 </android.support.constraint.ConstraintLayout>

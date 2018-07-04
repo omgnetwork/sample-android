@@ -1,6 +1,7 @@
 package co.omisego.omgshop.pages.transaction.showqr
 
 import co.omisego.omgshop.base.BasePresenterImpl
+import co.omisego.omgshop.extensions.readableAmount
 import co.omisego.omgshop.pages.transaction.showqr.caller.ShowQRCaller
 import co.omisego.omgshop.pages.transaction.showqr.caller.ShowQRCallerContract
 import co.omisego.omisego.model.APIError
@@ -37,7 +38,7 @@ class ShowQRPresenter : BasePresenterImpl<ShowQRContract.View, ShowQRCallerContr
             TransactionConsumptionStatus.APPROVED, TransactionConsumptionStatus.CONFIRMED -> {
                 val isSent = transactionConsumption.transactionRequest.type == TransactionRequestType.SEND
                 val direction = if (isSent) "sent" else "received"
-                val amount = transactionConsumption.amount.divide(transactionConsumption.token.subunitToUnit)
+                val amount = transactionConsumption.readableAmount()
                 val tokenSymbol = transactionConsumption.token.symbol
                 val status = if (transactionConsumption.approvedAt == null) "confirmed" else "approved"
                 val msg = String.format(
