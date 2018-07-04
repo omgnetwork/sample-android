@@ -28,7 +28,7 @@ class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseC
     private val stepSize = 50.bd // default SeekBar step size
     private var totalTokenAmount: BigDecimal = 0.bd
     private var itemPrice: BigDecimal = 0.bd
-    private lateinit var mCurrency: String
+    private lateinit var currency: String
 
     companion object {
         fun newInstance(itemPrice: String, amount: String, currency: String = "OMG"): RedeemDialogFragment {
@@ -48,7 +48,7 @@ class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseC
         arguments?.let {
             itemPrice = it.getString("itemPrice").toBigDecimal()
             totalTokenAmount = it.getString("amount").toBigDecimal()
-            mCurrency = it.getString("currency", "OMG")
+            currency = it.getString("currency", "OMG")
         }
     }
 
@@ -61,9 +61,9 @@ class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseC
         view.btnRedeem.setOnClickListener { mPresenter.handleClickRedeem() }
         view.btnCancel.setOnClickListener { dismiss() }
 
-        view.tvDialogTitle.text = getString(R.string.dialog_redeem_title, mCurrency)
-        view.tvDescription.text = getString(R.string.dialog_redeem_description, "$totalTokenAmount $mCurrency")
-        view.tvRedeemAmount.text = getString(R.string.dialog_redeem_redeem_amount, "0 $mCurrency")
+        view.tvDialogTitle.text = getString(R.string.dialog_redeem_title, currency)
+        view.tvDescription.text = getString(R.string.dialog_redeem_description, "$totalTokenAmount $currency")
+        view.tvRedeemAmount.text = getString(R.string.dialog_redeem_redeem_amount, "0 $currency")
         view.tvTotalDiscount.text = getString(R.string.dialog_redeem_total_discount, "฿0")
 
         // Set max seekbar to item amount or token value
@@ -80,12 +80,12 @@ class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseC
                 when (v) {
                     seekbarAmount.max -> {
                         if (itemPrice < totalTokenAmount) {
-                            mPresenter.redeemChanged(itemPrice, mCurrency)
+                            mPresenter.redeemChanged(itemPrice, currency)
                         } else {
-                            mPresenter.redeemChanged(totalTokenAmount, mCurrency)
+                            mPresenter.redeemChanged(totalTokenAmount, currency)
                         }
                     }
-                    else -> mPresenter.redeemChanged(v.bd.multiply(stepSize), mCurrency)
+                    else -> mPresenter.redeemChanged(v.bd.multiply(stepSize), currency)
                 }
             }
 
@@ -99,7 +99,7 @@ class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseC
     }
 
     override fun setTextRedeemAmount(redeem: String) {
-        tvRedeemAmount.text = getString(R.string.dialog_redeem_redeem_amount, "$redeem $mCurrency")
+        tvRedeemAmount.text = getString(R.string.dialog_redeem_redeem_amount, "$redeem $currency")
     }
 
     override fun setTextDiscount(discount: String) {
