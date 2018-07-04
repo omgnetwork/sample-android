@@ -25,9 +25,10 @@ import kotlinx.android.synthetic.main.activity_checkout.*
 
 class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContract.Caller, CheckoutContract.Presenter>(), CheckoutContract.View {
     override val mPresenter: CheckoutContract.Presenter by lazy { CheckoutPresenter() }
-    private lateinit var mProductItem: Product.Get.Item
-    private var mDiscount: Int = 0
-    private lateinit var mLoadingDialog: ProgressDialog
+    private lateinit var productItem: Product.Get.Item
+    private lateinit var loadingDialog: ProgressDialog
+    private var discountFromToken: Int = 0
+        get() = productItem.price
 
     companion object {
         const val INTENT_EXTRA_PRODUCT_ITEM = "product_item"
@@ -40,16 +41,11 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
     }
 
     private fun initInstance() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = getString(R.string.activity_checkout_toolbar_title)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mProductItem = intent.getParcelableExtra(INTENT_EXTRA_PRODUCT_ITEM)
-        mDiscount = mProductItem.price
+        productItem = intent.getParcelableExtra(INTENT_EXTRA_PRODUCT_ITEM)
+        discountFromToken = productItem.price
 
-        mLoadingDialog = ProgressDialog(this)
-        mLoadingDialog.setTitle(R.string.activity_checkout_loading_dialog_title)
-        mLoadingDialog.setMessage(getString(R.string.activity_checkout_loading_dialog_message) + " ${mProductItem.name}...")
-        mLoadingDialog.setCancelable(false)
+        setupToolbar()
+        initLoadingDialog()
 
         btnRedeem.setOnClickListener {
             mPresenter.redeem()
@@ -57,16 +53,29 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
 
         btnPay.setOnClickListener {
             val token = mPresenter.getCurrentTokenBalance().token
-            val tokenValue = token.fromUnitToSubunit(mDiscount.bd)
-            val productId = mProductItem.id
-            mPresenter.caller?.buy(Product.Buy.Request(token.id, tokenValue, productId))
+            val subunitTokenAmount = token.fromUnitToSubunit(discountFromToken.bd)
+            val productId = productItem.id
+            mPresenter.caller?.buy(Product.Buy.Request(token.id, subunitTokenAmount, productId))
         }
 
-        mPresenter.handleProductDetail(mProductItem)
-        mPresenter.calculateTotal(mProductItem.price.toDouble(), 0.0)
+        mPresenter.handleProductDetail(productItem)
+        mPresenter.calculateTotal(productItem.price.toDouble(), 0.0)
         mPresenter.resolveRedeemButtonName()
 
         mPresenter.checkIfBalanceAvailable()
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.activity_checkout_toolbar_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun initLoadingDialog() {
+        loadingDialog = ProgressDialog(this)
+        loadingDialog.setTitle(R.string.activity_checkout_loading_dialog_title)
+        loadingDialog.setMessage(getString(R.string.activity_checkout_loading_dialog_message) + " ${productItem.name}...")
+        loadingDialog.setCancelable(false)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -86,21 +95,21 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
     }
 
     override fun setDiscount(discount: Int) {
-        mDiscount = discount
+        discountFromToken = discount
     }
 
     override fun showRedeemDialog() {
-        val currentBalance = mPresenter.getCurrentTokenBalance()
-        val balanceAmount = currentBalance.readableAmount()
+        val balance = mPresenter.getCurrentTokenBalance()
+        val readableTokenAmount = balance.readableAmount()
         val dialog = RedeemDialogFragment.newInstance(
-            mProductItem.price.toString(),
-            balanceAmount ?: "0",
-            currentBalance.token.symbol
+            "${productItem.price}",
+            readableTokenAmount ?: "0",
+            balance.token.symbol
         )
         dialog.setRedeemDialogListener(object : RedeemDialogFragment.RedeemDialogListener {
             override fun onSetRedeem(amount: Int) {
                 log(amount.toString())
-                mPresenter.calculateTotal(mProductItem.price.toDouble(), amount.toDouble())
+                mPresenter.calculateTotal(productItem.price.toDouble(), amount.toDouble())
             }
         })
         dialog.show(supportFragmentManager, "")
@@ -128,15 +137,15 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
     }
 
     override fun showBalanceNotAvailable() {
-        btnRedeem.text = "No balance available"
+        btnRedeem.text = getString(R.string.activity_checkout_no_balance_available)
         btnRedeem.isEnabled = false
     }
 
     override fun showLoading() {
-        mLoadingDialog.show()
+        loadingDialog.show()
     }
 
     override fun hideLoading() {
-        mLoadingDialog.dismiss()
+        loadingDialog.dismiss()
     }
 }
