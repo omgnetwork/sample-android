@@ -22,13 +22,13 @@ interface CheckoutContract {
         fun showTokenRedeemButtonText(tokenSymbol: String)
         fun showBuySuccess()
         fun showBuyFailed(msg: String = "")
-        fun setDiscount(discount: Int)
+        fun setDiscount(discount: BigDecimal)
     }
 
     interface Presenter : BaseContract.BasePresenter<View, CheckoutCallerContract.Caller> {
         fun redeem()
         fun createBuyRequestParams(discount: BigDecimal, productId: String): Product.Buy.Request
-        fun calculateTotalAmountToPay(subTotal: Double, discount: Double)
+        fun calculateTotalAmountToPay(subTotal: BigDecimal, discount: BigDecimal)
         fun prepareProductToShow(productItem: Product.Get.Item)
         fun resolveRedeemButtonName()
         fun getCurrentTokenBalance(): Balance

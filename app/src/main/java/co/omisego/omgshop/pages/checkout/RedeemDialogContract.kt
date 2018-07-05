@@ -14,7 +14,7 @@ interface RedeemDialogContract {
     interface View : BaseContract.BaseView {
         fun setTextRedeemAmount(redeem: String)
         fun setTextDiscount(discount: String)
-        fun sendDiscountToCheckoutPage(discount: Int)
+        fun sendDiscountToCheckoutPage(discount: BigDecimal)
     }
 
     interface Presenter : BaseContract.BasePresenter<View, BaseContract.BaseCaller> {

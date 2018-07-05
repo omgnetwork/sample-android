@@ -74,10 +74,10 @@ class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCalle
         mView?.showRedeemDialog()
     }
 
-    override fun calculateTotalAmountToPay(subTotal: Double, discount: Double) {
-        val total = (subTotal - discount).thousandSeparator()
+    override fun calculateTotalAmountToPay(subTotal: BigDecimal, discount: BigDecimal) {
+        val total = subTotal.minus(discount).thousandSeparator()
         mView?.showSummary(subTotal.thousandSeparator(), discount.thousandSeparator(), total)
-        mView?.setDiscount(discount.toInt())
+        mView?.setDiscount(discount)
     }
 
     override fun prepareProductToShow(productItem: Product.Get.Item) {

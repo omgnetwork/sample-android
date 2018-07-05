@@ -106,12 +106,12 @@ class RedeemDialogFragment : BaseDialogFragment<RedeemDialogContract.View, BaseC
         tvTotalDiscount.text = getString(R.string.dialog_redeem_total_discount, "฿$discount")
     }
 
-    override fun sendDiscountToCheckoutPage(discount: Int) {
+    override fun sendDiscountToCheckoutPage(discount: BigDecimal) {
         mRedeemDialogListener?.onConfirm(discount)
         dismiss()
     }
 
     interface RedeemDialogListener {
-        fun onConfirm(amount: Int)
+        fun onConfirm(amount: BigDecimal)
     }
 }

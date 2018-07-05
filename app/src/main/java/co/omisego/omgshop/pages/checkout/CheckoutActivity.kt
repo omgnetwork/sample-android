@@ -23,12 +23,13 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.math.BigDecimal
 
 class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContract.Caller, CheckoutContract.Presenter>(), CheckoutContract.View {
     override val mPresenter: CheckoutContract.Presenter by lazy { CheckoutPresenter() }
     private lateinit var productItem: Product.Get.Item
     private lateinit var loadingDialog: ProgressDialog
-    private var discount: Int = 0
+    private var discount: BigDecimal = 0.bd
 
     companion object {
         const val INTENT_EXTRA_PRODUCT_ITEM = "product_item"
@@ -46,12 +47,12 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
         initLoadingDialog()
         btnRedeem.setOnClickListener { mPresenter.redeem() }
         btnPay.setOnClickListener {
-            val params = mPresenter.createBuyRequestParams(discount.bd, productItem.id)
+            val params = mPresenter.createBuyRequestParams(discount, productItem.id)
             mPresenter.caller?.buy(params)
         }
 
         mPresenter.prepareProductToShow(productItem)
-        mPresenter.calculateTotalAmountToPay(productItem.price.toDouble(), 0.0)
+        mPresenter.calculateTotalAmountToPay(productItem.price.bd, 0.bd)
         mPresenter.resolveRedeemButtonName()
         mPresenter.checkIfBalanceAvailable()
     }
@@ -85,7 +86,7 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
             .into(ivProductDetailLogo)
     }
 
-    override fun setDiscount(discount: Int) {
+    override fun setDiscount(discount: BigDecimal) {
         this.discount = discount
     }
 
@@ -98,8 +99,8 @@ class CheckoutActivity : BaseActivity<CheckoutContract.View, CheckoutCallerContr
             balance.token.symbol
         )
         dialog.setRedeemDialogListener(object : RedeemDialogFragment.RedeemDialogListener {
-            override fun onConfirm(amount: Int) {
-                mPresenter.calculateTotalAmountToPay(productItem.price.toDouble(), amount.toDouble())
+            override fun onConfirm(amount: BigDecimal) {
+                mPresenter.calculateTotalAmountToPay(productItem.price.bd, amount)
             }
         })
         dialog.show(supportFragmentManager, "")

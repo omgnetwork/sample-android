@@ -17,7 +17,7 @@ class RedeemDialogPresenter : BasePresenterImpl<RedeemDialogContract.View, BaseC
     private var mRedeemValue: BigDecimal = 0.bd
 
     override fun handleClickRedeem() {
-        mView?.sendDiscountToCheckoutPage(mRedeemValue.intValueExact())
+        mView?.sendDiscountToCheckoutPage(mRedeemValue)
     }
 
     override fun redeemChanged(value: BigDecimal, symbol: String) {
