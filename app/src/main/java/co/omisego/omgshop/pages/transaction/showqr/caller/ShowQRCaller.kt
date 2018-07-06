@@ -5,6 +5,7 @@ import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.network.ClientProvider
 import co.omisego.omgshop.network.CombinedAPIManager
+import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionActionParams
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 
 /*
@@ -31,5 +32,23 @@ class ShowQRCaller(
     override fun leaveChannel(authToken: String, request: TransactionRequest) {
         val client = ClientProvider.provideSocketClient(authToken).client
         request.stopListening(client)
+    }
+
+    override fun approve(authToken: String, id: String) {
+        CombinedAPIManager.approve(
+            authToken,
+            TransactionConsumptionActionParams(id),
+            handler::handleConfirmationFailed,
+            handler::handleApproveSuccess
+        )
+    }
+
+    override fun reject(authToken: String, id: String) {
+        CombinedAPIManager.reject(
+            authToken,
+            TransactionConsumptionActionParams(id),
+            handler::handleConfirmationFailed,
+            handler::handleRejectSuccess
+        )
     }
 }

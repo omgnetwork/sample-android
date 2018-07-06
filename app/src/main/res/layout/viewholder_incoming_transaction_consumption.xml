@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transactionRecord"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/tvTransactionDirection"
+        style="@style/OMGTextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="from"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@sample/transaction_history_list.json/data/transaction_direction" />
+
+    <TextView
+        android:id="@+id/tvTransactionAddress"
+        style="@style/OMGTextBold"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_marginStart="8dp"
+        android:text="64419d4b-c45e-41ce-a009-e08fec608aee"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvTransactionDirection"
+        app:layout_constraintStart_toEndOf="@+id/tvTransactionDirection"
+        tools:text="@sample/transaction_history_list.json/data/transaction_id" />
+
+    <TextView
+        android:id="@+id/tvTransactionAmount"
+        style="@style/OMGTextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:text="+ 955.0 OMG"
+        android:textColor="@color/colorGreen"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTransactionDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionDirection"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        tools:text="@sample/transaction_history_list.json/data/transaction_amount" />
+
+
+    <TextView
+        android:id="@+id/tvTransactionDate"
+        style="@style/OMGTextItalicBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="19 Jun 2018 10:53:32"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionAmount"
+        tools:text="@sample/transaction_history_list.json/data/transaction_date_time" />
+
+    <TextView
+        android:id="@+id/tvTransactionStatus"
+        style="@style/OMGTextItalicBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Confirmed"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvTransactionDate"
+        app:layout_constraintStart_toEndOf="@+id/tvTransactionDate" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivApprove"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:foreground="@drawable/ripple_white"
+        android:src="@drawable/ic_check_green"
+        app:civ_border_color="@color/colorGreen"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivReject"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:foreground="@drawable/ripple_white"
+        android:src="@drawable/ic_clear_red"
+        app:civ_border_color="@color/colorRed"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivApprove" />
+</android.support.constraint.ConstraintLayout>

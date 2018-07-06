@@ -27,14 +27,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="8dp" />
+                app:layout_constraintGuide_begin="0dp" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guide_y"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="16dp" />
+                app:layout_constraintGuide_begin="8dp" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guide_y_end"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_end="16dp" />
+                app:layout_constraintGuide_end="8dp" />
 
             <co.omisego.omgshop.view.SpinnerField
                 android:id="@+id/tokenField"
@@ -50,7 +50,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
                 app:layout_constraintStart_toStartOf="@+id/guide_y"
-                app:layout_constraintTop_toBottomOf="@+id/guide_x" />
+                app:layout_constraintTop_toBottomOf="@+id/guide_x"
+                app:spinSubTitle="The token to use for the request"
+                app:spinTitle="Token" />
 
             <co.omisego.omgshop.view.ToggleField
                 android:id="@+id/transactionType"
@@ -64,6 +66,7 @@
                 app:showText="true"
                 app:textOff="Receive"
                 app:textOn="Send"
+                app:toggleSubTitle="The type of the request (send of receive)"
                 app:toggleTitle="I want to" />
 
             <co.omisego.omgshop.view.ToggleField
@@ -76,6 +79,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/transactionType"
                 app:textOff="No"
                 app:textOn="Yes"
+                app:toggleSubTitle="This request needs a confirmation from you or not."
                 app:toggleTitle="Requires confirmation" />
 
             <co.omisego.omgshop.view.ToggleField
@@ -89,6 +93,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/requiredConfirmation"
                 app:textOff="No"
                 app:textOn="Yes"
+                app:toggleSubTitle="Allow or not the consumer to override the amount."
                 app:toggleTitle="Allow amount override" />
 
             <co.omisego.omgshop.view.SeekBarField
@@ -101,6 +106,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/allowAmountField"
                 app:max="50"
                 app:multiplier="1"
+                app:seekSubTitle="The maximum number of time that this request can be consumed."
                 app:seekTitle="Max consumption" />
 
             <co.omisego.omgshop.view.SeekBarField
@@ -113,6 +119,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/maxConsumption"
                 app:max="50"
                 app:multiplier="1"
+                app:seekSubTitle="The maximum number of consumptions allowed per unique user."
                 app:seekTitle="Max consumption per user" />
 
             <co.omisego.omgshop.view.EditTextField
@@ -121,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 app:editTextHint="∞"
+                app:editTextSubTitle="The amount of token to use for the transaction."
                 app:editTextTitle="Amount (optional)"
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
                 app:layout_constraintStart_toStartOf="@+id/guide_y"
@@ -136,6 +144,7 @@
                 app:editTextCounterMaxLength="36"
                 app:editTextHint="Your wallet address"
                 app:editTextMask="########-####-####-####-############"
+                app:editTextSubTitle="The address from which to send or receive the tokens"
                 app:editTextTitle="Address (optional)"
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
                 app:layout_constraintStart_toStartOf="@+id/guide_y"
@@ -147,6 +156,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 app:editTextHint="∞"
+                app:editTextSubTitle="The amount of time in millisecond during which a consumption is valid."
                 app:editTextTitle="Consumption time in ms (optional)"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
@@ -159,6 +169,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 app:editTextHint="Empty"
+                app:editTextSubTitle="An id that can uniquely identify a transaction."
                 app:editTextTitle="Correlation ID (optional)"
                 app:layout_constraintEnd_toStartOf="@+id/guide_y_end"
                 app:layout_constraintStart_toStartOf="@+id/guide_y"

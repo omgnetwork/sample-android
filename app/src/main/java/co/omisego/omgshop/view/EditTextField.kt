@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import co.omisego.omgshop.R
 import com.santalu.maskedittext.MaskEditText
+import kotlinx.android.synthetic.main.layout_edit_text_field.view.*
 
 class EditTextField : ConstraintLayout {
     var editText: MaskEditText? = null
@@ -45,6 +46,11 @@ class EditTextField : ConstraintLayout {
         set(value) {
             field = value
             tvTitle?.text = value
+        }
+    var subTitle: String = ""
+        set(value) {
+            field = value
+            tvSubTitle.text = value
         }
     var hint: String = ""
         set(value) {
@@ -110,6 +116,7 @@ class EditTextField : ConstraintLayout {
             0, 0)
         try {
             title = attrs.getString(R.styleable.EditTextField_editTextTitle) ?: title
+            subTitle = attrs.getString(R.styleable.EditTextField_editTextSubTitle) ?: subTitle
             hint = attrs.getString(R.styleable.EditTextField_editTextHint) ?: hint
             inputType = attrs.getInt(R.styleable.EditTextField_android_inputType, EditorInfo.TYPE_NUMBER_FLAG_DECIMAL)
             mask = attrs.getString(R.styleable.EditTextField_editTextMask) ?: mask

@@ -21,6 +21,7 @@ interface ConsumeTransactionContract {
         fun showConsumeTransactionFailed(response: APIError)
         fun showTransactionFinalizedFailed(msg: String)
         fun showTransactionFinalizedSuccess(msg: String)
+        fun setEnableBtnConsume(enable: Boolean)
     }
 
     interface Presenter : BaseContract.BasePresenter<View, ConsumeTransactionCallerContract.Caller> {

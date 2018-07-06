@@ -19,7 +19,7 @@
     </style>
 
     <style name="BlueButton" parent="AppTheme.BaseButton">
-        <item name="android:background">@drawable/ripple_round_shape</item>
+        <item name="android:background">@drawable/round_shape_selector</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 

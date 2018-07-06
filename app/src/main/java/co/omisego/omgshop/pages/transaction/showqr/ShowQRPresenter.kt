@@ -5,9 +5,9 @@ import co.omisego.omgshop.extensions.readableAmount
 import co.omisego.omgshop.pages.transaction.showqr.caller.ShowQRCaller
 import co.omisego.omgshop.pages.transaction.showqr.caller.ShowQRCallerContract
 import co.omisego.omisego.model.APIError
+import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionStatus
-import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.model.transaction.request.TransactionRequestType
 
 /*
@@ -21,19 +21,18 @@ class ShowQRPresenter : BasePresenterImpl<ShowQRContract.View, ShowQRCallerContr
     ShowQRCallerContract.Handler {
     override var caller: ShowQRCallerContract.Caller? = ShowQRCaller(this)
 
-    override fun leaveChannel(request: TransactionRequest) {
-        caller?.leaveChannel(request = request)
-    }
-
     override fun handleTransactionConsumptionRequest(transactionConsumption: TransactionConsumption) {
-        mView?.showIncomingTransactionConsumptionDialog(transactionConsumption)
+        mView?.addPendingConsumption(transactionConsumption)
     }
 
     override fun handleTransactionConsumptionFinalizedSuccess(transactionConsumption: TransactionConsumption) {
-        val consumerName = transactionConsumption.user?.username
+        val consumerName = transactionConsumption.user?.username?.split("|")?.get(0)
         when (transactionConsumption.status) {
-            TransactionConsumptionStatus.REJECTED -> {
-                mView?.showTransactionFinalizedFailed("The transaction consumption from $consumerName has been rejected")
+            TransactionConsumptionStatus.REJECTED, TransactionConsumptionStatus.UNKNOWN -> {
+                mView?.showTransactionFinalizedFailed(
+                    transactionConsumption,
+                    "The transaction consumption from $consumerName has been ${transactionConsumption.status.value}"
+                )
             }
             TransactionConsumptionStatus.APPROVED, TransactionConsumptionStatus.CONFIRMED -> {
                 val isSent = transactionConsumption.transactionRequest.type == TransactionRequestType.SEND
@@ -49,13 +48,25 @@ class ShowQRPresenter : BasePresenterImpl<ShowQRContract.View, ShowQRCallerContr
                     amount,
                     tokenSymbol
                 )
-                mView?.showTransactionFinalizedSuccess(msg)
+                mView?.showTransactionFinalizedSuccess(transactionConsumption, msg)
             }
         }
     }
 
     override fun handleTransactionConsumptionFinalizedFail(transactionConsumption: TransactionConsumption, apiError: APIError) {
-        mView?.showTransactionFinalizedFailed(apiError.description)
+        mView?.showTransactionFinalizedFailed(transactionConsumption, apiError.description)
+    }
+
+    override fun handleConfirmationFailed(error: OMGResponse<APIError>) {
+        mView?.showConfirmationFail(error.data.description)
+    }
+
+    override fun handleApproveSuccess(transactionConsumption: OMGResponse<TransactionConsumption>) {
+        log("Approved ${transactionConsumption.data.id}")
+    }
+
+    override fun handleRejectSuccess(transactionConsumption: OMGResponse<TransactionConsumption>) {
+        log("Rejected ${transactionConsumption.data.id}")
     }
 
     override fun showLoading() {

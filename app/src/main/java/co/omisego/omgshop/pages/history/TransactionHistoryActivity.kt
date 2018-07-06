@@ -3,6 +3,7 @@ package co.omisego.omgshop.pages.history
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
@@ -17,9 +18,12 @@ import kotlinx.android.synthetic.main.toolbar.*
 class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View, TransactionHistoryCallerContract.Caller, TransactionHistoryContract.Presenter>(), TransactionHistoryContract.View, LoadMoreCommand {
     override val mPresenter: TransactionHistoryContract.Presenter by lazy { TransactionHistoryPresenter() }
     private val transactionListAdapter by lazy {
-        TransactionHistoryAdapter(loadMoreCommand = this)
+        TransactionHistoryAdapter()
     }
     private var currentPage: Int = 0
+    private var lastVisibleItem: Int = 0
+    private var totalItemCount: Int = 0
+    private var loading: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +46,23 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
 
     private fun setupRecyclerView() {
         recyclerView.adapter = transactionListAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        val linearLayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = linearLayoutManager
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                totalItemCount = linearLayoutManager.itemCount
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition()
+                if (!loading && totalItemCount <= (lastVisibleItem + PaginationConfig.PER_PAGE)) {
+                    onLoadMore()
+                }
+            }
+        })
     }
 
     private fun loadTransactions(page: Int = 1) {
+        loading = true
         mPresenter.caller?.loadTransactionList(mPresenter.createTransactionListParams(page))
     }
 
@@ -67,6 +83,7 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
     }
 
     override fun addTransactions(transactionList: List<Transaction>, page: Int, isLastPage: Boolean) {
+        loading = false
         swipeRefresh.isRefreshing = false
         transactionListAdapter.addTransactions(transactionList)
         currentPage = page
@@ -79,6 +96,7 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
     }
 
     override fun showLoadTransactionListFail() {
+        loading = false
         swipeRefresh.isRefreshing = false
         transactionListAdapter.getLoadingListener()?.onFinished()
         logi("Failed to fetch transaction list")

@@ -2,6 +2,7 @@
     <declare-styleable name="EditTextField">
         <attr name="editTextTitle" format="string" />
         <attr name="editTextHint" format="string" />
+        <attr name="editTextSubTitle" format="string" />
         <attr name="android:inputType" />
         <attr name="editTextMask" format="string" />
         <attr name="editTextCounterEnabled" format="boolean" />

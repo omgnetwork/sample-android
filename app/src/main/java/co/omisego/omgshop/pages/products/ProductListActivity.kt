@@ -28,7 +28,7 @@ import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.CheckoutActivity
 import co.omisego.omgshop.pages.products.caller.ProductListCallerContract
 import co.omisego.omgshop.pages.profile.MyProfileActivity
-import co.omisego.omgshop.pages.qrcode.QRCodeActivity
+import co.omisego.omgshop.pages.qrcode.TransactionRequestFlowActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -76,7 +76,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCa
                 return true
             }
             R.id.scan -> {
-                startActivity(Intent(this, QRCodeActivity::class.java))
+                startActivity(Intent(this, TransactionRequestFlowActivity::class.java))
                 return true
             }
         }

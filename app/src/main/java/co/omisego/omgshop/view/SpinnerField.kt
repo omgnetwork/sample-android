@@ -16,6 +16,7 @@ import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.Token
 import co.omisego.omisego.model.WalletList
+import kotlinx.android.synthetic.main.layout_spinner_field.view.*
 
 class SpinnerField : ConstraintLayout, AdapterView.OnItemSelectedListener {
 
@@ -32,6 +33,17 @@ class SpinnerField : ConstraintLayout, AdapterView.OnItemSelectedListener {
             field = value
             if (adapter.isEmpty)
                 adapter.addAll(value)
+        }
+
+    var title: String = ""
+        set(value) {
+            field = value
+            tvTitle.text = value
+        }
+    var subTitle: String = ""
+        set(value) {
+            field = value
+            tvSubTitle.text = value
         }
 
     lateinit var selectedToken: Token
@@ -85,7 +97,6 @@ class SpinnerField : ConstraintLayout, AdapterView.OnItemSelectedListener {
                     val index = tokens.indexOf(selectedToken)
                     spinner?.setSelection(index)
                 }
-
             }
         })
     }
@@ -101,16 +112,17 @@ class SpinnerField : ConstraintLayout, AdapterView.OnItemSelectedListener {
     }
 
     private fun AttributeSet?.apply() {
-//        val attrs = context.theme.obtainStyledAttributes(
-//            this,
-//            R.styleable.SeekBarField,
-//            0, 0)
-//
-//        try {
-//            max = attrs.getInteger(R.styleable.SeekBarField_max, max)
-//        } finally {
-//            attrs.recycle()
-//        }
+        val attrs = context.theme.obtainStyledAttributes(
+            this,
+            R.styleable.SpinnerField,
+            0, 0)
+
+        try {
+            title = attrs.getString(R.styleable.SpinnerField_spinTitle) ?: title
+            subTitle = attrs.getString(R.styleable.SpinnerField_spinSubTitle) ?: subTitle
+        } finally {
+            attrs.recycle()
+        }
     }
 
     interface OnSelectionTokenListener {

@@ -17,10 +17,10 @@ import co.omisego.omgshop.pages.scan.ScanActivity
 import co.omisego.omgshop.pages.transaction.consume.ConsumeTransactionActivity
 import co.omisego.omgshop.pages.transaction.generate.GenerateTransactionActivity
 import co.omisego.omisego.model.transaction.request.TransactionRequest
-import kotlinx.android.synthetic.main.activity_qrcode.*
+import kotlinx.android.synthetic.main.activity_transaction_request_flow.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class QRCodeActivity : AppCompatActivity() {
+class TransactionRequestFlowActivity : AppCompatActivity() {
 
     companion object {
         const val REQUEST_CODE_SCAN = 100
@@ -28,7 +28,7 @@ class QRCodeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_qrcode)
+        setContentView(R.layout.activity_transaction_request_flow)
         setupToolbar()
 
         btnScan.setOnClickListener {

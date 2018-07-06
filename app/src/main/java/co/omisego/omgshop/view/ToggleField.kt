@@ -22,11 +22,15 @@ class ToggleField : ConstraintLayout {
                 tvValue?.visibility = View.INVISIBLE
             }
         }
-
     var title: String = "Title"
         set(value) {
             field = value
             rootView.tvTitle.text = value
+        }
+    var subTitle: String = ""
+        set(value) {
+            field = value
+            rootView.tvSubTitle.text = value
         }
     var textOn: String = "On"
         set(value) {
@@ -86,6 +90,7 @@ class ToggleField : ConstraintLayout {
             title = attrs.getString(R.styleable.ToggleField_toggleTitle) ?: title
             textOn = attrs.getString(R.styleable.ToggleField_textOn) ?: textOn
             textOff = attrs.getString(R.styleable.ToggleField_textOff) ?: textOff
+            subTitle = attrs.getString(R.styleable.ToggleField_toggleSubTitle) ?: subTitle
             showText = attrs.getBoolean(R.styleable.ToggleField_showText, false)
         } finally {
             attrs.recycle()
