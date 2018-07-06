@@ -8,7 +8,6 @@ import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumptionStatus
-import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.model.transaction.request.TransactionRequestType
 
 /*
@@ -21,10 +20,6 @@ class ShowQRPresenter : BasePresenterImpl<ShowQRContract.View, ShowQRCallerContr
     ShowQRContract.Presenter,
     ShowQRCallerContract.Handler {
     override var caller: ShowQRCallerContract.Caller? = ShowQRCaller(this)
-
-    override fun leaveChannel(request: TransactionRequest) {
-        caller?.leaveChannel(request = request)
-    }
 
     override fun handleTransactionConsumptionRequest(transactionConsumption: TransactionConsumption) {
         mView?.addPendingConsumption(transactionConsumption)

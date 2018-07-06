@@ -10,7 +10,6 @@ package co.omisego.omgshop.pages.transaction.showqr
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.pages.transaction.showqr.caller.ShowQRCallerContract
 import co.omisego.omisego.model.transaction.consumption.TransactionConsumption
-import co.omisego.omisego.model.transaction.request.TransactionRequest
 
 interface ShowQRContract {
     interface View : BaseContract.BaseView {
@@ -21,6 +20,5 @@ interface ShowQRContract {
     }
 
     interface Presenter : BaseContract.BasePresenter<View, ShowQRCallerContract.Caller> {
-        fun leaveChannel(request: TransactionRequest)
     }
 }

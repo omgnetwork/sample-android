@@ -63,7 +63,7 @@ class ShowQRActivity : BaseActivity<ShowQRContract.View, ShowQRCallerContract.Ca
 
     override fun onStop() {
         super.onStop()
-        mPresenter.leaveChannel(transactionRequest)
+        mPresenter.caller?.leaveChannel(request = transactionRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
