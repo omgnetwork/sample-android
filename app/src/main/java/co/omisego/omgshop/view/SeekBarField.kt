@@ -19,6 +19,11 @@ class SeekBarField : ConstraintLayout {
             field = value
             rootView.tvTitle.text = value
         }
+    var subTitle: String = ""
+        set(value) {
+            field = value
+            rootView.tvSubTitle.text = value
+        }
     var max: Int = 15
         set(value) {
             field = value
@@ -78,6 +83,7 @@ class SeekBarField : ConstraintLayout {
             max = attrs.getInteger(R.styleable.SeekBarField_max, max)
             progress = attrs.getInteger(R.styleable.SeekBarField_progress, progress)
             title = attrs.getString(R.styleable.SeekBarField_seekTitle) ?: title
+            subTitle = attrs.getString(R.styleable.SeekBarField_seekSubTitle) ?: subTitle
             multiplier = attrs.getInt(R.styleable.SeekBarField_multiplier, 1)
         } finally {
             attrs.recycle()

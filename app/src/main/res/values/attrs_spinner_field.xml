@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="SpinnerField">
+        <attr name="spinTitle" format="string" />
+        <attr name="spinSubTitle" format="string" />
+    </declare-styleable>
+</resources>
