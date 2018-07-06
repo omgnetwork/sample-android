@@ -71,4 +71,10 @@ object Preference {
             null
         }
     }
+
+    fun saveWalletAddress(address: String) {
+        sharePref["address"] = address
+    }
+
+    fun loadWalletAddress() = sharePref["address"]
 }

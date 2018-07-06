@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transactionRecord"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:id="@+id/tvTransactionDirection"
+            style="@style/OMGTextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="from"
+            android:textSize="14sp"
+            tools:text="@sample/transaction_history_list.json/data/transaction_direction" />
+
+        <TextView
+            android:id="@+id/tvTransactionAddress"
+            style="@style/OMGTextBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="64419d4b-c45e-41ce-a009-e08fec608aee"
+            android:textColor="@color/colorBlack"
+            tools:text="@sample/transaction_history_list.json/data/transaction_id" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:id="@+id/tvTransactionDate"
+            style="@style/OMGTextItalicBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="19 Jun 2018 10:53:32"
+            android:textSize="12sp"
+            tools:text="@sample/transaction_history_list.json/data/transaction_date_time" />
+
+        <TextView
+            android:id="@+id/tvTransactionStatus"
+            style="@style/OMGTextItalicBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Confirmed"
+            android:textSize="12sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvTransactionAmount"
+            style="@style/OMGTextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ 955.0 OMG"
+            android:textColor="@color/colorGreen"
+            android:textSize="16sp"
+            tools:text="@sample/transaction_history_list.json/data/transaction_amount" />
+    </LinearLayout>
+</LinearLayout>

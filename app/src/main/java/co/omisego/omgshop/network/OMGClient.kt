@@ -4,7 +4,7 @@ import co.omisego.omgshop.helpers.Config
 import co.omisego.omisego.OMGAPIClient
 import co.omisego.omisego.model.ClientConfiguration
 import co.omisego.omisego.network.ewallet.EWalletClient
-import java.util.Objects
+import java.util.*
 
 /*
  * OmiseGO

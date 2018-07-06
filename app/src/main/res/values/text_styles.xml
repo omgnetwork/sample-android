@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="OMGTextBlack">
+        <item name="fontFamily">@font/circularstd_black</item>
+    </style>
+
+    <style name="OMGTextBold">
+        <item name="fontFamily">@font/circularstd_bold</item>
+    </style>
+
+    <style name="OMGTextMedium">
+        <item name="fontFamily">@font/circularstd_medium</item>
+    </style>
+
+    <style name="OMGTextNormal">
+        <item name="fontFamily">@font/circularstd_book</item>
+    </style>
+
+    <style name="OMGTextItalicBlack">
+        <item name="fontFamily">@font/circularstd_black_italic</item>
+    </style>
+
+    <style name="OMGTextItalicBold">
+        <item name="fontFamily">@font/circularstd_bold_italic</item>
+    </style>
+
+    <style name="OMGTextItalicMedium">
+        <item name="fontFamily">@font/circularstd_medium_italic</item>
+    </style>
+
+    <style name="OMGTextItalicNormal">
+        <item name="fontFamily">@font/circularstd_book_italic</item>
+    </style>
+</resources>

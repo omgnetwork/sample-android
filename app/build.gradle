@@ -42,6 +42,7 @@ dependencies {
     implementation kotlinDependencies.stdlib
     implementation supportDependencies.appCompat
     implementation supportDependencies.design
+    implementation supportDependencies.cardView
     implementation retrofitDependencies.retrofit
     implementation retrofitDependencies.converterGson
     implementation retrofitDependencies.adapterRxJava2
@@ -50,6 +51,7 @@ dependencies {
     implementation okHttp3.loggingIntercepter
 
     // For testing
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation junit.junit
     testImplementation kluent.android
     testImplementation assertJ.core

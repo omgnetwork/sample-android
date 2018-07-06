@@ -15,11 +15,13 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
+import co.omisego.omgshop.pages.history.TransactionHistoryActivity
 import co.omisego.omgshop.pages.login.LoginActivity
 import co.omisego.omgshop.pages.profile.caller.MyProfileCallerContract
 import co.omisego.omisego.model.Balance
@@ -63,10 +65,16 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileCallerCo
         mPresenter.caller?.loadWallets()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_my_profile, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         item?.let {
             when (item.itemId) {
                 android.R.id.home -> finish()
+                R.id.history -> startActivity(Intent(this, TransactionHistoryActivity::class.java))
             }
         }
         return false
