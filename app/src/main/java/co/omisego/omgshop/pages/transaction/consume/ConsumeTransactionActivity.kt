@@ -1,6 +1,7 @@
 package co.omisego.omgshop.pages.transaction.consume
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.MenuItem
 import android.widget.Toast
 import co.omisego.omgshop.R
@@ -106,6 +107,8 @@ class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View,
     override fun showConsumeTransactionSuccess(response: TransactionConsumption) {
         transactionConsumption = response
         Toast.makeText(this, "Consumed transaction id ${response.id} successful", Toast.LENGTH_LONG).show()
+        btnConsume.isEnabled = false
+        btnConsume.text = getString(R.string.activity_consume_transaction_waiting_for_confirmation)
     }
 
     override fun showTransactionFinalizedFailed(msg: String) {
@@ -115,5 +118,16 @@ class ConsumeTransactionActivity : BaseActivity<ConsumeTransactionContract.View,
     override fun showTransactionFinalizedSuccess(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
         finish()
+    }
+
+    override fun setEnableBtnConsume(enable: Boolean) {
+        btnConsume.isEnabled = enable
+        btnConsume.text = if (enable) {
+            btnConsume.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
+            getString(R.string.btn_consume)
+        } else {
+            btnConsume.setTextColor(ContextCompat.getColor(this, R.color.colorGrayDarkerDarker))
+            getString(R.string.activity_consume_transaction_waiting_for_confirmation)
+        }
     }
 }

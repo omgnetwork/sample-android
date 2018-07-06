@@ -42,7 +42,6 @@ class ConsumeTransactionPresenter : BasePresenterImpl<ConsumeTransactionContract
         return transactionRequest.toTransactionConsumptionParams(
             amount = sendAmount,
             address = if (address.isEmpty()) null else address,
-            tokenId = token?.id ?: null,
             correlationId = if (correlationId == null || correlationId.isEmpty()) null else correlationId
         )
     }
@@ -50,20 +49,25 @@ class ConsumeTransactionPresenter : BasePresenterImpl<ConsumeTransactionContract
     override fun handleConsumeTransactionFailed(error: OMGResponse<APIError>) {
         mView?.hideLoading()
         mView?.showConsumeTransactionFailed(error.data)
+        mView?.setEnableBtnConsume(true)
     }
 
     override fun handleConsumeTransactionSuccess(response: OMGResponse<TransactionConsumption>) {
         mView?.hideLoading()
         mView?.showConsumeTransactionSuccess(response.data)
         caller?.listenTransactionConsumption(transactionConsumption = response.data)
+        mView?.setEnableBtnConsume(false)
     }
 
     override fun handleTransactionConsumptionFinalizedFail(response: TransactionConsumption, error: APIError) {
+        mView?.setEnableBtnConsume(true)
+        mView?.showConsumeTransactionFailed(error)
     }
 
     override fun handleTransactionConsumptionFinalizedSuccess(response: TransactionConsumption) {
         when (response.status) {
             TransactionConsumptionStatus.REJECTED -> {
+                mView?.setEnableBtnConsume(true)
                 mView?.showTransactionFinalizedFailed("The transaction ${response.id} has been rejected")
             }
             TransactionConsumptionStatus.APPROVED, TransactionConsumptionStatus.CONFIRMED -> {
