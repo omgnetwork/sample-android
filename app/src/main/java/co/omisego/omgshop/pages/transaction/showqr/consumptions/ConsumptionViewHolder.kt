@@ -31,9 +31,7 @@ class ConsumptionViewHolder(val view: View, private val listener: OnConfirmation
                 setTransactionDirection(sameAddress) {
                     itemView.tvTransactionDirection.text = it
                 }
-                transaction?.setTransactionAddress(sameAddress) {
-                    itemView.tvTransactionAddress.text = it
-                }
+                itemView.tvTransactionAddress.text = address
                 colorizedTransactionAmount(sameAddress) {
                     itemView.tvTransactionAmount.setTextColor(it)
                 }
