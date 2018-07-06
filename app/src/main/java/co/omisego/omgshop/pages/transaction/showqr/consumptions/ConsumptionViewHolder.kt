@@ -52,7 +52,8 @@ class ConsumptionViewHolder(val view: View, private val listener: OnConfirmation
         }
     }
 
-    fun updateStatus(newStatus: TransactionConsumptionStatus) {
+    fun updateStatus(newStatus: TransactionConsumptionStatus?) {
+        if (newStatus == null) return
         transactionConsumption = transactionConsumption.copy(status = newStatus)
         itemView.tvTransactionStatus.text = itemView.context.getString(
             R.string.transaction_status,
