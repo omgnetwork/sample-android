@@ -26,7 +26,7 @@ class ShowQRPresenter : BasePresenterImpl<ShowQRContract.View, ShowQRCallerContr
     }
 
     override fun handleTransactionConsumptionFinalizedSuccess(transactionConsumption: TransactionConsumption) {
-        val consumerName = transactionConsumption.user?.username
+        val consumerName = transactionConsumption.user?.username?.split("|")?.get(0)
         when (transactionConsumption.status) {
             TransactionConsumptionStatus.REJECTED, TransactionConsumptionStatus.UNKNOWN -> {
                 mView?.showTransactionFinalizedFailed(
