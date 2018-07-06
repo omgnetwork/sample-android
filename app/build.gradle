@@ -31,9 +31,7 @@ androidExtensions {
 }
 
 repositories {
-    flatDir {
-        dirs 'libs'
-    }
+    mavenCentral()
 }
 
 dependencies {
@@ -62,3 +60,4 @@ dependencies {
     androidTestImplementation testRunner.runner
     androidTestImplementation espresso.core
 }
+

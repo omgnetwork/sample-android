@@ -7,6 +7,7 @@
 
 # idea files
 *.iml
+.idea/modules.xml
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
