@@ -50,9 +50,10 @@ dependencies {
     implementation glide.glide
     implementation okHttp3.loggingIntercepter
     implementation custom.editText
+    implementation custom.circleImageView
+    implementation custom.constraintLayout
 
     // For testing
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation junit.junit
     testImplementation kluent.android
     testImplementation assertJ.core

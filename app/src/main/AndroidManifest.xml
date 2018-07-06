@@ -34,7 +34,7 @@
         <activity android:name=".pages.checkout.CheckoutActivity" />
         <activity android:name=".pages.profile.MyProfileActivity" />
         <activity android:name=".pages.history.TransactionHistoryActivity" />
-        <activity android:name=".pages.qrcode.QRCodeActivity" />
+        <activity android:name=".pages.qrcode.TransactionRequestFlowActivity" />
         <activity android:name=".pages.scan.ScanActivity" />
         <activity android:name=".pages.transaction.generate.GenerateTransactionActivity"></activity>
         <activity android:name=".pages.transaction.consume.ConsumeTransactionActivity"></activity>
