@@ -22,6 +22,6 @@ class TransactionHistoryDiffCallback(
     override fun getNewListSize() = newTransactionList.size
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return areItemsTheSame(oldItemPosition, newItemPosition)
+        return true
     }
 }
