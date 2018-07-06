@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import co.omisego.omgshop.R
 import co.omisego.omgshop.pages.history.PaginationConfig
-import co.omisego.omgshop.pages.history.viewholder.listener.LoadMoreCommand
 import co.omisego.omgshop.pages.history.viewholder.listener.OnLoadListener
 import kotlinx.android.synthetic.main.viewholder_load_more.view.*
 
@@ -15,24 +14,19 @@ import kotlinx.android.synthetic.main.viewholder_load_more.view.*
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 class LoadMoreViewHolder(
-        itemView: View,
-        private val command: LoadMoreCommand
+    itemView: View
 ) : RecyclerView.ViewHolder(itemView), OnLoadListener {
     fun bindClick() {
-        if (itemView.isEnabled)
-            itemView.tvLoadMore.text = itemView.context.getString(R.string.load_more, PaginationConfig.PER_PAGE)
-        itemView.setOnClickListener {
-            setViewLoading(true)
-            command.onLoadMore()
-        }
+        setViewLoading(true)
     }
 
     override fun onFinished() {
-        setViewLoading(false)
+        setViewLoading(true)
     }
 
     override fun onReachedLastPage() {
         setViewEnabled(false)
+        setViewLoading(false)
     }
 
     override fun onReloaded() {

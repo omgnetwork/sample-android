@@ -9,7 +9,6 @@ import co.omisego.omgshop.pages.history.ItemType
 import co.omisego.omgshop.pages.history.TransactionHistoryDiffCallback
 import co.omisego.omgshop.pages.history.viewholder.LoadMoreViewHolder
 import co.omisego.omgshop.pages.history.viewholder.TransactionHistoryViewHolder
-import co.omisego.omgshop.pages.history.viewholder.listener.LoadMoreCommand
 import co.omisego.omgshop.pages.history.viewholder.listener.OnLoadListener
 import co.omisego.omisego.model.transaction.Transaction
 
@@ -21,7 +20,6 @@ import co.omisego.omisego.model.transaction.Transaction
  */
 class TransactionHistoryAdapter(
     private val transactionList: MutableList<Transaction> = mutableListOf(),
-    private val loadMoreCommand: LoadMoreCommand,
     var myAddress: String = ""
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var loadingListener: OnLoadListener? = null
@@ -34,7 +32,7 @@ class TransactionHistoryAdapter(
             }
             else -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_load_more, parent, false)
-                val loadMoreViewHolder = LoadMoreViewHolder(view, loadMoreCommand)
+                val loadMoreViewHolder = LoadMoreViewHolder(view)
                 loadingListener = loadMoreViewHolder
                 return loadMoreViewHolder
             }
