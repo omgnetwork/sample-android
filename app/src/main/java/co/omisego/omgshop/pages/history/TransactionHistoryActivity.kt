@@ -10,8 +10,9 @@ import co.omisego.omgshop.extensions.logi
 import co.omisego.omgshop.pages.checkout.caller.TransactionHistoryCallerContract
 import co.omisego.omgshop.pages.history.adapter.TransactionHistoryAdapter
 import co.omisego.omgshop.pages.history.viewholder.listener.LoadMoreCommand
-import co.omisego.omisego.model.transaction.list.Transaction
+import co.omisego.omisego.model.transaction.Transaction
 import kotlinx.android.synthetic.main.activity_transaction_history.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View, TransactionHistoryCallerContract.Caller, TransactionHistoryContract.Presenter>(), TransactionHistoryContract.View, LoadMoreCommand {
     override val mPresenter: TransactionHistoryContract.Presenter by lazy { TransactionHistoryPresenter() }

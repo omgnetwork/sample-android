@@ -11,7 +11,7 @@ import co.omisego.omgshop.pages.history.viewholder.LoadMoreViewHolder
 import co.omisego.omgshop.pages.history.viewholder.TransactionHistoryViewHolder
 import co.omisego.omgshop.pages.history.viewholder.listener.LoadMoreCommand
 import co.omisego.omgshop.pages.history.viewholder.listener.OnLoadListener
-import co.omisego.omisego.model.transaction.list.Transaction
+import co.omisego.omisego.model.transaction.Transaction
 
 /*
  * OmiseGO

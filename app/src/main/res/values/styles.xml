@@ -6,22 +6,50 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="textColorError">@color/colorRed</item>
+        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
     </style>
 
+    <style name="AppTheme.BaseButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="fontFamily">@font/circularstd_medium</item>
+    </style>
 
-    <style name="AppTheme.OmiseGOButton" parent="Widget.AppCompat.Button.Colored">
+    <style name="AppTheme.BaseButtonBorderless" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="fontFamily">@font/circularstd_medium</item>
+    </style>
+
+    <style name="BlueButton" parent="AppTheme.BaseButton">
         <item name="android:background">@drawable/ripple_round_shape</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
-    <style name="AppTheme.OmiseGOOutlineButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:background">@drawable/ripple_round_outline_shape</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="RedButton" parent="AppTheme.BaseButton">
+        <item name="android:background">@drawable/ripple_round_shape_red</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
-    <style name="AppTheme.OmiseGOSectionHeader">
+    <style name="BorderlessButton" parent="AppTheme.BaseButtonBorderless">
+        <item name="android:background">@drawable/ripple_borderless_blue</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="OutlineButton" parent="AppTheme.BaseButton">
+        <item name="android:background">@drawable/round_outline_selector</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/AppTheme.ToolbarTextStyle</item>
+    </style>
+
+    <style name="AppTheme.ToolbarTextStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="fontFamily">@font/circularstd_bold</item>
+    </style>
+
+    <style name="AppTheme.SectionHeader">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/circularstd_bold</item>
         <item name="android:alpha">0.9</item>
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:padding">8dp</item>

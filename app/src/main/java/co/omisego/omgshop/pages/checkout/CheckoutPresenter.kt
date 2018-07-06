@@ -2,6 +2,7 @@ package co.omisego.omgshop.pages.checkout
 
 import co.omisego.omgshop.base.BasePresenterImpl
 import co.omisego.omgshop.extensions.errorResponse
+import co.omisego.omgshop.extensions.fromUnitToSubunit
 import co.omisego.omgshop.extensions.thousandSeparator
 import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Credential
@@ -14,6 +15,7 @@ import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.Balance
 import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.WalletList
+import java.math.BigDecimal
 
 /**
  * OmiseGO
@@ -23,8 +25,8 @@ import co.omisego.omisego.model.WalletList
  */
 
 class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCallerContract.Caller>(),
-        CheckoutContract.Presenter,
-        CheckoutCallerContract.Handler {
+    CheckoutContract.Presenter,
+    CheckoutCallerContract.Handler {
     override var caller: CheckoutCallerContract.Caller? = CheckoutCaller(this)
 
     override fun handleBuySuccess(response: Response<Credential>) {
@@ -54,8 +56,14 @@ class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCalle
 
     override fun checkIfBalanceAvailable() {
         if (getCurrentTokenBalance().amount <= 0.bd) {
-            mView?.showBalanceNotAvailable()
+            mView?.showTokenRedeemButtonNotAvailable()
         }
+    }
+
+    override fun createBuyRequestParams(discount: BigDecimal, productId: String): Product.Buy.Request {
+        val token = getCurrentTokenBalance().token
+        val subunitDiscount = token.fromUnitToSubunit(discount)
+        return Product.Buy.Request(token.id, subunitDiscount, productId)
     }
 
     override fun showLoading() {
@@ -66,19 +74,19 @@ class CheckoutPresenter : BasePresenterImpl<CheckoutContract.View, CheckoutCalle
         mView?.showRedeemDialog()
     }
 
-    override fun calculateTotal(subTotal: Double, discount: Double) {
-        val total = (subTotal - discount).thousandSeparator()
+    override fun calculateTotalAmountToPay(subTotal: BigDecimal, discount: BigDecimal) {
+        val total = subTotal.minus(discount).thousandSeparator()
         mView?.showSummary(subTotal.thousandSeparator(), discount.thousandSeparator(), total)
-        mView?.setDiscount(discount.toInt())
+        mView?.setDiscount(discount)
     }
 
-    override fun handleProductDetail(productItem: Product.Get.Item) {
+    override fun prepareProductToShow(productItem: Product.Get.Item) {
         mView?.showProductDetail(productItem.imageUrl, productItem.name, "฿${productItem.price.toDouble().thousandSeparator()}")
     }
 
     override fun resolveRedeemButtonName() {
         val symbol = Preference.loadSelectedTokenBalance()?.token?.symbol ?: ""
-        mView?.showRedeemButton(symbol)
+        mView?.showTokenRedeemButtonText(symbol)
     }
 
     override fun getCurrentTokenBalance(): Balance {

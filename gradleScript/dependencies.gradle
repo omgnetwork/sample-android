@@ -1,7 +1,7 @@
 ext {
     /* Version */
-    omisego = '0.9.52'
-    supportLibrary = '27.1.0'
+    omisego = '0.9.6-alpha5'
+    supportLibrary = '27.1.1'
     kotlin = '1.2.50'
     retrofit = '2.3.0'
     rxandroid = '2.0.1'
@@ -49,5 +49,8 @@ ext {
     ]
     espresso = [
         core: "com.android.support.test.espresso:espresso-core:3.0.1",
+    ]
+    custom = [
+        editText: "com.github.santalu:mask-edittext:1.0.5"
     ]
 }

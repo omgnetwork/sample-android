@@ -11,6 +11,7 @@ import co.omisego.omgshop.network.prototype.Provider
 object ClientProvider : Provider {
     private var omgClient: OMGClient? = null
     private var shopClient: ShopClient? = null
+    private var socketClient: SocketClient? = null
 
     override fun provideOMGClient(authToken: String): OMGClient {
         val client = omgClient
@@ -21,6 +22,18 @@ object ClientProvider : Provider {
 
         return OMGClient(authToken).also {
             omgClient = it
+        }
+    }
+
+    override fun provideSocketClient(authToken: String): SocketClient {
+        val client = socketClient
+
+        if (client != null && client.authToken == authToken) {
+            return client
+        }
+
+        return SocketClient(authToken).also {
+            socketClient = it
         }
     }
 

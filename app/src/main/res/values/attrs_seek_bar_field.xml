@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="SeekBarField">
+        <attr name="seekTitle" format="string" />
+        <attr name="max" format="integer" />
+        <attr name="progress" format="integer" />
+        <attr name="multiplier" format="integer" />
+    </declare-styleable>
+</resources>

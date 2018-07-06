@@ -2,9 +2,8 @@ package co.omisego.omgshop.pages.history
 
 import co.omisego.omgshop.base.BaseContract
 import co.omisego.omgshop.pages.checkout.caller.TransactionHistoryCallerContract
-import co.omisego.omisego.model.transaction.list.Transaction
+import co.omisego.omisego.model.transaction.Transaction
 import co.omisego.omisego.model.transaction.list.TransactionListParams
-
 
 /*
  * OmiseGO

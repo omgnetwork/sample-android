@@ -5,7 +5,7 @@ import co.omisego.omgshop.models.Credential
 import co.omisego.omisego.model.APIError
 import co.omisego.omisego.model.OMGResponse
 import co.omisego.omisego.model.pagination.PaginationList
-import co.omisego.omisego.model.transaction.list.Transaction
+import co.omisego.omisego.model.transaction.Transaction
 import co.omisego.omisego.model.transaction.list.TransactionListParams
 
 /*

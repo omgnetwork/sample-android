@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="co.omisego.omgshop">
+    package="co.omisego.omgshop">
 
-  <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
-  <application
-      android:name=".OmiseShopApplication"
-      android:allowBackup="true"
-      android:fullBackupContent="true"
-      android:icon="@mipmap/ic_launcher"
-      android:label="@string/app_name"
-      android:roundIcon="@mipmap/ic_launcher_round"
-      android:supportsRtl="true"
-      android:theme="@style/AppTheme">
-    <activity
-        android:name=".pages.login.LoginActivity"
-        android:windowSoftInputMode="adjustPan">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name=".pages.register.RegisterActivity"
-        android:windowSoftInputMode="adjustResize"/>
-    <activity android:name=".pages.products.ProductListActivity"/>
-    <activity android:name=".pages.checkout.CheckoutActivity"/>
-    <activity android:name=".pages.profile.MyProfileActivity"/>
-    <activity android:name=".pages.history.TransactionHistoryActivity">
-    </activity>
-  </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name=".OmiseShopApplication"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".pages.login.LoginActivity"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".pages.register.RegisterActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".pages.products.ProductListActivity" />
+        <activity android:name=".pages.checkout.CheckoutActivity" />
+        <activity android:name=".pages.profile.MyProfileActivity" />
+        <activity android:name=".pages.history.TransactionHistoryActivity" />
+        <activity android:name=".pages.qrcode.QRCodeActivity" />
+        <activity android:name=".pages.scan.ScanActivity" />
+        <activity android:name=".pages.transaction.generate.GenerateTransactionActivity"></activity>
+        <activity android:name=".pages.transaction.consume.ConsumeTransactionActivity"></activity>
+        <activity android:name=".pages.transaction.showqr.ShowQRActivity"></activity>
+    </application>
 
 </manifest>

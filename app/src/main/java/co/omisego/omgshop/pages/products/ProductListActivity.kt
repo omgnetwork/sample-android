@@ -10,6 +10,8 @@ package co.omisego.omgshop.pages.products
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.util.DiffUtil
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -26,10 +28,12 @@ import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.checkout.CheckoutActivity
 import co.omisego.omgshop.pages.products.caller.ProductListCallerContract
 import co.omisego.omgshop.pages.profile.MyProfileActivity
+import co.omisego.omgshop.pages.qrcode.QRCodeActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_product_list.*
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_loading.*
 import kotlinx.android.synthetic.main.viewholder_product.view.*
 
@@ -47,6 +51,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCa
     }
 
     private fun initInstance() {
+        toolbar.navigationIcon = null
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_product_list_toolbar_title)
         setViewLoading(viewLoading)
@@ -54,6 +59,7 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCa
         adapter = ProductListRecyclerAdapter(productList)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         mPresenter.caller?.loadProductList()
     }
@@ -69,12 +75,16 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCa
                 startActivity(Intent(this, MyProfileActivity::class.java))
                 return true
             }
+            R.id.scan -> {
+                startActivity(Intent(this, QRCodeActivity::class.java))
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun showProductList(items: List<Product.Get.Item>) {
-        adapter.updateItem(items)
+        adapter.add(items)
     }
 
     override fun showLoadProductFail(response: Error) {
@@ -93,9 +103,14 @@ class ProductListActivity : BaseActivity<ProductListContract.View, ProductListCa
             return ProductViewHolder(itemView)
         }
 
-        fun updateItem(productList: List<Product.Get.Item>) {
-            this.productList.addAll(productList)
-            notifyDataSetChanged()
+        fun add(items: List<Product.Get.Item>) {
+            val diffCallback = ProductListDiffCallback(
+                productList,
+                productList + items
+            )
+            val diff = DiffUtil.calculateDiff(diffCallback)
+            diff.dispatchUpdatesTo(this)
+            this.productList.addAll(items)
         }
 
         override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.bind(productList[position])

@@ -20,6 +20,7 @@ import co.omisego.omgshop.models.Register
 import co.omisego.omgshop.pages.products.ProductListActivity
 import co.omisego.omgshop.pages.register.caller.RegisterCallerContract
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class RegisterActivity : BaseActivity<RegisterContract.View, RegisterCallerContract.Caller, RegisterContract.Presenter>(), RegisterContract.View {
     override val mPresenter: RegisterContract.Presenter by lazy { RegisterPresenter() }

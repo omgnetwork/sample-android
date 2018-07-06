@@ -7,18 +7,12 @@
     android:orientation="vertical"
     tools:context="co.omisego.omgshop.pages.checkout.CheckoutActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:titleTextColor="@android:color/white" />
+    <include layout="@layout/toolbar" />
+
 
     <TextView
         android:id="@+id/tvSection1Title"
-        style="@style/AppTheme.OmiseGOSectionHeader"
+        style="@style/AppTheme.SectionHeader"
         android:text="@string/activity_checkout_section_1_header" />
 
     <LinearLayout
@@ -41,8 +35,11 @@
 
             <TextView
                 android:id="@+id/tvProductTitle"
+                style="@style/OMGTextMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
                 tools:text="OmiseGO T-Shirt" />
 
             <android.support.v4.widget.Space
@@ -52,6 +49,7 @@
 
             <TextView
                 android:id="@+id/tvPrice"
+                style="@style/OMGTextMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
@@ -64,22 +62,24 @@
 
     <TextView
         android:id="@+id/tvSection2Title"
-        style="@style/AppTheme.OmiseGOSectionHeader"
+        style="@style/AppTheme.SectionHeader"
         android:text="@string/activity_checkout_section_2_header" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
+            style="@style/OMGTextBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_checkout_sub_total" />
+            android:text="@string/activity_checkout_sub_total"
+            android:textColor="@color/colorBlack" />
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -88,6 +88,7 @@
 
         <TextView
             android:id="@+id/tvSubtotal"
+            style="@style/OMGTextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="฿985.00"
@@ -99,15 +100,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
+            style="@style/OMGTextBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_checkout_discount" />
+            android:text="@string/activity_checkout_discount"
+            android:textColor="@color/colorBlack" />
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -116,6 +119,7 @@
 
         <TextView
             android:id="@+id/tvDiscount"
+            style="@style/OMGTextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="฿0.00"
@@ -127,15 +131,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
+            style="@style/OMGTextBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_checkout_total" />
+            android:text="@string/activity_checkout_total"
+            android:textColor="@color/colorBlack" />
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -144,6 +150,7 @@
 
         <TextView
             android:id="@+id/tvTotal"
+            style="@style/OMGTextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="฿985.00"
@@ -165,7 +172,7 @@
 
         <Button
             android:id="@+id/btnRedeem"
-            style="@style/AppTheme.OmiseGOOutlineButton"
+            style="@style/OutlineButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -173,12 +180,11 @@
 
         <Button
             android:id="@+id/btnPay"
-            style="@style/AppTheme.OmiseGOButton"
+            style="@style/BlueButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-
             android:text="@string/activity_checkout_button_pay" />
     </LinearLayout>
 

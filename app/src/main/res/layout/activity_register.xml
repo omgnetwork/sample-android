@@ -7,14 +7,7 @@
     android:orientation="vertical"
     tools:context="co.omisego.omgshop.pages.register.RegisterActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:titleTextColor="@android:color/white" />
+    <include layout="@layout/toolbar" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -26,8 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingEnd="32dp"
-            android:paddingStart="32dp">
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -44,11 +37,14 @@
 
                 <EditText
                     android:id="@+id/etFirstName"
+                    style="@style/OMGTextNormal"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
                     android:hint="@string/activity_register_first_name"
                     android:inputType="textPersonName|textNoSuggestions"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    app:backgroundTint="@color/colorGray" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -59,11 +55,14 @@
 
                 <EditText
                     android:id="@+id/etLastName"
+                    style="@style/OMGTextNormal"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
                     android:hint="@string/activity_register_last_name"
                     android:inputType="textPersonName|textNoSuggestions"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    app:backgroundTint="@color/colorGray" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -74,12 +73,15 @@
 
                 <EditText
                     android:id="@+id/etEmail"
+                    style="@style/OMGTextNormal"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
                     android:hint="@string/activity_register_email"
                     android:importantForAutofill="no"
                     android:inputType="textEmailAddress|textNoSuggestions"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    app:backgroundTint="@color/colorGray" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -91,23 +93,25 @@
 
                 <EditText
                     android:id="@+id/etPassword"
+                    style="@style/OMGTextNormal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/activity_register_password"
                     android:importantForAutofill="no"
                     android:inputType="textPassword|textNoSuggestions"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    app:backgroundTint="@color/colorGray" />
 
             </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/btnRegister"
-                style="@style/AppTheme.OmiseGOButton"
+                style="@style/BlueButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/activity_register_register" />
 
         </LinearLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:minHeight="?attr/actionBarSize"
+    app:navigationIcon="@drawable/ic_arrow_left_24dp"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark"
+    app:titleTextColor="@android:color/white"
+    tools:showIn="@layout/activity_generate_transaction" />

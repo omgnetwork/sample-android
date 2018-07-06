@@ -49,6 +49,7 @@ dependencies {
     implementation rxJava2.rxandroid
     implementation glide.glide
     implementation okHttp3.loggingIntercepter
+    implementation custom.editText
 
     // For testing
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'

@@ -26,6 +26,7 @@ import co.omisego.omgshop.pages.login.LoginActivity
 import co.omisego.omgshop.pages.profile.caller.MyProfileCallerContract
 import co.omisego.omisego.model.Balance
 import kotlinx.android.synthetic.main.activity_my_profile.*
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_loading.*
 import kotlinx.android.synthetic.main.viewholder_content_my_profile.view.*
 

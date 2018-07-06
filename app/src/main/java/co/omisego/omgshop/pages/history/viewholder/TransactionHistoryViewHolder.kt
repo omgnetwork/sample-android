@@ -11,10 +11,13 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import co.omisego.omgshop.R
+import co.omisego.omgshop.extensions.fromSubunitToUnit
+import co.omisego.omgshop.extensions.thousandSeparator
 import co.omisego.omisego.model.pagination.Paginable
-import co.omisego.omisego.model.transaction.list.Transaction
-import co.omisego.omisego.model.transaction.list.TransactionSource
+import co.omisego.omisego.model.transaction.Transaction
+import co.omisego.omisego.model.transaction.TransactionSource
 import kotlinx.android.synthetic.main.viewholder_transaction_record.view.*
+import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -68,12 +71,25 @@ class TransactionHistoryViewHolder(
     }
 
     private fun TransactionSource.formatTransactionAmount(sameAddress: Boolean) {
-        val amount = String.format("%.1f", this.amount.divide(this.token.subunitToUnit))
+        val numberOfDecimals = Math.log10(this.token.subunitToUnit.toDouble()).toInt()
+        val readableAmount = this.token.fromSubunitToUnit(this.amount)
+        val amount = readableAmount
+            .setScale(numberOfDecimals, RoundingMode.HALF_EVEN)
+            .thousandSeparator(numberOfDecimal = numberOfDecimals)
+
         val symbol = token.symbol
         if (sameAddress) {
-            itemView.tvTransactionAmount.text = itemView.context.getString(R.string.transaction_amount_to, amount, symbol)
+            itemView.tvTransactionAmount.text = itemView.context.getString(
+                R.string.transaction_amount_to,
+                amount,
+                symbol
+            )
         } else {
-            itemView.tvTransactionAmount.text = itemView.context.getString(R.string.transaction_amount_from, amount, symbol)
+            itemView.tvTransactionAmount.text = itemView.context.getString(
+                R.string.transaction_amount_from,
+                amount,
+                symbol
+            )
         }
     }
 

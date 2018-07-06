@@ -39,8 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
         <TextView
             android:id="@+id/tvTransactionDate"
@@ -71,6 +71,9 @@
             style="@style/OMGTextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:paddingStart="16dp"
+            android:singleLine="true"
             android:text="+ 955.0 OMG"
             android:textColor="@color/colorGreen"
             android:textSize="16sp"

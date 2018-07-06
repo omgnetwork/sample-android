@@ -13,6 +13,7 @@ import java.util.Properties
 
 object Config {
     lateinit var OMG_HOST_URL: String
+    lateinit var OMG_SOCKET_HOST_URL: String
     lateinit var HOST_URL: String
     lateinit var API_KEY: String
     lateinit var API_KEY_ID: String
@@ -25,6 +26,7 @@ object Config {
         val properties = Properties().apply { load(configRes) }
         with(properties) {
             OMG_HOST_URL = getProperty("omisego_host_url")
+            OMG_SOCKET_HOST_URL = getProperty("omisego_socket_host_url")
             HOST_URL = getProperty("host_url")
             API_KEY = getProperty("api_key")
             API_KEY_ID = getProperty("api_key_id")
