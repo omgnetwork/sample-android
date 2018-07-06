@@ -18,8 +18,8 @@
     <string name="activity_register_password">Password</string>
     <string name="activity_register_register">Register</string>
     <string name="activity_register_toolbar_title">Register</string>
-    <string name="activity_scan_qr_toolbar_title">Scan QR</string>
-    <string name="activity_qr_code_toolbar_title">QR Code</string>
+    <string name="activity_scan_qr_toolbar_title">Scan QR Code</string>
+    <string name="activity_qr_code_toolbar_title">Send / Receive Tokens</string>
     <string name="activity_register_loading_dialog_title">Please wait</string>
     <string name="activity_register_loading_dialog_message">Registering…</string>
     <string name="activity_register_email_error_validation">Email address is not valid</string>
@@ -42,6 +42,7 @@
     <string name="activity_checkout_redeem_button">Redeem %1$s</string>
     <string name="activity_checkout_pay_error_token_not_set">The default token has not been selected/</string>
     <string name="activity_checkout_no_balance_available">No balance available</string>
+    <string name="activity_checkout_note">Note: You\'ll get tokens as a reward if you purchase without discount.</string>
 
     <!-- My Profile -->
     <string name="activity_my_profile_token">TOKEN</string>
@@ -102,7 +103,7 @@
     <string name="activity_transaction_action_create">Create</string>
 
     <!-- QR code -->
-    <string name="activity_qrcode_scan">Send Or Receive</string>
+    <string name="activity_qrcode_scan">Scan QR Code</string>
     <string name="activity_qrcode_generate">Create Transaction Request</string>
 
     <!-- Permission -->
