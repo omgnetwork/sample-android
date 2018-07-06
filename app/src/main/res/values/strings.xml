@@ -68,6 +68,8 @@
 
     <!-- Consume QR -->
     <string name="activity_consume_transaction_toolbar_title">Consume Transaction</string>
+    <string name="activity_consume_transaction_waiting_for_confirmation">Waiting for confirmation…</string>
+    <string name="btn_consume">Consume</string>
 
     <!-- Redeem dialog -->
     <string name="dialog_redeem_title">Redeem %s coins</string>
@@ -108,5 +110,8 @@
     <string name="permission_should_manually_granted">Enable camera permission in setting first to use QR code scanner.
   </string>
     <string name="ok">OK</string>
+
+    <!-- Show QR -->
     <string name="show_qr_waiting_for_scan">Waiting for scan…</string>
+    <string name="show_qr_consumption_requests">Consumption requests:</string>
 </resources>
