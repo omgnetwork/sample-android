@@ -85,7 +85,7 @@
         android:clickable="true"
         android:foreground="@drawable/ripple_white"
         android:src="@drawable/ic_check_green"
-        app:civ_border_color="@color/colorBlack"
+        app:civ_border_color="@color/colorGreen"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -98,7 +98,7 @@
         android:clickable="true"
         android:foreground="@drawable/ripple_white"
         android:src="@drawable/ic_clear_red"
-        app:civ_border_color="@color/colorBlack"
+        app:civ_border_color="@color/colorRed"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ivApprove" />
