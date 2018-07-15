@@ -53,6 +53,7 @@ dependencies {
     implementation custom.circleImageView
     implementation custom.constraintLayout
     implementation custom.stetho
+    implementation custom.shimmer
 
     // For testing
     testImplementation junit.junit
