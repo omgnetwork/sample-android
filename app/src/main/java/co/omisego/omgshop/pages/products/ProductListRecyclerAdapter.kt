@@ -21,6 +21,7 @@ class ProductListRecyclerAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), HandleProductListener by productListenerDelegator {
     var state: ProductListState = ProductListState.Loading()
         set(value) {
+            if (value.viewType == field.viewType) return
             val diffCallback = when (value) {
                 is ProductListState.Loading -> {
                     ProductListDiffCallback(

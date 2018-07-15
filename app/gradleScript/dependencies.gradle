@@ -51,7 +51,7 @@ ext {
         core: "com.android.support.test.espresso:espresso-core:3.0.1",
     ]
     custom = [
-        editText        : "com.github.santalu:mask-edittext:1.0.7",
+        editText        : "com.github.santalu:mask-edittext:1.0.5",
         circleImageView : 'de.hdodenhof:circleimageview:2.2.0',
         constraintLayout: 'com.android.support.constraint:constraint-layout:1.1.2',
         stetho          : 'com.facebook.stetho:stetho-okhttp3:1.5.0',
