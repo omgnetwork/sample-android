@@ -11,6 +11,7 @@ import android.annotation.SuppressLint
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.math.BigDecimal
+import java.util.UUID
 
 @SuppressLint("ParcelCreator")
 object Product {
@@ -26,7 +27,19 @@ object Product {
             val description: String,
             val imageUrl: String,
             val price: Int
-        ) : Parcelable
+        ) : Parcelable {
+            companion object {
+                fun createEmpty(): Item {
+                    return Item(
+                        UUID.randomUUID().toString(),
+                        "",
+                        "",
+                        "",
+                        0
+                    )
+                }
+            }
+        }
     }
 
     object Buy {
