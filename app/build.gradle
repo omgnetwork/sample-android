@@ -37,7 +37,8 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation omisego.sdk
+//    implementation omisego.sdk
+    implementation project(':omisego-sdk')
     implementation kotlinDependencies.stdlib
     implementation supportDependencies.appCompat
     implementation supportDependencies.design
@@ -51,6 +52,7 @@ dependencies {
     implementation custom.editText
     implementation custom.circleImageView
     implementation custom.constraintLayout
+    implementation custom.stetho
 
     // For testing
     testImplementation junit.junit

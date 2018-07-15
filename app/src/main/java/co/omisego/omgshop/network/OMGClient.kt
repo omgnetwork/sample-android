@@ -4,6 +4,8 @@ import co.omisego.omgshop.helpers.Config
 import co.omisego.omisego.OMGAPIClient
 import co.omisego.omisego.model.ClientConfiguration
 import co.omisego.omisego.network.ewallet.EWalletClient
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.Objects
 
 /*
@@ -21,6 +23,12 @@ class OMGClient(
         EWalletClient.Builder {
             clientConfiguration = ClientConfiguration(baseURL, apiKey, authToken)
             debug = true
+            debugOkHttpInterceptors = mutableListOf(
+                HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                },
+                StethoInterceptor()
+            )
         }.build()
     }
 
