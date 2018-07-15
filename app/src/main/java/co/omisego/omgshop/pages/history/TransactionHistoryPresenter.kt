@@ -43,7 +43,7 @@ class TransactionHistoryPresenter : BasePresenterImpl<TransactionHistoryContract
     }
 
     override fun handleLoadTransactionListFailed(response: OMGResponse<APIError>) {
-        logi(response)
+        mView?.showLoadTransactionListFail()
         mView?.hideLoading()
     }
 
