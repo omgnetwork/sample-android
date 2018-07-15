@@ -53,11 +53,13 @@ class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCa
     override fun handleLoadWalletFailed(error: OMGResponse<APIError>) {
         mView?.hideLoading()
         mView?.showMessage(error.data.description)
+        goBackToLoginIfNeeded(error.data)
     }
 
     override fun handleLogoutFailed(error: OMGResponse<APIError>) {
         mView?.hideLoadingDialog()
         mView?.showMessage(error.data.description)
+        goBackToLoginIfNeeded(error.data)
     }
 
     override fun handleLogoutSuccess(response: OMGResponse<Logout>) {
