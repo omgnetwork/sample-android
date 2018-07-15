@@ -115,4 +115,7 @@
     <!-- Show QR -->
     <string name="show_qr_waiting_for_scan">Waiting for scan…</string>
     <string name="show_qr_consumption_requests">Consumption requests:</string>
+
+    <!-- Other -->
+    <string name="data_is_not_available">Sorry, data is not available</string>
 </resources>
