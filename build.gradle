@@ -31,6 +31,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-// Load dependencies
-apply from: 'gradleScript/dependencies.gradle'

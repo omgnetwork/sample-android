@@ -12,11 +12,15 @@ import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.pages.profile.caller.MyProfileCaller
 import co.omisego.omgshop.pages.profile.caller.MyProfileCallerContract
-import co.omisego.omisego.model.*
+import co.omisego.omisego.model.APIError
+import co.omisego.omisego.model.Balance
+import co.omisego.omisego.model.Logout
+import co.omisego.omisego.model.OMGResponse
+import co.omisego.omisego.model.WalletList
 
 class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCallerContract.Caller>(),
-        MyProfileContract.Presenter,
-        MyProfileCallerContract.Handler {
+    MyProfileContract.Presenter,
+    MyProfileCallerContract.Handler {
     override var caller: MyProfileCallerContract.Caller? = MyProfileCaller(this)
 
     override fun saveSelectedToken(balance: Balance) {
@@ -43,7 +47,7 @@ class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCa
         val balances = response.data.data.flatMap { it.balances }
         mView?.showBalances(balances)
         mView?.showUsername(response.data.data[0].user?.username?.split("|")?.get(0)
-                ?: "Cannot found the user")
+            ?: "Cannot found the user")
     }
 
     override fun handleLoadWalletFailed(error: OMGResponse<APIError>) {

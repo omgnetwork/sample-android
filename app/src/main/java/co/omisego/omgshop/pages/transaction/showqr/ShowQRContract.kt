@@ -19,6 +19,5 @@ interface ShowQRContract {
         fun addPendingConsumption(transactionConsumption: TransactionConsumption)
     }
 
-    interface Presenter : BaseContract.BasePresenter<View, ShowQRCallerContract.Caller> {
-    }
+    interface Presenter : BaseContract.BasePresenter<View, ShowQRCallerContract.Caller>
 }

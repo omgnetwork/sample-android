@@ -32,19 +32,21 @@ class SeekBarField : ConstraintLayout {
     var progress: Int = 0
         set(value) {
             field = value
-            if (value == 0)
+            if (value == 0) {
                 tvValue.text = "∞"
-            else
+            } else {
                 tvValue.text = "${value * multiplier}"
+            }
         }
 
     var multiplier: Int = 1
         set(value) {
             field = value
-            if (progress == 0)
+            if (progress == 0) {
                 tvValue.text = "∞"
-            else
+            } else {
                 tvValue.text = "${value * progress}"
+            }
         }
 
     constructor(context: Context) : super(context) {

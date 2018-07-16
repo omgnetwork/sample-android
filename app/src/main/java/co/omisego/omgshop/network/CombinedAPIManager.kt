@@ -168,7 +168,6 @@ object CombinedAPIManager {
             })
     }
 
-
     inline fun listenTransactionRequest(
         authToken: String,
         request: TransactionRequest,
