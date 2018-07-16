@@ -50,7 +50,7 @@ class ProductListActivity(
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_product_list_toolbar_title)
 
-        adapter = ProductListRecyclerAdapter(productList)
+        adapter = ProductListRecyclerAdapter()
         adapter.setProductListener(object : ProductListener {
             override fun onProductClick(id: String) {
                 mPresenter.handleClickProductItem(id)

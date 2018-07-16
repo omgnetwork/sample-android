@@ -15,7 +15,7 @@ import co.omisego.omgshop.models.Product
 import co.omisego.omgshop.pages.products.listener.HandleProductListener
 import co.omisego.omgshop.pages.products.viewholder.ProductViewHolder
 
-sealed class ProductListState {
+sealed class ProductListState : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class Loading : ProductListState() {
         override val viewType: Int = 1
         override val productList: List<Product.Get.Item> by lazy {
@@ -25,11 +25,12 @@ sealed class ProductListState {
                 Product.Get.Item.createEmpty()
             )
         }
-        val totalLoadingPlaceHolderItem by lazy { productList.size }
-        override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_product_loading, parent, false)
             return object : RecyclerView.ViewHolder(itemView) {}
         }
+        override fun getItemCount() = productList.size
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {}
     }
 
     class Success(
@@ -37,13 +38,16 @@ sealed class ProductListState {
         productListenerDelegator: HandleProductListener
     ) : ProductListState(), HandleProductListener by productListenerDelegator {
         override val viewType: Int = 2
-        override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_product, parent, false)
             return ProductViewHolder(itemView, this)
         }
+        override fun getItemCount() = productList.size
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            (holder as ProductViewHolder).bind(productList[position])
+        }
     }
 
-    abstract fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder
     abstract val productList: List<Product.Get.Item>
     abstract val viewType: Int
 }
