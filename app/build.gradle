@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.jlleitschuh.gradle.ktlint'
+apply from: 'gradleScript/dependencies.gradle'
 
 android {
     compileSdkVersion 27
@@ -31,9 +32,7 @@ androidExtensions {
 }
 
 repositories {
-    flatDir {
-        dirs 'libs'
-    }
+    mavenCentral()
 }
 
 dependencies {
@@ -62,3 +61,4 @@ dependencies {
     androidTestImplementation testRunner.runner
     androidTestImplementation espresso.core
 }
+

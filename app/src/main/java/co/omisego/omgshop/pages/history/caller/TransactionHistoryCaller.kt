@@ -13,16 +13,17 @@ import co.omisego.omisego.model.transaction.list.TransactionListParams
  * Created by Phuchit Sirimongkolsathien on 19/6/2018 AD.
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
 class TransactionHistoryCaller(
-        private val handler: TransactionHistoryCallerContract.Handler,
-        override val credential: Credential = Preference.loadCredential()
+    private val handler: TransactionHistoryCallerContract.Handler,
+    override val credential: Credential = Preference.loadCredential()
 ) : BaseCaller(), TransactionHistoryCallerContract.Caller {
     override fun loadTransactionList(request: TransactionListParams) {
         handler.showLoading()
         CombinedAPIManager.getTransactions(
-                credential.omisegoAuthenticationToken,
-                request,
-                handler::handleLoadTransactionListFailed,
-                handler::handleLoadTransactionListSuccess)
+            credential.omisegoAuthenticationToken,
+            request,
+            handler::handleLoadTransactionListFailed,
+            handler::handleLoadTransactionListSuccess)
     }
 }

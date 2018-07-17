@@ -16,6 +16,5 @@ interface TransactionConfirmContract {
         fun showConfirmationFail(msg: String)
     }
 
-    interface Presenter : BaseContract.BasePresenter<View, TransactionConfirmCallerContract.Caller> {
-    }
+    interface Presenter : BaseContract.BasePresenter<View, TransactionConfirmCallerContract.Caller>
 }

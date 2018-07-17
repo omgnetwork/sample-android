@@ -75,11 +75,10 @@ class EditTextField : ConstraintLayout {
         tvTitle = rootView.findViewById(R.id.tvTitle)
         editText = rootView.findViewById(R.id.editText)
 
-        if (this.isInEditMode) {
-
-        } else {
+        if (!this.isInEditMode) {
             tilEditText = rootView.findViewById(R.id.tilEditText)
         }
+
         attrs?.apply()
         adjustPaddingIfNeeded()
     }

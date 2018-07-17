@@ -3,7 +3,6 @@ package co.omisego.omgshop.pages.history
 import co.omisego.omisego.model.pagination.Paginable
 import co.omisego.omisego.model.pagination.SortDirection
 
-
 /*
  * OmiseGO
  *
