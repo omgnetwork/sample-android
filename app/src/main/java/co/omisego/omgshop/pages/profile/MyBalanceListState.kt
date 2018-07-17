@@ -19,7 +19,8 @@ import co.omisego.omgshop.pages.profile.viewholder.UpdateBalanceAdapterListener
 import co.omisego.omisego.extension.bd
 import co.omisego.omisego.model.Balance
 import co.omisego.omisego.model.Token
-import java.util.*
+import java.util.Date
+import java.util.UUID
 
 fun createEmptyBalance(): Balance {
     return Balance(0.bd, Token(UUID.randomUUID().toString(), "", "", 0.bd, Date(), Date(), mapOf(), mapOf()))
@@ -43,6 +44,7 @@ sealed class MyBalanceListState : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             listBalance.clear()
             listBalance.addAll(newList)
         }
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             return if (viewType == this.viewType) {
                 val itemView = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_content_my_profile, parent, false)
@@ -52,12 +54,14 @@ sealed class MyBalanceListState : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 object : RecyclerView.ViewHolder(itemView) {}
             }
         }
+
         override fun getItemCount() = listBalance.size + 1
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             if (holder is MyProfileContentViewHolder) {
                 holder.bind(listBalance[position - 1])
             }
         }
+
         override fun getItemViewType(position: Int): Int {
             return if (position == 0) 1 else viewType
         }
@@ -79,6 +83,7 @@ sealed class MyBalanceListState : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             }
             return object : RecyclerView.ViewHolder(itemView) {}
         }
+
         override fun getItemCount() = listBalance.size + 1
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {}
         override fun getItemViewType(position: Int): Int {

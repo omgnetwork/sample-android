@@ -28,9 +28,9 @@ interface UpdateBalanceAdapterListener {
 }
 
 class MyProfileContentViewHolder(
-        itemView: View,
-        delegator: BalanceListenerHolder,
-        private var adapterListener: UpdateBalanceAdapterListener
+    itemView: View,
+    delegator: BalanceListenerHolder,
+    private var adapterListener: UpdateBalanceAdapterListener
 ) : RecyclerView.ViewHolder(itemView), BalanceListenerHolder by delegator {
     private val tvAmount = itemView.tvAmount
     private val tvToken = itemView.tvToken

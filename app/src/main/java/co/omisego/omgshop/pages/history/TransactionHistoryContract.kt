@@ -11,6 +11,7 @@ import co.omisego.omisego.model.transaction.list.TransactionListParams
  * Created by Phuchit Sirimongkolsathien on 21/6/2018 AD.
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
 interface TransactionHistoryContract {
     interface View : BaseContract.BaseView {
         fun addTransactions(transactionList: List<Transaction>, page: Int, isLastPage: Boolean)

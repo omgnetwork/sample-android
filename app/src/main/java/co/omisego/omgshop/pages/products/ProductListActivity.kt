@@ -30,10 +30,10 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_data_not_available.*
 
 class ProductListActivity(
-        errorViewDelegator: ShowErrorViewDelegator = ShowErrorViewDelegator()
+    errorViewDelegator: ShowErrorViewDelegator = ShowErrorViewDelegator()
 ) : BaseActivity<ProductListContract.View, ProductListCallerContract.Caller, ProductListContract.Presenter>(),
-        ProductListContract.View,
-        ErrorViewHandler by errorViewDelegator {
+    ProductListContract.View,
+    ErrorViewHandler by errorViewDelegator {
 
     private lateinit var adapter: ProductListRecyclerAdapter
     override val mPresenter: ProductListContract.Presenter by lazy {
