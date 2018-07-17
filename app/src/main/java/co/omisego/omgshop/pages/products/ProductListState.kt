@@ -12,7 +12,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import co.omisego.omgshop.R
 import co.omisego.omgshop.models.Product
-import co.omisego.omgshop.pages.products.listener.HandleProductListener
+import co.omisego.omgshop.pages.products.listener.ProductListenerHolder
 import co.omisego.omgshop.pages.products.viewholder.ProductViewHolder
 
 sealed class ProductListState : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -35,8 +35,8 @@ sealed class ProductListState : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     class Success(
         override val productList: List<Product.Get.Item>,
-        productListenerDelegator: HandleProductListener
-    ) : ProductListState(), HandleProductListener by productListenerDelegator {
+        productListenerDelegator: ProductListenerHolder
+    ) : ProductListState(), ProductListenerHolder by productListenerDelegator {
         override val viewType: Int = 2
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_product, parent, false)

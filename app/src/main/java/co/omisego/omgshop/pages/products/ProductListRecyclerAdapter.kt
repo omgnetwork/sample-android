@@ -11,11 +11,11 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import co.omisego.omgshop.pages.products.delegator.ProductListenerDelegator
-import co.omisego.omgshop.pages.products.listener.HandleProductListener
+import co.omisego.omgshop.pages.products.listener.ProductListenerHolder
 
 class ProductListRecyclerAdapter(
-    private val productListenerDelegator: HandleProductListener = ProductListenerDelegator()
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), HandleProductListener by productListenerDelegator {
+    private val productListenerDelegator: ProductListenerHolder = ProductListenerDelegator()
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), ProductListenerHolder by productListenerDelegator {
     var state: ProductListState = ProductListState.Loading()
         set(value) {
             field = dispatchDiffUpdates(field, value)

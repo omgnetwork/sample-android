@@ -11,7 +11,6 @@ interface ProductListener {
     fun onProductClick(id: String)
 }
 
-interface HandleProductListener {
-    var listener: ProductListener?
-    fun setProductListener(listener: ProductListener)
+interface ProductListenerHolder {
+    var productListener: ProductListener?
 }

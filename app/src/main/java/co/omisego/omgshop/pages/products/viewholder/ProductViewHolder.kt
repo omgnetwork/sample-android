@@ -12,7 +12,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import co.omisego.omgshop.extensions.thousandSeparator
 import co.omisego.omgshop.models.Product
-import co.omisego.omgshop.pages.products.listener.HandleProductListener
+import co.omisego.omgshop.pages.products.listener.ProductListenerHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.viewholder_product.view.*
 
 class ProductViewHolder(
     itemView: View,
-    productListenerDelegator: HandleProductListener
-) : RecyclerView.ViewHolder(itemView), HandleProductListener by productListenerDelegator {
+    productListenerDelegator: ProductListenerHolder
+) : RecyclerView.ViewHolder(itemView), ProductListenerHolder by productListenerDelegator {
     private val tvTitle = itemView.tvTitle
     private val tvDescription = itemView.tvDescription
     private val ivLogo = itemView.ivLogo
@@ -37,7 +37,7 @@ class ProductViewHolder(
                 .apply(RequestOptions().transforms(RoundedCorners(20)))
                 .into(ivLogo)
             btnPrice.text = "฿${price.toDouble().thousandSeparator()}"
-            btnPrice.setOnClickListener { listener?.onProductClick(id) }
+            btnPrice.setOnClickListener { productListener?.onProductClick(id) }
         }
     }
 }

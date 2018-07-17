@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
@@ -26,12 +27,13 @@ import co.omisego.omgshop.pages.profile.MyProfileActivity
 import co.omisego.omgshop.pages.qrcode.TransactionRequestFlowActivity
 import kotlinx.android.synthetic.main.activity_product_list.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_data_not_available.*
 
 class ProductListActivity(
-    errorViewDelegator: ShowErrorViewDelegator = ShowErrorViewDelegator()
+        errorViewDelegator: ShowErrorViewDelegator = ShowErrorViewDelegator()
 ) : BaseActivity<ProductListContract.View, ProductListCallerContract.Caller, ProductListContract.Presenter>(),
-    ProductListContract.View,
-    ErrorViewHandler by errorViewDelegator {
+        ProductListContract.View,
+        ErrorViewHandler by errorViewDelegator {
 
     private lateinit var adapter: ProductListRecyclerAdapter
     override val mPresenter: ProductListContract.Presenter by lazy {
@@ -51,15 +53,23 @@ class ProductListActivity(
         supportActionBar?.title = getString(R.string.activity_product_list_toolbar_title)
 
         adapter = ProductListRecyclerAdapter()
-        adapter.setProductListener(object : ProductListener {
+        adapter.productListener = object : ProductListener {
             override fun onProductClick(id: String) {
                 mPresenter.handleClickProductItem(id)
             }
-        })
+        }
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         mPresenter.caller?.loadProductList()
+
+        btnReload.setOnClickListener {
+            mPresenter.caller?.loadProductList()
+            recyclerView.visibility = View.VISIBLE
+            viewError.visibility = View.GONE
+            adapter.state = ProductListState.Loading()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
