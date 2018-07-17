@@ -13,16 +13,17 @@ import co.omisego.omisego.model.Balance
 
 interface MyProfileContract {
     interface View : BaseContract.BaseView {
-        fun showBalances(listBalance: List<Balance>)
-        fun setCurrentSelectedTokenId(id: String)
+        fun showBalances(listBalance: List<Balance>, selectedBalance: Balance)
+        fun setSelectedBalance(balance: Balance)
         fun showUsername(email: String)
         fun showLogout()
+        fun showLoadBalanceFailed()
         fun showLoadingDialog()
         fun hideLoadingDialog()
     }
 
     interface Presenter : BaseContract.BasePresenter<View, MyProfileCallerContract.Caller> {
-        fun saveSelectedToken(balance: Balance)
-        fun getCurrentToken(): Balance?
+        fun saveSelectedBalance(balance: Balance)
+        fun getCurrentBalance(): Balance?
     }
 }

@@ -7,37 +7,37 @@ package co.omisego.omgshop.pages.profile
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
 
-import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import android.support.transition.TransitionManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import co.omisego.omgshop.R
 import co.omisego.omgshop.base.BaseActivity
 import co.omisego.omgshop.pages.history.TransactionHistoryActivity
 import co.omisego.omgshop.pages.login.LoginActivity
 import co.omisego.omgshop.pages.profile.caller.MyProfileCallerContract
+import co.omisego.omgshop.pages.profile.viewholder.BalanceListener
 import co.omisego.omisego.model.Balance
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_loading.*
-import kotlinx.android.synthetic.main.viewholder_content_my_profile.view.*
+import kotlinx.android.synthetic.main.view_data_not_available.view.*
 
-class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileCallerContract.Caller, MyProfileContract.Presenter>(), MyProfileContract.View {
+@Suppress("OVERRIDE_BY_INLINE")
+class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileCallerContract.Caller, MyProfileContract.Presenter>(),
+        MyProfileContract.View,
+        BalanceListener {
 
     override val mPresenter: MyProfileContract.Presenter by lazy {
         MyProfilePresenter()
     }
-    private lateinit var myProfileContentAdapter: MyProfileContentAdapter
-    private var mCurrentSelectedTokenId: String = ""
+    private lateinit var myProfileBalanceAdapter: MyProfileBalanceAdapter
     private lateinit var mLoadingDialog: ProgressDialog
+    private var mBalanceList: List<Balance> = listOf()
+    private var mSelectedBalance: Balance? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +46,6 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileCallerCo
     }
 
     private fun initInstance() {
-        setViewLoading(viewLoading)
-
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.activity_my_profile_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -57,13 +55,20 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileCallerCo
         mLoadingDialog.setMessage(getString(R.string.activity_my_profile_dialog_message))
         mLoadingDialog.setCancelable(false)
 
-        myProfileContentAdapter = MyProfileContentAdapter(mutableListOf())
-        recyclerView.adapter = myProfileContentAdapter
+        myProfileBalanceAdapter = MyProfileBalanceAdapter()
+        recyclerView.adapter = myProfileBalanceAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         tvLogout.setOnClickListener { mPresenter.caller?.logout() }
 
         mPresenter.caller?.loadWallets()
+
+        viewError.btnReload.setOnClickListener {
+            mPresenter.caller?.loadWallets()
+            recyclerView.visibility = View.VISIBLE
+            viewError.visibility = View.GONE
+            myProfileBalanceAdapter.state = MyBalanceListState.Loading()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -81,20 +86,31 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileCallerCo
         return false
     }
 
-    override fun setCurrentSelectedTokenId(id: String) {
-        mCurrentSelectedTokenId = id
+    override fun setSelectedBalance(balance: Balance) {
+        mSelectedBalance = balance
     }
 
-    override fun showBalances(listBalance: List<Balance>) {
-        myProfileContentAdapter.updateListToken(listBalance.toMutableList())
+    override fun showBalances(listBalance: List<Balance>, selectedBalance: Balance) {
+        mBalanceList = listBalance
+        myProfileBalanceAdapter.state = MyBalanceListState.MyBalance(
+                listBalance.map { it to (it.token.id == selectedBalance.token.id) }.toMutableList(),
+                myProfileBalanceAdapter
+        ).also { it.balanceListener = this }
+    }
+
+    override fun showLoadBalanceFailed() {
+        TransitionManager.beginDelayedTransition(viewContainer)
+        viewError.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+    }
+
+    override fun save(balance: Balance) {
+        mPresenter.saveSelectedBalance(balance)
     }
 
     override fun showLogout() {
         val intent = Intent(this, LoginActivity::class.java)
-
-        // Start login activity with clear all history stack.
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
         startActivity(intent)
     }
 
@@ -108,74 +124,5 @@ class MyProfileActivity : BaseActivity<MyProfileContract.View, MyProfileCallerCo
 
     override fun hideLoadingDialog() {
         mLoadingDialog.dismiss()
-    }
-
-    inner class MyProfileContentAdapter(private var listToken: MutableList<Balance>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-        private val TYPE_HEADER = 0
-        private val TYPE_CONTENT = 1
-
-        fun updateListToken(listToken: MutableList<Balance>) {
-            this.listToken = listToken
-            notifyDataSetChanged()
-        }
-
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            // Ignore the first position which is the header section
-            if (position > 0) {
-                val contentViewHolder = holder as? MyProfileContentViewHolder
-                contentViewHolder?.bind(listToken[position - 1])
-            }
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            // Get view holder layout by type
-            return when (viewType) {
-                TYPE_HEADER -> {
-                    val itemView = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_header_my_profile, parent, false)
-                    MyProfileHeaderViewHolder(itemView)
-                }
-                else -> {
-                    val itemView = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_content_my_profile, parent, false)
-                    MyProfileContentViewHolder(itemView)
-                }
-            }
-        }
-
-        override fun getItemViewType(position: Int) = if (position == 0) TYPE_HEADER else TYPE_CONTENT
-        override fun getItemCount(): Int = listToken.size + 1
-
-        inner class MyProfileContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val tvAmount = itemView.tvAmount
-            private val tvToken = itemView.tvToken
-            private val ivSelected = itemView.ivSelected
-            private val layoutContainer = itemView.layoutContainer
-
-            @SuppressLint("SetTextI18n")
-            fun bind(token: Balance) {
-                // Set data
-                tvAmount.text = token.displayAmount(0)
-                tvToken.text = token.token.symbol
-
-                val drawable = when (mCurrentSelectedTokenId) {
-                    token.token.id -> ContextCompat.getDrawable(itemView.context, R.drawable.ic_check_24dp)
-                    else -> null
-                }
-                ivSelected.setImageDrawable(drawable)
-
-                // bind token click listener
-                layoutContainer.setOnClickListener {
-                    val currentToken = listToken.firstOrNull { it.token.id == mCurrentSelectedTokenId } ?: listToken[0]
-                    val currentTokenIndex = listToken.indexOf(currentToken) + 1
-
-                    // Save new token id
-                    mPresenter.saveSelectedToken(listToken[layoutPosition - 1])
-
-                    notifyItemChanged(layoutPosition)
-                    notifyItemChanged(currentTokenIndex)
-                }
-            }
-        }
-
-        inner class MyProfileHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     }
 }

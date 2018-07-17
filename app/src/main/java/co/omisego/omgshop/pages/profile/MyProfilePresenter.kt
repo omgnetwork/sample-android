@@ -12,47 +12,44 @@ import co.omisego.omgshop.helpers.Preference
 import co.omisego.omgshop.models.Credential
 import co.omisego.omgshop.pages.profile.caller.MyProfileCaller
 import co.omisego.omgshop.pages.profile.caller.MyProfileCallerContract
-import co.omisego.omisego.model.APIError
-import co.omisego.omisego.model.Balance
-import co.omisego.omisego.model.Logout
-import co.omisego.omisego.model.OMGResponse
-import co.omisego.omisego.model.WalletList
+import co.omisego.omisego.model.*
 
 class MyProfilePresenter : BasePresenterImpl<MyProfileContract.View, MyProfileCallerContract.Caller>(),
-    MyProfileContract.Presenter,
-    MyProfileCallerContract.Handler {
+        MyProfileContract.Presenter,
+        MyProfileCallerContract.Handler {
     override var caller: MyProfileCallerContract.Caller? = MyProfileCaller(this)
 
-    override fun saveSelectedToken(balance: Balance) {
+    override fun saveSelectedBalance(balance: Balance) {
         Preference.saveSelectedTokenBalance(balance)
-        mView?.setCurrentSelectedTokenId(balance.token.id)
     }
 
-    override fun getCurrentToken(): Balance? {
+    override fun getCurrentBalance(): Balance? {
         return Preference.loadSelectedTokenBalance()
     }
 
     override fun handleLoadWalletSuccess(response: OMGResponse<WalletList>) {
-        mView?.hideLoading()
-        // If user doesn't select default minted token, then set default value to the first item.
-        var selectedToken = getCurrentToken()
 
-        selectedToken = response.data.data[0].balances.firstOrNull { it.token.id == selectedToken?.token?.id } ?: response.data.data[0].balances[0]
-        saveSelectedToken(selectedToken)
+        var currentBalance = response.data.data[0].balances.firstOrNull { it.token.id == getCurrentBalance()?.token?.id }
+        if (currentBalance == null) {
+            currentBalance = response.data.data[0].balances[0]
+            saveSelectedBalance(currentBalance)
+        }
+        mView?.setSelectedBalance(currentBalance)
 
         // Save current address
         Preference.saveWalletAddress(response.data.data[0].address)
 
         // update UI
         val balances = response.data.data.flatMap { it.balances }
-        mView?.showBalances(balances)
+        mView?.showBalances(balances, currentBalance)
         mView?.showUsername(response.data.data[0].user?.username?.split("|")?.get(0)
-            ?: "Cannot found the user")
+                ?: "Cannot found the user")
     }
 
     override fun handleLoadWalletFailed(error: OMGResponse<APIError>) {
         mView?.hideLoading()
         mView?.showMessage(error.data.description)
+        mView?.showLoadBalanceFailed()
         goBackToLoginIfNeeded(error.data)
     }
 
