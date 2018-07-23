@@ -53,6 +53,7 @@ ext {
     custom = [
         editText: "com.github.santalu:mask-edittext:1.0.5",
         circleImageView: 'de.hdodenhof:circleimageview:2.2.0',
-        constraintLayout: 'com.android.support.constraint:constraint-layout:1.1.2'
+        constraintLayout: 'com.android.support.constraint:constraint-layout:1.1.2',
+        stetho: 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     ]
 }
