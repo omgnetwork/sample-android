@@ -24,7 +24,6 @@ class ProductListPresenter : BasePresenterImpl<ProductListContract.View, Product
     override var caller: ProductListCallerContract.Caller? = ProductListCaller(this)
 
     override fun handleLoadProductListSuccess(response: List<Product.Get.Item>) {
-        mView?.hideLoading()
         productList = response
         if (Preference.loadSelectedTokenBalance() != null) {
             mView?.showProductList(response)
@@ -34,20 +33,17 @@ class ProductListPresenter : BasePresenterImpl<ProductListContract.View, Product
     }
 
     override fun handleLoadProductListFailed(throwable: Throwable) {
-        mView?.hideLoading()
         mView?.showMessage(throwable.errorResponse().data.description)
         mView?.showLoadProductFail(throwable.errorResponse().data)
         goBackToLoginIfNeeded(throwable.errorResponse().data)
     }
 
     override fun handleLoadWalletSuccess(response: OMGResponse<WalletList>) {
-        mView?.hideLoading()
         Preference.saveSelectedTokenBalance(response.data.data[0].balances[0])
         mView?.showProductList(productList ?: return)
     }
 
     override fun handleLoadWalletFailed(error: OMGResponse<APIError>) {
-        mView?.hideLoading()
         mView?.showMessage(error.data.description)
         goBackToLoginIfNeeded(error.data)
     }

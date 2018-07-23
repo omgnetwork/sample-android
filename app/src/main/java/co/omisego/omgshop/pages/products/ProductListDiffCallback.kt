@@ -14,7 +14,7 @@ class ProductListDiffCallback(
     private val newList: List<Product.Get.Item>
 ) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        oldList[oldItemPosition] == newList[newItemPosition]
+        oldList[oldItemPosition].id == newList[newItemPosition].id
 
     override fun getOldListSize() = oldList.size
     override fun getNewListSize() = newList.size

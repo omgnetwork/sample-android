@@ -13,6 +13,7 @@ import co.omisego.omisego.model.WalletList
  * Created by Phuchit Sirimongkolsathien on 19/6/2018 AD.
  * Copyright © 2017-2018 OmiseGO. All rights reserved.
  */
+
 interface MyProfileCallerContract {
     interface Caller : BaseContract.BaseCaller {
         val credential: Credential

@@ -98,7 +98,7 @@ class TransactionHistoryActivity : BaseActivity<TransactionHistoryContract.View,
     override fun showLoadTransactionListFail() {
         loading = false
         swipeRefresh.isRefreshing = false
-        transactionListAdapter.getLoadingListener()?.onFinished()
+        transactionListAdapter.getLoadingListener()?.onReachedLastPage()
         logi("Failed to fetch transaction list")
     }
 }
