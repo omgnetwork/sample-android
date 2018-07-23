@@ -16,6 +16,8 @@ interface ShowQRContract {
         fun showTransactionFinalizedFailed(transactionConsumption: TransactionConsumption, msg: String)
         fun showTransactionFinalizedSuccess(transactionConsumption: TransactionConsumption, msg: String)
         fun showConfirmationFail(msg: String)
+        fun showOnConnected()
+        fun showOnDisconnected()
         fun addPendingConsumption(transactionConsumption: TransactionConsumption)
     }
 

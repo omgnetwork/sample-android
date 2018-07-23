@@ -19,6 +19,7 @@ import co.omisego.omisego.model.transaction.request.TransactionRequestType
 class ShowQRPresenter : BasePresenterImpl<ShowQRContract.View, ShowQRCallerContract.Caller>(),
     ShowQRContract.Presenter,
     ShowQRCallerContract.Handler {
+
     override var caller: ShowQRCallerContract.Caller? = ShowQRCaller(this)
 
     override fun handleTransactionConsumptionRequest(transactionConsumption: TransactionConsumption) {
@@ -67,6 +68,14 @@ class ShowQRPresenter : BasePresenterImpl<ShowQRContract.View, ShowQRCallerContr
 
     override fun handleRejectSuccess(transactionConsumption: OMGResponse<TransactionConsumption>) {
         log("Rejected ${transactionConsumption.data.id}")
+    }
+
+    override fun handleOnConnected() {
+        mView?.showOnConnected()
+    }
+
+    override fun handleOnDisconnected() {
+        mView?.showOnDisconnected()
     }
 
     override fun showLoading() {

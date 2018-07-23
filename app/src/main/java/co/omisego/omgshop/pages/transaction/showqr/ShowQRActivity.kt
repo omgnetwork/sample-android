@@ -1,6 +1,7 @@
 package co.omisego.omgshop.pages.transaction.showqr
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
@@ -17,8 +18,8 @@ import co.omisego.omisego.qrcode.generator.generateQRCode
 import kotlinx.android.synthetic.main.activity_show_qr.*
 
 class ShowQRActivity : BaseActivity<ShowQRContract.View, ShowQRCallerContract.Caller, ShowQRContract.Presenter>(),
-    ShowQRContract.View,
-    ConsumptionViewHolder.OnConfirmationClickListener {
+        ShowQRContract.View,
+        ConsumptionViewHolder.OnConfirmationClickListener {
     private val consumptionRecyclerAdapter = ConsumptionRecyclerAdapter(mutableListOf(), this)
     override val mPresenter: ShowQRContract.Presenter by lazy {
         ShowQRPresenter()
@@ -48,6 +49,7 @@ class ShowQRActivity : BaseActivity<ShowQRContract.View, ShowQRCallerContract.Ca
     private fun showQR(transactionRequest: TransactionRequest) {
         val bitmap = transactionRequest.generateQRCode(size = 512)
         ivQRCode.setImageBitmap(bitmap)
+        showQRVisibility(true)
     }
 
     private fun setupToolbar() {
@@ -58,6 +60,7 @@ class ShowQRActivity : BaseActivity<ShowQRContract.View, ShowQRCallerContract.Ca
 
     override fun onStart() {
         super.onStart()
+        mPresenter.caller?.listenSocketConnection()
         mPresenter.caller?.joinChannel(request = transactionRequest)
     }
 
@@ -73,6 +76,21 @@ class ShowQRActivity : BaseActivity<ShowQRContract.View, ShowQRCallerContract.Ca
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showQRVisibility(visible: Boolean) {
+        when (visible) {
+            true -> {
+                textView.text = getText(R.string.show_qr_waiting_for_scan)
+                textView.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                ivQRCode.alpha = 1f
+            }
+            else -> {
+                textView.text = getText(R.string.show_qr_socket_disconnect)
+                textView.setTextColor(ContextCompat.getColor(this, R.color.colorGray))
+                ivQRCode.alpha = 0.2f
+            }
+        }
+    }
+
     override fun showTransactionFinalizedFailed(transactionConsumption: TransactionConsumption, msg: String) {
         consumptionRecyclerAdapter.update(transactionConsumption)
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
@@ -85,6 +103,14 @@ class ShowQRActivity : BaseActivity<ShowQRContract.View, ShowQRCallerContract.Ca
 
     override fun showConfirmationFail(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showOnConnected() {
+        showQRVisibility(true)
+    }
+
+    override fun showOnDisconnected() {
+        showQRVisibility(false)
     }
 
     override fun onClickApprove(transactionConsumption: TransactionConsumption) {
