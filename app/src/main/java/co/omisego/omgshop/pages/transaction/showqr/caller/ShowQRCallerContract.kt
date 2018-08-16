@@ -27,6 +27,8 @@ interface ShowQRCallerContract {
             authToken: String = credential.omisegoAuthenticationToken,
             id: String
         )
+
+        fun listenSocketConnection(authToken: String = credential.omisegoAuthenticationToken)
     }
 
     interface Handler {
@@ -36,6 +38,8 @@ interface ShowQRCallerContract {
         fun handleTransactionConsumptionRequest(transactionConsumption: TransactionConsumption)
         fun handleTransactionConsumptionFinalizedSuccess(transactionConsumption: TransactionConsumption)
         fun handleTransactionConsumptionFinalizedFail(transactionConsumption: TransactionConsumption, apiError: APIError)
+        fun handleOnConnected()
+        fun handleOnDisconnected()
         fun showLoading()
     }
 }

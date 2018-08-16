@@ -19,6 +19,14 @@ class ShowQRCaller(
     override val credential: Credential = Preference.loadCredential()
 ) : BaseCaller(), ShowQRCallerContract.Caller {
 
+    override fun listenSocketConnection(authToken: String) {
+        CombinedAPIManager.listenSocketConnection(
+            authToken,
+            handler::handleOnConnected,
+            handler::handleOnDisconnected
+        )
+    }
+
     override fun joinChannel(authToken: String, request: TransactionRequest) {
         CombinedAPIManager.listenTransactionRequest(
             authToken,

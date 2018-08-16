@@ -19,10 +19,13 @@ import co.omisego.omisego.model.transaction.list.TransactionListParams
 import co.omisego.omisego.model.transaction.request.TransactionRequest
 import co.omisego.omisego.model.transaction.request.TransactionRequestCreateParams
 import co.omisego.omisego.operation.startListeningEvents
-import co.omisego.omisego.websocket.SocketCustomEventListener
+import co.omisego.omisego.websocket.listener.SocketConnectionListener
+import co.omisego.omisego.websocket.listener.TransactionConsumptionListener
+import co.omisego.omisego.websocket.listener.TransactionRequestListener
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.net.ssl.SSLException
 
 /**
  * OmiseGO
@@ -168,6 +171,25 @@ object CombinedAPIManager {
             })
     }
 
+    inline fun listenSocketConnection(
+        authToken: String,
+        crossinline onConnected: () -> Unit,
+        crossinline onDisconnected: () -> Unit
+    ) {
+        val client = ClientProvider.provideSocketClient(authToken).client
+        client.addConnectionListener(object : SocketConnectionListener {
+            override fun onConnected() {
+                onConnected()
+            }
+
+            override fun onDisconnected(throwable: Throwable?) {
+                if (throwable is SSLException) {
+                    onDisconnected()
+                }
+            }
+        })
+    }
+
     inline fun listenTransactionRequest(
         authToken: String,
         request: TransactionRequest,
@@ -176,7 +198,7 @@ object CombinedAPIManager {
         crossinline onFinalizedSuccess: (TransactionConsumption) -> Unit
     ) {
         val client = ClientProvider.provideSocketClient(authToken).client
-        request.startListeningEvents(client, listener = object : SocketCustomEventListener.TransactionRequestListener() {
+        request.startListeningEvents(client, listener = object : TransactionRequestListener() {
             override fun onTransactionConsumptionFinalizedFail(transactionConsumption: TransactionConsumption, apiError: APIError) =
                 onFinalizedFail.invoke(transactionConsumption, apiError)
 
@@ -195,7 +217,7 @@ object CombinedAPIManager {
         crossinline onFinalizedSuccess: (TransactionConsumption) -> Unit
     ) {
         val client = ClientProvider.provideSocketClient(authToken).client
-        request.startListeningEvents(client, listener = object : SocketCustomEventListener.TransactionConsumptionListener() {
+        request.startListeningEvents(client, listener = object : TransactionConsumptionListener() {
             override fun onTransactionConsumptionFinalizedFail(transactionConsumption: TransactionConsumption, apiError: APIError) =
                 onFinalizedFail.invoke(transactionConsumption, apiError)
 

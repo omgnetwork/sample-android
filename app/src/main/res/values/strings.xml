@@ -114,6 +114,7 @@
 
     <!-- Show QR -->
     <string name="show_qr_waiting_for_scan">Waiting for scan…</string>
+    <string name="show_qr_socket_disconnect">Waiting for socket connection…</string>
     <string name="show_qr_consumption_requests">Consumption requests:</string>
 
     <!-- Other -->

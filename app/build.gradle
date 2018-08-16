@@ -37,8 +37,7 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-//    implementation omisego.sdk
-    implementation project(':omisego-sdk')
+    implementation omisego.sdk
     implementation kotlinDependencies.stdlib
     implementation supportDependencies.appCompat
     implementation supportDependencies.design

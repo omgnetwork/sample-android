@@ -72,6 +72,9 @@ sealed class MyBalanceListState : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         override var listBalance: MutableList<Pair<Balance, Boolean>> = mutableListOf(
             createEmptyBalance() to false,
             createEmptyBalance() to false,
+            createEmptyBalance() to false,
+            createEmptyBalance() to false,
+            createEmptyBalance() to false,
             createEmptyBalance() to false
         )
 
